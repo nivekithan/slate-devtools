@@ -1,21 +1,12 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import { createPortal } from "react-dom";
-import { createEditor, Editor, Node, Path } from "slate";
-import {
-  Editable,
-  ReactEditor,
-  RenderElementProps,
-  RenderLeafProps,
-  Slate,
-  withReact,
-} from "slate-react";
-import { RenderElement } from "../components/renderElement";
-import { RenderLeaf } from "../components/renderLeaf";
-import { withDepth, withId, withIndex } from "../plugins";
+import { Node } from "slate";
+import { ReactEditor } from "slate-react";
 import {
   SelectedPropertiesProvider,
   SelectedProperties,
 } from "../contexts/selectedProperties";
+import { DevSlate } from "./devSlate";
 
 type DevtoolsProps = {
   value: Node[]; // NodeList value to show in devtools
@@ -23,45 +14,19 @@ type DevtoolsProps = {
 };
 
 export const Devtools = ({ value, editor }: DevtoolsProps) => {
-  const devEditor = useMemo(
-    () => withIndex(withId(withDepth(withReact(createEditor())))),
-    []
-  );
-  const [devValue, setDevValue] = useState<Node[]>(value);
   const [
     selectedProperties,
     setSelectedProperties,
   ] = useState<SelectedProperties>({ node: { children: [] }, path: [] });
-
-  const renderElement = useCallback(
-    (props: RenderElementProps) => <RenderElement {...props} />,
-    []
-  );
-
-  const renderLeaf = useCallback(
-    (props: RenderLeafProps) => <RenderLeaf {...props} />,
-    []
-  );
-
-  // Normalize the editor
-  useEffect(() => {
-    Editor.normalize(devEditor, { force: true });
-  }, []);
 
   return createPortal(
     <SelectedPropertiesProvider
       value={selectedProperties}
       dispatch={setSelectedProperties}
     >
-      <div className="w-full h-400px min-h-100px bg-hex-282a36 text-white rounded p-4">
+      <div className="w-full h-400px min-h-100px  bg-hex-282a36 text-white rounded p-4">
         <div>
-          <Slate value={devValue} editor={devEditor} onChange={setDevValue}>
-            <Editable
-              renderElement={renderElement}
-              renderLeaf={renderLeaf}
-              spellCheck={false}
-            />
-          </Slate>
+          <DevSlate value={value} />
         </div>
       </div>
     </SelectedPropertiesProvider>,

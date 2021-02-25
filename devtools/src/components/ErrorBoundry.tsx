@@ -3,7 +3,6 @@ import { Editable, ReactEditor } from "slate-react";
 
 type Props = {
   children: ReactNode;
-  editor: ReactEditor;
 };
 
 type State = {
