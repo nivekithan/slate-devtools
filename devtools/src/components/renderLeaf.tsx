@@ -5,17 +5,21 @@ import { useToggleOnClick } from "../hooks/useToggleOnClick";
 export const RenderLeaf = ({ text, attributes, children }: RenderLeafProps) => {
   const { devtools_depth: depth } = text;
 
-  const [shouldShowText, onClick] = useToggleOnClick(false);
+  const [shouldShowText, onClick] = useToggleOnClick<HTMLDivElement>(false);
 
   const depthStyle = (depth: number): CSSProperties => {
     return {
-      marginLeft: `${depth * 1.5}rem`,
+      marginLeft: `${depth}rem`,
     };
   };
 
   return (
-    <div {...attributes} style={{ ...depthStyle((depth as number) || 1) }} contentEditable={false}>
-      <div className="flex gap-x-3" >
+    <div
+      {...attributes}
+      style={{ ...depthStyle((depth as number) || 1) }}
+      contentEditable={false}
+    >
+      <div className="flex gap-x-3">
         <div onClick={onClick} className={"cursor-pointer"}>
           +
         </div>

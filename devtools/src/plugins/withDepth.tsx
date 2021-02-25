@@ -1,4 +1,4 @@
-import { NodeEntry, Transforms } from "slate";
+import { NodeEntry, Transforms, Editor } from "slate";
 import { ReactEditor } from "slate-react";
 
 export const withDepth = (editor: ReactEditor) => {
@@ -6,9 +6,9 @@ export const withDepth = (editor: ReactEditor) => {
 
   // Overwriting the normalize node functionality of editor
   editor.normalizeNode = (entry) => {
-    const [, path] = entry;
+    const [node, path] = entry;
 
-    if (!hasValidDepth(entry)) {
+    if (!Editor.isEditor(node) && !hasValidDepth(entry)) {
       Transforms.setNodes(
         editor,
         { devtools_depth: path.length },

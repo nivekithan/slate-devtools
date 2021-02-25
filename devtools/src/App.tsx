@@ -1,8 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { createEditor, Node } from "slate";
 import { Editable, withReact, Slate } from "slate-react";
-import {Devtools} from "./devtools"
-
+import { Devtools } from "./devtools";
 
 export const App = () => {
   const [slateValue, setSlateValue] = useState<Node[]>(initalValue);
@@ -12,7 +11,7 @@ export const App = () => {
     <div>
       <div>
         <Slate editor={editor} value={slateValue} onChange={setSlateValue}>
-          <Editable />
+          <Editable spellCheck={false} />
         </Slate>
       </div>
       <Devtools value={slateValue} editor={editor} />
@@ -25,29 +24,29 @@ const initalValue = [
     type: "normal",
     children: [
       {
-        type : "numbered-list",
-        children : [
+        type: "numbered-list",
+        children: [
           {
-            text : "NUmbered list"
-          }
-        ]
+            text: "NUmbered list",
+          },
+        ],
       },
       {
-        type : "bullet-list",
-        children : [
+        type: "bullet-list",
+        children: [
           {
-            text : "bullete list"
-          }
-        ]
-      }
+            text: "bullete list",
+          },
+        ],
+      },
     ],
   },
   {
-    type : "numbered-list",
-    children : [
+    type: "numbered-list",
+    children: [
       {
-        text : "2 numberlist"
-      }
-    ]
-  }
+        text: "2 numberlist",
+      },
+    ],
+  },
 ];

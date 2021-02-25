@@ -11,7 +11,9 @@ import {
 } from "slate-react";
 import { RenderElement } from "../components/renderElement";
 import { RenderLeaf } from "../components/renderLeaf";
-import { withDepth } from "../plugins/withDepth";
+import { withDepth, withId } from "../plugins";
+
+
 
 type DevtoolsProps = {
   value: Node[]; // NodeList value to show in devtools
@@ -19,7 +21,10 @@ type DevtoolsProps = {
 };
 
 export const Devtools = ({ value, editor }: DevtoolsProps) => {
-  const devEditor = useMemo(() => withDepth(withReact(createEditor())), []);
+  const devEditor = useMemo(
+    () => withId(withDepth(withReact(createEditor()))),
+    []
+  );
   const [devValue, setDevValue] = useState<Node[]>(value);
 
   const renderElement = useCallback(
@@ -41,7 +46,11 @@ export const Devtools = ({ value, editor }: DevtoolsProps) => {
     <div className="w-full h-400px min-h-100px bg-hex-282a36 text-white rounded p-4">
       <div>
         <Slate value={devValue} editor={devEditor} onChange={setDevValue}>
-          <Editable renderElement={renderElement} renderLeaf={renderLeaf} />
+          <Editable
+            renderElement={renderElement}
+            renderLeaf={renderLeaf}
+            spellCheck={false}
+          />
         </Slate>
       </div>
     </div>,
