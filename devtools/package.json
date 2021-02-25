@@ -9,7 +9,6 @@
   "dependencies": {
     "nanoid": "^3.1.20",
     "react": "^17.0.0",
-    "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^17.0.0",
     "slate": "^0.59.0",
     "slate-react": "^0.59.0"

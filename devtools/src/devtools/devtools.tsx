@@ -11,9 +11,7 @@ import {
 } from "slate-react";
 import { RenderElement } from "../components/renderElement";
 import { RenderLeaf } from "../components/renderLeaf";
-import { withDepth, withId } from "../plugins";
-
-
+import { withDepth, withId, withIndex } from "../plugins";
 
 type DevtoolsProps = {
   value: Node[]; // NodeList value to show in devtools
@@ -22,7 +20,7 @@ type DevtoolsProps = {
 
 export const Devtools = ({ value, editor }: DevtoolsProps) => {
   const devEditor = useMemo(
-    () => withId(withDepth(withReact(createEditor()))),
+    () => withIndex(withId(withDepth(withReact(createEditor())))),
     []
   );
   const [devValue, setDevValue] = useState<Node[]>(value);
