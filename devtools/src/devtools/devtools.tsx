@@ -16,7 +16,6 @@ import {
   SelectedPropertiesProvider,
   SelectedProperties,
 } from "../contexts/selectedProperties";
-import { RenderPath } from "../components/renderPath";
 
 type DevtoolsProps = {
   value: Node[]; // NodeList value to show in devtools
@@ -48,7 +47,7 @@ export const Devtools = ({ value, editor }: DevtoolsProps) => {
   useEffect(() => {
     Editor.normalize(devEditor, { force: true });
   }, []);
-  
+
   return createPortal(
     <SelectedPropertiesProvider
       value={selectedProperties}
