@@ -22,7 +22,7 @@ export const withDepth = (editor: ReactEditor) => {
   return editor;
 };
 
-const hasValidDepth = ([node, path]: NodeEntry) => {
+const hasValidDepth = ([node, path]: NodeEntry): boolean => {
   const { devtools_depth: depth } = node;
 
   // If there is node depth return false
@@ -36,4 +36,6 @@ const hasValidDepth = ([node, path]: NodeEntry) => {
   // If the depth is not length of path then return false
 
   if (depth !== path.length) return false;
+
+  return true;
 };

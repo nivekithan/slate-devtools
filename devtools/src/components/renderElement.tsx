@@ -1,5 +1,5 @@
 import { RenderElementProps } from "slate-react";
-import React from "react";
+import React, { CSSProperties } from "react";
 import { useToggleOnClick } from "../hooks/useToggleOnClick";
 
 export const RenderElement = ({
@@ -15,12 +15,13 @@ export const RenderElement = ({
     type = "normal";
   }
 
+  const depthStyle: CSSProperties = {
+    marginLeft: `${(depth as number) || 1 * 1.5}rem`,
+  };
+
   return (
-    <div
-      {...attributes}
-      style={{ marginLeft: `${((depth as number) || 0) * 1.5}rem` }}
-    >
-      <div className="flex gap-x-3" contentEditable={false}>
+    <div {...attributes} style={{ ...depthStyle }} contentEditable={false}>
+      <div className="flex gap-x-3">
         <div onClick={onClick} className="cursor-pointer">
           +
         </div>
