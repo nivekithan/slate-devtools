@@ -23,7 +23,7 @@ export const RenderElement = ({
 
   const selectedProperties = useSelectedProperties();
   const setSelectedProperties = useSetSelectedProperties();
-  const [shouldShowChildren, onClickToggle] = useToggleOnClick<HTMLDivElement>(
+  const [shouldShowChildren, onClickToggle] = useToggleOnClick<HTMLButtonElement>(
     false
   );
 
@@ -55,13 +55,13 @@ export const RenderElement = ({
   return (
     <div {...attributes} style={{ ...depthStyle }} contentEditable={false}>
       <div className="flex gap-x-3">
-        <div onClick={onClickToggle} className="cursor-pointer">
+        <button onClick={onClickToggle}>
           +
-        </div>
+        </button>
         <div onClick={onClickUpdateSelectedProperties}>{`<${type} />`}</div>
-        <div onClick={onClickCopy} className="text-gray-500">
+        <button onClick={onClickCopy} className="text-gray-500">
           C
-        </div>
+        </button>
       </div>
       {shouldShowChildren ? children : null}
     </div>

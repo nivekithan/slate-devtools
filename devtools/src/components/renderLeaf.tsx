@@ -23,7 +23,7 @@ export const RenderLeaf = ({ text, attributes }: RenderLeafProps) => {
     };
   };
 
-  const [shouldShowText, onClick] = useToggleOnClick<HTMLDivElement>(false);
+  const [shouldShowText, onClick] = useToggleOnClick<HTMLButtonElement>(false);
 
   const copyOnClick = useCopyOnClick(
     JSON.stringify(ReactEditor.findPath(editor, text))
@@ -53,14 +53,14 @@ export const RenderLeaf = ({ text, attributes }: RenderLeafProps) => {
       contentEditable={false}
     >
       <div className="flex gap-x-3">
-        <div onClick={onClick} className="cursor-pointer">
+        <button onClick={onClick} >
           +
-        </div>
+        </button>
 
         <div onClick={onClickUpateSelectedProperties}>{`<Text />`}</div>
-        <div onClick={copyOnClick} className="text-gray-500">
+        <button onClick={copyOnClick} className="text-gray-500">
           C
-        </div>
+        </button>
       </div>
       {shouldShowText ? (
         <div style={{ ...depthStyle(((depth as number) || 1) + 1) }}>
