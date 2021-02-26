@@ -11,16 +11,14 @@ import {
 import { RenderElement } from "../components/renderElement";
 import { RenderLeaf } from "../components/renderLeaf";
 import { SlateEditorErrorBoundry } from "../components/ErrorBoundry";
+import { useDevEditor } from "../contexts/devEditor";
 
 type Props = {
   value: Node[];
 };
 
 export const DevSlate = ({ value }: Props) => {
-  const devEditor = useMemo(
-    () => withIndex(withId(withDepth(withReact(createEditor())))),
-    []
-  );
+  const devEditor = useDevEditor()
   const [devValue, setDevValue] = useState<Node[]>(value);
 
   const renderElement = useCallback(
