@@ -46,6 +46,13 @@ export const SingleProperty = ({ keys, value }: Props) => {
     setValueInputValue(e.currentTarget.value);
   };
 
+  const onRemoveClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    Transforms.unsetNodes(devEditor, keys, { at: path });
+  };
+
   return (
     <div className="flex gap-x-3">
       <div className="w-100px truncate text-blue-500">{keys}</div>
@@ -63,6 +70,11 @@ export const SingleProperty = ({ keys, value }: Props) => {
           <span>{value}</span>
         )}
       </div>
+      {allowEdit && keys !== "text" ? (
+        <button className="text-red-400 pl-2" onClick={onRemoveClick}>
+          X
+        </button>
+      ) : null}
     </div>
   );
 };
