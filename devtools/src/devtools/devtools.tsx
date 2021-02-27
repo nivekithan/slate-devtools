@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { Node, createEditor } from "slate";
 import { ReactEditor, withReact } from "slate-react";
@@ -32,9 +32,9 @@ export const Devtools = ({ value, editor }: DevtoolsProps) => {
       dispatch={setSelectedProperties}
     >
       <div className="w-full h-400px min-h-100px  bg-hex-282a36 text-white rounded p-4 flex gap-x-100px ">
-        <DevEditorProvider value={devEditor}>
+        <DevEditorProvider value={devEditor} >
           <div>
-            <DevSlate value={value} />
+            <DevSlate value={value} editor={editor} />
           </div>
           <div>
             <PropertiesEditor />

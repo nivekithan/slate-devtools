@@ -1,6 +1,7 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { createEditor, Node } from "slate";
 import { Editable, withReact, Slate } from "slate-react";
+import { SlateEditorErrorBoundry } from "./components/ErrorBoundry";
 import { Devtools } from "./devtools";
 
 export const App = () => {
@@ -9,12 +10,14 @@ export const App = () => {
 
   return (
     <div>
-      <div>
-        <Slate editor={editor} value={slateValue} onChange={setSlateValue}>
-          <Editable spellCheck={false} />
-        </Slate>
-      </div>
-      <Devtools value={slateValue} editor={editor} />
+      <SlateEditorErrorBoundry value={slateValue}>
+        <div>
+          <Slate editor={editor} value={slateValue}  onChange={setSlateValue}>
+            <Editable spellCheck={false} />
+          </Slate>
+        </div>
+      </SlateEditorErrorBoundry>
+      <Devtools value={slateValue} editor={editor} /> 
     </div>
   );
 };

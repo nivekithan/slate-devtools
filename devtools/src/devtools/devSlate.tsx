@@ -1,4 +1,10 @@
-import React, { useMemo, useState, useEffect, useCallback } from "react";
+import React, {
+  useMemo,
+  useState,
+  useEffect,
+  useCallback,
+  useLayoutEffect,
+} from "react";
 import { withDepth, withId, withIndex } from "../plugins";
 import { createEditor, Node, Editor } from "slate";
 import {
@@ -7,19 +13,28 @@ import {
   Editable,
   RenderElementProps,
   RenderLeafProps,
+  ReactEditor,
 } from "slate-react";
 import { RenderElement } from "../components/renderElement";
 import { RenderLeaf } from "../components/renderLeaf";
 import { SlateEditorErrorBoundry } from "../components/ErrorBoundry";
 import { useDevEditor } from "../contexts/devEditor";
+import { useSetSelectedProperties } from "../contexts/selectedProperties";
 
 type Props = {
   value: Node[];
+  editor: ReactEditor;
 };
 
-export const DevSlate = ({ value }: Props) => {
-  const devEditor = useDevEditor()
+export const DevSlate = ({ value, editor }: Props) => {
+  // console.log("I am here")
+  const devEditor = useDevEditor();
   const [devValue, setDevValue] = useState<Node[]>(value);
+
+  useLayoutEffect(() => {
+    const { operations } = editor;
+    operations.forEach(devEditor.apply);
+  }, [value]);
 
   const renderElement = useCallback(
     (props: RenderElementProps) => <RenderElement {...props} />,
@@ -35,6 +50,9 @@ export const DevSlate = ({ value }: Props) => {
   useEffect(() => {
     Editor.normalize(devEditor, { force: true });
   }, []);
+
+  // console.log(devValue);
+
   return (
     <SlateEditorErrorBoundry>
       <Slate value={devValue} editor={devEditor} onChange={setDevValue}>

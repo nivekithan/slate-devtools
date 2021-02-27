@@ -1,8 +1,10 @@
 import React, { ReactNode } from "react";
+import { Node } from "slate";
 import { Editable, ReactEditor } from "slate-react";
 
 type Props = {
   children: ReactNode;
+  value: Node[];
 };
 
 type State = {
@@ -20,8 +22,10 @@ export class SlateEditorErrorBoundry extends React.Component<Props, State> {
   }
 
   componentDidCatch(error: any) {
-    console.log(error);
-    window.location.reload()
+    // window.location.reload();
+    console.error(error);
+    // console.log(this.props.value);
+    // console.error(error.stack)
     this.setState({ hasError: false });
   }
 

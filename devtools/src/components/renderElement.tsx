@@ -23,9 +23,10 @@ export const RenderElement = ({
 
   const selectedProperties = useSelectedProperties();
   const setSelectedProperties = useSetSelectedProperties();
-  const [shouldShowChildren, onClickToggle] = useToggleOnClick<HTMLButtonElement>(
-    false
-  );
+  const [
+    shouldShowChildren,
+    onClickToggle,
+  ] = useToggleOnClick<HTMLButtonElement>(false);
 
   const depthStyle: CSSProperties = {
     marginLeft: `${(depth as number) || 1 * 1.5}rem`,
@@ -39,6 +40,7 @@ export const RenderElement = ({
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     e.preventDefault();
+    // console.log({element, path})
     setSelectedProperties({ node: element, path: path });
   };
 
@@ -55,9 +57,7 @@ export const RenderElement = ({
   return (
     <div {...attributes} style={{ ...depthStyle }} contentEditable={false}>
       <div className="flex gap-x-3">
-        <button onClick={onClickToggle}>
-          +
-        </button>
+        <button onClick={onClickToggle}>+</button>
         <div onClick={onClickUpdateSelectedProperties}>{`<${type} />`}</div>
         <button onClick={onClickCopy} className="text-gray-500">
           C

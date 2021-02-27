@@ -33,6 +33,8 @@ export const RenderLeaf = ({ text, attributes }: RenderLeafProps) => {
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     e.preventDefault();
+    // console.log({ text, path });
+
     setSelectedProperties({ node: text, path: path });
   };
 
@@ -40,6 +42,7 @@ export const RenderLeaf = ({ text, attributes }: RenderLeafProps) => {
     const {
       node: { devtools_id: selectedId },
     } = selectedProperties;
+    // console.log({ selectedId, selectedProperties, id, text, path });
 
     if (id === selectedId) {
       setSelectedProperties({ node: text, path: path });
@@ -53,9 +56,7 @@ export const RenderLeaf = ({ text, attributes }: RenderLeafProps) => {
       contentEditable={false}
     >
       <div className="flex gap-x-3">
-        <button onClick={onClick} >
-          +
-        </button>
+        <button onClick={onClick}>+</button>
 
         <div onClick={onClickUpateSelectedProperties}>{`<Text />`}</div>
         <button onClick={copyOnClick} className="text-gray-500">

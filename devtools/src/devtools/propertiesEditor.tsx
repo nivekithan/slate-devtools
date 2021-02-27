@@ -22,7 +22,9 @@ export const PropertiesEditor = ({}: Props) => {
               <SingleProperty
                 keys={keys}
                 value={JSON.stringify(node[keys])}
-                key={`${node.devtools_id}_${keys}`}
+                key={`${node.devtools_id}_${keys}_${JSON.stringify(
+                  node[keys]
+                )}`}
               />
             );
           }
