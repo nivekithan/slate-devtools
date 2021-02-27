@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { useOuterClick } from "../hooks/useOuterClick";
 import { AddPropertiesModal } from "./addPropertiesModal";
+import { usePopper } from "react-popper";
 
 export const AddProperties = () => {
   const [
@@ -15,14 +16,18 @@ export const AddProperties = () => {
     setShowModal(true);
   };
 
-  const onOutsideClick = (e: MouseEvent) => {
-    setShowModal(false);
-  };
-
   const ParentModal = ({ children }: { children: React.ReactNode }) => {
-    const ref = useOuterClick<HTMLDivElement>(onOutsideClick);
+    const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
+      null
+    );
 
-    return <div ref={ref}>{children}</div>;
+    const { styles, attributes } = usePopper(referenceElement, popperElement);
+
+    return (
+      <div ref={setPopperElement} style={styles.popper} {...attributes.popper}>
+        {children}
+      </div>
+    );
   };
 
   return (
@@ -34,8 +39,8 @@ export const AddProperties = () => {
       </div>
       {showModal ? (
         <AddPropertiesModal
-          referenceElement={referenceElement}
           ParentModal={ParentModal}
+          setShowModal={setShowModal}
         />
       ) : null}
     </Fragment>

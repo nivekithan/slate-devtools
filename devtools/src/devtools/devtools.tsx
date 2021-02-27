@@ -31,7 +31,7 @@ export const Devtools = ({ value, editor }: DevtoolsProps) => {
       value={selectedProperties}
       dispatch={setSelectedProperties}
     >
-      <div className="w-full h-400px min-h-100px  bg-hex-282a36 text-white rounded p-4 flex gap-x-100px">
+      <div className="w-full h-400px min-h-100px  bg-hex-282a36 text-white rounded p-4 flex gap-x-100px ">
         <DevEditorProvider value={devEditor}>
           <div>
             <DevSlate value={value} />
