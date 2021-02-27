@@ -32,8 +32,7 @@ export const InlineEdit = ({
   return isEditing ? (
     <div className="flex gap-x-3">
       <input
-        className="outline-solid-000"
-        style={{ backgroundColor: "inherit" }}
+        className=" outline-none bg-hex-0F0F0F bg-opacity-30 px-2  rounded"
         {...inputProps}
         value={value}
         onChange={onChange}
@@ -41,6 +40,8 @@ export const InlineEdit = ({
       />
     </div>
   ) : (
-    <span {...spanProps}>{value}</span>
+    <span {...spanProps} className="px-2">
+      {value}
+    </span>
   );
 };
