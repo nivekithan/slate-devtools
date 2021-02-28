@@ -18,7 +18,7 @@ import {
 import { RenderElement } from "../components/renderElement";
 import { RenderLeaf } from "../components/renderLeaf";
 import { SlateEditorErrorBoundry } from "../components/ErrorBoundry";
-import { useDevEditor } from "../contexts/devEditor";
+import { useDevEditorRead } from "../atom/devEditor";
 
 type Props = {
   value: Node[];
@@ -26,7 +26,7 @@ type Props = {
 };
 
 export const DevSlate = ({ value, editor }: Props) => {
-  const devEditor = useDevEditor();
+  const [devEditor] = useDevEditorRead();
   const [devValue, setDevValue] = useState<Node[]>(value);
 
   useLayoutEffect(() => {

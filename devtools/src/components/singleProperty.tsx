@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import { Node, Transforms } from "slate";
 import { ReactEditor } from "slate-react";
+import { useDevEditorRead } from "../atom/devEditor";
 import { useSelectedPropertiesRead } from "../atom/selectedProperties";
-import { useDevEditor } from "../contexts/devEditor";
 import { InlineEdit } from "./inlineEdit";
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const SingleProperty = ({ keys, value }: Props) => {
-  const devEditor = useDevEditor();
+  const [devEditor] = useDevEditorRead();
   const [{ path }] = useSelectedPropertiesRead()
   const [valueInputValue, setValueInputValue] = useState<string>(value);
   const [isEditing, setIsEditing] = useState<boolean>(false);

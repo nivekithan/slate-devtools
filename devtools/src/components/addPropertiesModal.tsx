@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import { usePopper } from "react-popper";
 import { Transforms } from "slate";
+import { useDevEditorRead } from "../atom/devEditor";
 import { useSelectedPropertiesRead } from "../atom/selectedProperties";
-import { useDevEditor } from "../contexts/devEditor";
 
 type Props = {
   ParentModal: ({ children }: { children: React.ReactNode }) => JSX.Element;
@@ -15,7 +15,7 @@ const inputClassName = "bg-hex-0F0F0F px-2 py-1 rounded";
 export const AddPropertiesModal = ({ ParentModal, setShowModal }: Props) => {
   const [keyInputValue, setKeyInputValue] = useState<string>('""');
   const [valueInputValue, setValueInputValue] = useState<string>('""');
-  const devEditor = useDevEditor();
+  const [devEditor] = useDevEditorRead()
   const [{ path }] = useSelectedPropertiesRead();
 
   const onChange = (

@@ -2,7 +2,6 @@ import React, { useState, useMemo, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { Node, createEditor } from "slate";
 import { ReactEditor, withReact } from "slate-react";
-import { DevEditorProvider } from "../contexts/devEditor";
 
 import { withDepth, withId, withIndex } from "../plugins";
 import { DevSlate } from "./devSlate";
@@ -15,12 +14,6 @@ type DevtoolsProps = {
 };
 
 export const Devtools = ({ value, editor }: DevtoolsProps) => {
-
-  const devEditor = useMemo(
-    () => withIndex(withId(withDepth(withReact(createEditor())))),
-    []
-  );
-
   const [firstButtonState, setFirstButtonState] = useState<"yes" | "no">("no");
   const [secondButtonState, setSecondButtonState] = useState<"yes" | "no">(
     "no"
@@ -34,22 +27,19 @@ export const Devtools = ({ value, editor }: DevtoolsProps) => {
   });
 
   return createPortal(
-  
-      <div className=" bg-hex-282a36 text-white rounded flex flex-col p-5 ">
+    <div className=" bg-hex-282a36 text-white rounded flex flex-col p-5 ">
+      <div>
+        {/* <Menu devtools={firstButtonState} app={secondButtonState} /> */}
+      </div>
+      <div className="h-400px min-h-100px  p-4 flex gap-x-100px ">
         <div>
-          {/* <Menu devtools={firstButtonState} app={secondButtonState} /> */}
+          <DevSlate value={value} editor={editor} key="devtools_editor" />
         </div>
-        <div className="h-400px min-h-100px  p-4 flex gap-x-100px ">
-          <DevEditorProvider value={devEditor}>
-            <div>
-              <DevSlate value={value} editor={editor} key="devtools_editor" />
-            </div>
-            <div>
-              <PropertiesEditor />
-            </div>
-          </DevEditorProvider>
+        <div>
+          <PropertiesEditor />
         </div>
-      </div>,
+      </div>
+    </div>,
     document.body
   );
 };
