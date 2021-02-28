@@ -2,14 +2,11 @@ import { ReactEditor, RenderElementProps, useSlate } from "slate-react";
 import React, { CSSProperties } from "react";
 import { useToggleOnClick } from "../hooks/useToggleOnClick";
 import { useCopyOnClick } from "../hooks/useCopyOnClick";
-import {
-  useSelectedProperties,
-  useSetSelectedProperties,
-} from "../contexts/selectedProperties";
+
 import useDeepCompareEffect from "use-deep-compare-effect";
+import { useSelectedProperties } from "../atom/selectedProperties";
 
 export const RenderElement = ({
-  attributes,
   children,
   element,
 }: RenderElementProps) => {
@@ -21,8 +18,8 @@ export const RenderElement = ({
   const editor = useSlate();
   const path = ReactEditor.findPath(editor, element);
 
-  const selectedProperties = useSelectedProperties();
-  const setSelectedProperties = useSetSelectedProperties();
+  const [selectedProperties, setSelectedProperties] = useSelectedProperties();
+
   const [
     shouldShowChildren,
     onClickToggle,

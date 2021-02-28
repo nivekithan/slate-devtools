@@ -3,10 +3,7 @@ import { createPortal } from "react-dom";
 import { Node, createEditor } from "slate";
 import { ReactEditor, withReact } from "slate-react";
 import { DevEditorProvider } from "../contexts/devEditor";
-import {
-  SelectedPropertiesProvider,
-  SelectedProperties,
-} from "../contexts/selectedProperties";
+
 import { withDepth, withId, withIndex } from "../plugins";
 import { DevSlate } from "./devSlate";
 import { PropertiesEditor } from "./propertiesEditor";
@@ -18,10 +15,7 @@ type DevtoolsProps = {
 };
 
 export const Devtools = ({ value, editor }: DevtoolsProps) => {
-  const [
-    selectedProperties,
-    setSelectedProperties,
-  ] = useState<SelectedProperties>({ node: { children: [] }, path: [] });
+
   const devEditor = useMemo(
     () => withIndex(withId(withDepth(withReact(createEditor())))),
     []
@@ -40,13 +34,10 @@ export const Devtools = ({ value, editor }: DevtoolsProps) => {
   });
 
   return createPortal(
-    <SelectedPropertiesProvider
-      value={selectedProperties}
-      dispatch={setSelectedProperties}
-    >
+  
       <div className=" bg-hex-282a36 text-white rounded flex flex-col p-5 ">
         <div>
-          <Menu devtools={firstButtonState} app={secondButtonState} />
+          {/* <Menu devtools={firstButtonState} app={secondButtonState} /> */}
         </div>
         <div className="h-400px min-h-100px  p-4 flex gap-x-100px ">
           <DevEditorProvider value={devEditor}>
@@ -58,8 +49,7 @@ export const Devtools = ({ value, editor }: DevtoolsProps) => {
             </div>
           </DevEditorProvider>
         </div>
-      </div>
-    </SelectedPropertiesProvider>,
+      </div>,
     document.body
   );
 };

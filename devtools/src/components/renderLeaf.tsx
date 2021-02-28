@@ -1,19 +1,15 @@
 import React, { CSSProperties } from "react";
 import { ReactEditor, RenderLeafProps, useEditor, useSlate } from "slate-react";
 import useDeepCompareEffect from "use-deep-compare-effect";
-import {
-  useSelectedProperties,
-  useSetSelectedProperties,
-} from "../contexts/selectedProperties";
+import { useSelectedProperties } from "../atom/selectedProperties";
 import { useCopyOnClick } from "../hooks/useCopyOnClick";
 import { useToggleOnClick } from "../hooks/useToggleOnClick";
 
-export const RenderLeaf = ({ text, attributes }: RenderLeafProps) => {
+export const RenderLeaf = ({ text }: RenderLeafProps) => {
   const { devtools_depth: depth, devtools_id: id } = text;
   const editor = useSlate();
 
-  const selectedProperties = useSelectedProperties();
-  const setSelectedProperties = useSetSelectedProperties();
+  const [selectedProperties, setSelectedProperties] = useSelectedProperties();
 
   const path = ReactEditor.findPath(editor, text);
 

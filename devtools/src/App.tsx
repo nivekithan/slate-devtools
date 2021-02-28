@@ -10,7 +10,7 @@ export const App = () => {
 
   return (
     <div>
-      <SlateEditorErrorBoundry value={slateValue}>
+      <SlateEditorErrorBoundry>
         <div>
           <Slate editor={editor} value={slateValue}  onChange={setSlateValue}>
             <Editable spellCheck={false} />
