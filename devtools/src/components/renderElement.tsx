@@ -55,7 +55,7 @@ export const RenderElement = ({
   }, [selectedProperties, id, element, path]);
 
   return (
-    <div {...attributes} style={{ ...depthStyle }} contentEditable={false}>
+    <div style={{ ...depthStyle }} contentEditable={false}>
       <div className="flex gap-x-3">
         <button onClick={onClickToggle}>+</button>
         <div onClick={onClickUpdateSelectedProperties}>{`<${type} />`}</div>

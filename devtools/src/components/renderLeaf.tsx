@@ -51,7 +51,6 @@ export const RenderLeaf = ({ text, attributes }: RenderLeafProps) => {
 
   return (
     <div
-      {...attributes}
       style={{ ...depthStyle((depth as number) || 1) }}
       contentEditable={false}
     >

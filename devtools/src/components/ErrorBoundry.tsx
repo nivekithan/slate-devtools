@@ -4,7 +4,6 @@ import { Editable, ReactEditor } from "slate-react";
 
 type Props = {
   children: ReactNode;
-  value: Node[];
 };
 
 type State = {

@@ -22,6 +22,8 @@ export const App = () => {
   );
 };
 
+  
+
 const initalValue = [
   {
     type: "normal",
@@ -38,7 +40,7 @@ const initalValue = [
         type: "bullet-list",
         children: [
           {
-            text: "bullete list",
+            text: "bullet list",
           },
         ],
       },

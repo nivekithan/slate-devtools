@@ -19,7 +19,6 @@ import { RenderElement } from "../components/renderElement";
 import { RenderLeaf } from "../components/renderLeaf";
 import { SlateEditorErrorBoundry } from "../components/ErrorBoundry";
 import { useDevEditor } from "../contexts/devEditor";
-import { useSetSelectedProperties } from "../contexts/selectedProperties";
 
 type Props = {
   value: Node[];
@@ -27,7 +26,6 @@ type Props = {
 };
 
 export const DevSlate = ({ value, editor }: Props) => {
-  // console.log("I am here")
   const devEditor = useDevEditor();
   const [devValue, setDevValue] = useState<Node[]>(value);
 
@@ -47,7 +45,7 @@ export const DevSlate = ({ value, editor }: Props) => {
   );
 
   // Normalize the editor
-  useEffect(() => {
+  useLayoutEffect(() => {
     Editor.normalize(devEditor, { force: true });
   }, []);
 
