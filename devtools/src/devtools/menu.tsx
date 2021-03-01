@@ -1,8 +1,9 @@
-import React, { useEffect, useLayoutEffect, useRef } from "react";
+import { computeStyles } from "@popperjs/core";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Editor, Node, Operation } from "slate";
 import { ReactEditor } from "slate-react";
 import { useDevEditorRead } from "../atom/devEditor";
-import { useUpdateAppRead } from "../atom/updateApp";
+import { useUpdateApp, useUpdateAppRead } from "../atom/updateApp";
 import {
   useUpdateDevtools,
   useUpdateDevToolsRead,
@@ -11,16 +12,26 @@ import {
 type Props = {
   editor: ReactEditor;
   value: Node[];
+  devValue: Node[];
 };
 
-export const Menu = ({ editor, value }: Props) => {
+export const Menu = ({ editor, value, devValue }: Props) => {
   const [updateDevtools, setUpdateDevtools] = useUpdateDevtools();
-  const [updateApp] = useUpdateAppRead();
+  const [updateApp, setUpdateApp] = useUpdateApp();
   const [devEditor] = useDevEditorRead();
 
+  const isAppUpdating = useRef<boolean>(false);
+  const isDevtoolsUpdating = useRef<boolean>(false);
+
   const appOperations = useRef<Operation[]>([]);
+  const devtoolsOperations = useRef<Operation[]>([]);
 
   useLayoutEffect(() => {
+    if (isAppUpdating.current) {
+      isAppUpdating.current = false;
+      return;
+    }
+
     const operations = appOperations.current;
 
     for (const operation of editor.operations) {
@@ -32,7 +43,27 @@ export const Menu = ({ editor, value }: Props) => {
     }
 
     appOperations.current = operations;
+    console.log(appOperations);
   }, [value]);
+
+  useLayoutEffect(() => {
+    if (isDevtoolsUpdating.current) {
+      isDevtoolsUpdating.current = false;
+      return;
+    }
+
+    const operations = devtoolsOperations.current;
+
+    for (const operation of devEditor.operations) {
+      if (operation.type === "set_selection") {
+        continue;
+      }
+
+      operations.push(operation);
+    }
+
+    devtoolsOperations.current = operations;
+  }, [devValue]);
 
   useEffect(() => {
     const { current } = appOperations;
@@ -44,10 +75,21 @@ export const Menu = ({ editor, value }: Props) => {
     }
   });
 
-  const onDevtoolsClick = (
+  useEffect(() => {
+    const { current } = devtoolsOperations;
+
+    if (current.length !== 0) {
+      setUpdateApp("on");
+    } else {
+      setUpdateApp("off");
+    }
+  });
+
+  const onUpdateDevtoolsClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
+    isDevtoolsUpdating.current = true;
     const operations = appOperations.current;
     Editor.withoutNormalizing(devEditor, () => {
       for (const operation of operations) {
@@ -55,7 +97,23 @@ export const Menu = ({ editor, value }: Props) => {
       }
     });
     appOperations.current = [];
-    setUpdateDevtools("off");
+  };
+
+  const onUpdateAppClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+
+    isAppUpdating.current = true;
+    const operations = devtoolsOperations.current;
+
+    Editor.withoutNormalizing(editor, () => {
+      for (const operation of operations) {
+        editor.apply(operation);
+      }
+    });
+
+    devtoolsOperations.current = [];
   };
 
   return (
@@ -66,7 +124,7 @@ export const Menu = ({ editor, value }: Props) => {
             ? "bg-rose-500 hover:bg-rose-600"
             : "bg-gray-600"
         }`}
-        onClick={onDevtoolsClick}
+        onClick={onUpdateDevtoolsClick}
       >
         Update devtools
       </button>
@@ -74,6 +132,7 @@ export const Menu = ({ editor, value }: Props) => {
         className={`grid place-items-center p-2 rounded text-sm font-semibold ${
           updateApp === "on" ? "bg-red-500 hover:bg-red-600" : "bg-gray-600"
         }`}
+        onClick={onUpdateAppClick}
       >
         Update app
       </button>

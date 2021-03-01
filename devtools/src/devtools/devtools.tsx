@@ -15,23 +15,25 @@ import { PropertiesEditor } from "./propertiesEditor";
 import { Menu } from "./menu";
 import { useUpdateAppSet } from "../atom/updateApp";
 import { useUpdateDevToolsSet } from "../atom/updateDevtools";
+import { useDevEditorRead } from "../atom/devEditor";
 
 type DevtoolsProps = {
   value: Node[]; // NodeList value to show in devtools
   editor: ReactEditor; // Corresponding editor
 };
 
-export const Devtools = ({ value, editor, }: DevtoolsProps) => {
-
+export const Devtools = ({ value, editor }: DevtoolsProps) => {
+  const [devValue, setDevValue] = useState<Node[]>(value);
+ 
 
   return createPortal(
     <div className=" bg-hex-282a36 text-white rounded flex flex-col p-5 ">
       <div>
-        <Menu value={value} editor={editor} />
+        <Menu value={value} editor={editor} devValue={devValue} />
       </div>
       <div className="h-400px min-h-100px  p-4 flex gap-x-100px ">
         <div>
-          <DevSlate value={value} editor={editor} key="devtools_editor"  />
+          <DevSlate value={value} editor={editor} key="devtools_editor" devValue={devValue} setDevValue={setDevValue} />
         </div>
         <div>
           <PropertiesEditor />

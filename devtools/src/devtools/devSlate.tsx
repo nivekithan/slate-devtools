@@ -7,7 +7,14 @@ import React, {
   useRef,
 } from "react";
 import { withDepth, withId, withIndex } from "../plugins";
-import { createEditor, Node, Editor, Transforms, Range } from "slate";
+import {
+  createEditor,
+  Node,
+  Editor,
+  Transforms,
+  Range,
+  Operation,
+} from "slate";
 import {
   withReact,
   Slate,
@@ -24,11 +31,13 @@ import { useDevEditorRead } from "../atom/devEditor";
 type Props = {
   value: Node[];
   editor: ReactEditor;
+  devValue: Node[];
+  setDevValue: (value: Node[]) => void;
 };
 
-export const DevSlate = ({ value, editor }: Props) => {
+export const DevSlate = ({ value, editor, devValue, setDevValue }: Props) => {
   const [devEditor] = useDevEditorRead();
-  const [devValue, setDevValue] = useState<Node[]>(value);
+  const devtoolsOperations = useRef<Operation[]>([]);
 
   const renderElement = useCallback(
     (props: RenderElementProps) => <RenderElement {...props} />,
@@ -39,6 +48,18 @@ export const DevSlate = ({ value, editor }: Props) => {
     (props: RenderLeafProps) => <RenderLeaf {...props} />,
     []
   );
+
+  useLayoutEffect(() => {
+    const operations = devtoolsOperations.current;
+
+    for (const operation of devEditor.operations) {
+      if (operation.type === "set_selection") {
+        continue;
+      }
+      operations.push(operation);
+    }
+    devtoolsOperations.current = operations;
+  }, [devValue]);
 
   // Normalize the editor
   useLayoutEffect(() => {

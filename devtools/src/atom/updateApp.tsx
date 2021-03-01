@@ -8,6 +8,12 @@ const updateAppAtomSet = atom(null, (get, set, by: "on" | "off") =>
   set(updateAppAtom, by)
 );
 
+export const useUpdateApp = () => {
+  const atomValue = useAtom(updateAppAtom);
+
+  return atomValue;
+};
+
 export const useUpdateAppRead = () => {
   const atomValue = useAtom(updateAppAtomRead);
 
