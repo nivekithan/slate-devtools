@@ -4,6 +4,7 @@ import { ReactEditor } from "slate-react";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useUpdateApp } from "../atom/updateApp";
 import { useUpdateDevtools } from "../atom/updateDevtools";
+import { addOperations } from "../util/addOperations";
 
 type Props = {
   editor: ReactEditor;
@@ -32,17 +33,8 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
       return;
     }
 
-    const operations = appOperations.current;
+    appOperations.current = addOperations(appOperations, editor.operations);
 
-    for (const operation of editor.operations) {
-      if (operation.type === "set_selection") {
-        continue;
-      }
-
-      operations.push(operation);
-    }
-
-    appOperations.current = operations;
   }, [value]);
 
   useLayoutEffect(() => {
@@ -51,17 +43,11 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
       return;
     }
 
-    const operations = devtoolsOperations.current;
-
-    for (const operation of devEditor.operations) {
-      if (operation.type === "set_selection") {
-        continue;
-      }
-
-      operations.push(operation);
-    }
-
-    devtoolsOperations.current = operations;
+    devtoolsOperations.current = addOperations(
+      devtoolsOperations,
+      editor.operations
+    );
+    
   }, [devValue]);
 
   useEffect(() => {
