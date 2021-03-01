@@ -5,6 +5,7 @@ import { useDevEditorRead } from "../atom/devEditor";
 import { useUpdateApp } from "../atom/updateApp";
 import { useUpdateDevtools } from "../atom/updateDevtools";
 import { addOperations } from "../util/addOperations";
+import { applyOperations } from "../util/applyOperations";
 
 type Props = {
   editor: ReactEditor;
@@ -34,7 +35,6 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
     }
 
     appOperations.current = addOperations(appOperations, editor.operations);
-
   }, [value]);
 
   useLayoutEffect(() => {
@@ -47,7 +47,6 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
       devtoolsOperations,
       devEditor.operations
     );
-    
   }, [devValue]);
 
   useEffect(() => {
@@ -80,15 +79,7 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
     e.preventDefault();
 
     isDevtoolsUpdating.current = true;
-
-    const operations = appOperations.current;
-
-    Editor.withoutNormalizing(devEditor, () => {
-      for (const operation of operations) {
-        devEditor.apply(operation);
-      }
-    });
-    appOperations.current = [];
+    appOperations.current = applyOperations(appOperations, devEditor);
   };
 
   const onUpdateAppClick = (
@@ -97,15 +88,7 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
     e.preventDefault();
 
     isAppUpdating.current = true;
-    const operations = devtoolsOperations.current;
-
-    Editor.withoutNormalizing(editor, () => {
-      for (const operation of operations) {
-        editor.apply(operation);
-      }
-    });
-
-    devtoolsOperations.current = [];
+    devtoolsOperations.current = applyOperations(devtoolsOperations, editor);
   };
 
   return (
