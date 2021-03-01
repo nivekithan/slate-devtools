@@ -24,7 +24,7 @@ export const PropertiesEditor = ({}: Props) => {
               <SingleProperty
                 keys={keys}
                 value={value}
-                key={`${node.devtools_id}_${keys}_${value}`}
+                key={`${node.devtools_id}_${keys}`}
               />
             );
           }

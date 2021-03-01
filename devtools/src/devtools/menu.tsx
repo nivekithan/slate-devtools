@@ -1,18 +1,70 @@
-import React from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
+import { Editor, Node, Operation } from "slate";
+import { ReactEditor } from "slate-react";
+import { useDevEditorRead } from "../atom/devEditor";
+import { useUpdateAppRead } from "../atom/updateApp";
+import {
+  useUpdateDevtools,
+  useUpdateDevToolsRead,
+} from "../atom/updateDevtools";
 
 type Props = {
-  devtools: "yes" | "no";
-  app: "yes" | "no";
-  onDevtoolsClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  onAppClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  editor: ReactEditor;
+  value: Node[];
 };
 
-export const Menu = ({ devtools, app, onDevtoolsClick, onAppClick }: Props) => {
+export const Menu = ({ editor, value }: Props) => {
+  const [updateDevtools, setUpdateDevtools] = useUpdateDevtools();
+  const [updateApp] = useUpdateAppRead();
+  const [devEditor] = useDevEditorRead();
+
+  const appOperations = useRef<Operation[]>([]);
+
+  useLayoutEffect(() => {
+    const operations = appOperations.current;
+
+    for (const operation of editor.operations) {
+      if (operation.type === "set_selection") {
+        continue;
+      }
+
+      operations.push(operation);
+    }
+
+    appOperations.current = operations;
+  }, [value]);
+
+  useEffect(() => {
+    const { current } = appOperations;
+
+    if (current.length !== 0) {
+      setUpdateDevtools("on");
+    } else {
+      setUpdateDevtools("off");
+    }
+  });
+
+  const onDevtoolsClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    const operations = appOperations.current;
+    Editor.withoutNormalizing(devEditor, () => {
+      for (const operation of operations) {
+        devEditor.apply(operation);
+      }
+    });
+    appOperations.current = [];
+    setUpdateDevtools("off");
+  };
+
   return (
     <div className="flex gap-x-5">
       <button
         className={`grid place-items-center p-2 rounded text-sm font-semibold ${
-          devtools === "yes" ? "bg-rose-500 hover:bg-rose-600" : "bg-gray-600"
+          updateDevtools === "on"
+            ? "bg-rose-500 hover:bg-rose-600"
+            : "bg-gray-600"
         }`}
         onClick={onDevtoolsClick}
       >
@@ -20,9 +72,8 @@ export const Menu = ({ devtools, app, onDevtoolsClick, onAppClick }: Props) => {
       </button>
       <button
         className={`grid place-items-center p-2 rounded text-sm font-semibold ${
-          app === "yes" ? "bg-red-500 hover:bg-red-600" : "bg-gray-600"
+          updateApp === "on" ? "bg-red-500 hover:bg-red-600" : "bg-gray-600"
         }`}
-        onClick={onAppClick}
       >
         Update app
       </button>

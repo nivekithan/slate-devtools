@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Node, Transforms } from "slate";
 import { ReactEditor } from "slate-react";
 import { useDevEditorRead } from "../atom/devEditor";
@@ -12,7 +12,7 @@ type Props = {
 
 export const SingleProperty = ({ keys, value }: Props) => {
   const [devEditor] = useDevEditorRead();
-  const [{ path }] = useSelectedPropertiesRead()
+  const [{ path }] = useSelectedPropertiesRead();
   const [valueInputValue, setValueInputValue] = useState<string>(value);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const validValue = useRef<string>(value);
@@ -53,6 +53,10 @@ export const SingleProperty = ({ keys, value }: Props) => {
     Transforms.unsetNodes(devEditor, keys, { at: path });
   };
 
+  useLayoutEffect(() => {
+    setValueInputValue(value);
+  }, [value]);
+
   return (
     <div className="flex gap-x-3">
       <div className="w-100px truncate text-blue-500">{keys}</div>
@@ -67,7 +71,7 @@ export const SingleProperty = ({ keys, value }: Props) => {
             spanProps={{ onClick: onSpanClick }}
           />
         ) : (
-          <span>{value}</span>
+          <span>{valueInputValue}</span>
         )}
       </div>
       {allowEdit && keys !== "text" ? (

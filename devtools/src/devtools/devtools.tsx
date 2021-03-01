@@ -1,39 +1,37 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, {
+  useState,
+  useMemo,
+  useEffect,
+  useRef,
+  useLayoutEffect,
+} from "react";
 import { createPortal } from "react-dom";
-import { Node, createEditor } from "slate";
+import { Node, createEditor, Operation, Range } from "slate";
 import { ReactEditor, withReact } from "slate-react";
 
 import { withDepth, withId, withIndex } from "../plugins";
 import { DevSlate } from "./devSlate";
 import { PropertiesEditor } from "./propertiesEditor";
 import { Menu } from "./menu";
+import { useUpdateAppSet } from "../atom/updateApp";
+import { useUpdateDevToolsSet } from "../atom/updateDevtools";
 
 type DevtoolsProps = {
   value: Node[]; // NodeList value to show in devtools
   editor: ReactEditor; // Corresponding editor
 };
 
-export const Devtools = ({ value, editor }: DevtoolsProps) => {
-  const [firstButtonState, setFirstButtonState] = useState<"yes" | "no">("no");
-  const [secondButtonState, setSecondButtonState] = useState<"yes" | "no">(
-    "no"
-  );
+export const Devtools = ({ value, editor, }: DevtoolsProps) => {
 
-  useEffect(() => {
-    setTimeout(() => {
-      setFirstButtonState("yes");
-      setSecondButtonState("yes");
-    }, 2000);
-  });
 
   return createPortal(
     <div className=" bg-hex-282a36 text-white rounded flex flex-col p-5 ">
       <div>
-        {/* <Menu devtools={firstButtonState} app={secondButtonState} /> */}
+        <Menu value={value} editor={editor} />
       </div>
       <div className="h-400px min-h-100px  p-4 flex gap-x-100px ">
         <div>
-          <DevSlate value={value} editor={editor} key="devtools_editor" />
+          <DevSlate value={value} editor={editor} key="devtools_editor"  />
         </div>
         <div>
           <PropertiesEditor />

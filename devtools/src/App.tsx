@@ -1,6 +1,13 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { createEditor, Node } from "slate";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { createEditor, Node, Operation } from "slate";
 import { Editable, withReact, Slate } from "slate-react";
+import useDeepCompareEffect from "use-deep-compare-effect";
 import { SlateEditorErrorBoundry } from "./components/ErrorBoundry";
 import { Devtools } from "./devtools";
 
@@ -12,17 +19,15 @@ export const App = () => {
     <div>
       <SlateEditorErrorBoundry>
         <div>
-          <Slate editor={editor} value={slateValue}  onChange={setSlateValue}>
+          <Slate editor={editor} value={slateValue} onChange={setSlateValue}>
             <Editable spellCheck={false} />
           </Slate>
         </div>
       </SlateEditorErrorBoundry>
-      <Devtools value={slateValue} editor={editor} /> 
+      <Devtools value={slateValue} editor={editor} />
     </div>
   );
 };
-
-  
 
 const initalValue = [
   {

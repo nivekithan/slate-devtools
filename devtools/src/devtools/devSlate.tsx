@@ -4,9 +4,10 @@ import React, {
   useEffect,
   useCallback,
   useLayoutEffect,
+  useRef,
 } from "react";
 import { withDepth, withId, withIndex } from "../plugins";
-import { createEditor, Node, Editor } from "slate";
+import { createEditor, Node, Editor, Transforms, Range } from "slate";
 import {
   withReact,
   Slate,
@@ -28,11 +29,6 @@ type Props = {
 export const DevSlate = ({ value, editor }: Props) => {
   const [devEditor] = useDevEditorRead();
   const [devValue, setDevValue] = useState<Node[]>(value);
-
-  useLayoutEffect(() => {
-    const { operations } = editor;
-    operations.forEach(devEditor.apply);
-  }, [value]);
 
   const renderElement = useCallback(
     (props: RenderElementProps) => <RenderElement {...props} />,
