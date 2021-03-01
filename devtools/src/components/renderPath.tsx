@@ -3,12 +3,12 @@ import React from "react";
 
 export const RenderPath = ({ path }: { path: Path }) => {
   return (
-    <div>
-      <span>{"["}</span>
+    <div className="flex gap-x-1 items-center">
+      <div className="text-blue-300">{"["}</div>
       {path.map((value, i) => {
-        return <span key={`${value}_${i}`}>{`${value},`}</span>;
+        return <div key={`${value}_${i}`}>{`${value},`}</div>;
       })}
-      <span>{"]"}</span>
+      <div className="text-blue-300">{"]"}</div>
     </div>
   );
 };
