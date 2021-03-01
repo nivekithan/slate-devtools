@@ -4,6 +4,7 @@ import { ReactEditor } from "slate-react";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useUpdateApp } from "../atom/updateApp";
 import { useUpdateDevtools } from "../atom/updateDevtools";
+import { useCallOnce } from "../hooks/useCallOnce";
 import { addOperations } from "../util/addOperations";
 import { applyOperations } from "../util/applyOperations";
 
@@ -12,8 +13,6 @@ type Props = {
   value: Node[];
   devValue: Node[];
 };
-
-let firstTime = true;
 
 export const UpdateButtons = ({ editor, value, devValue }: Props) => {
   const [updateDevtools, setUpdateDevtools] = useUpdateDevtools();
@@ -27,6 +26,10 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
   const devtoolsOperations = useRef<Operation[]>([]);
 
   const updateAppRef = useRef<HTMLButtonElement | null>(null);
+
+  const clickUpdateAppButtonOnce = useCallOnce(() => {
+    updateAppRef.current?.click();
+  });
 
   useLayoutEffect(() => {
     if (isAppUpdating.current) {
@@ -64,10 +67,7 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
 
     if (current.length !== 0) {
       setUpdateApp("on");
-      if (firstTime) {
-        updateAppRef.current?.click();
-        firstTime = false;
-      }
+      clickUpdateAppButtonOnce();
     } else {
       setUpdateApp("off");
     }
