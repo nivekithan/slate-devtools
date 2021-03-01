@@ -45,7 +45,7 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
 
     devtoolsOperations.current = addOperations(
       devtoolsOperations,
-      editor.operations
+      devEditor.operations
     );
     
   }, [devValue]);
