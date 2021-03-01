@@ -15,6 +15,8 @@ type Props = {
   devValue: Node[];
 };
 
+let firstTime = true;
+
 export const Menu = ({ editor, value, devValue }: Props) => {
   const [updateDevtools, setUpdateDevtools] = useUpdateDevtools();
   const [updateApp, setUpdateApp] = useUpdateApp();
@@ -25,6 +27,8 @@ export const Menu = ({ editor, value, devValue }: Props) => {
 
   const appOperations = useRef<Operation[]>([]);
   const devtoolsOperations = useRef<Operation[]>([]);
+
+  const updateAppRef = useRef<HTMLButtonElement | null>(null);
 
   useLayoutEffect(() => {
     if (isAppUpdating.current) {
@@ -80,6 +84,10 @@ export const Menu = ({ editor, value, devValue }: Props) => {
 
     if (current.length !== 0) {
       setUpdateApp("on");
+      if (firstTime) {
+        updateAppRef.current?.click();
+        firstTime = false;
+      }
     } else {
       setUpdateApp("off");
     }
@@ -89,8 +97,11 @@ export const Menu = ({ editor, value, devValue }: Props) => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
+
     isDevtoolsUpdating.current = true;
+
     const operations = appOperations.current;
+
     Editor.withoutNormalizing(devEditor, () => {
       for (const operation of operations) {
         devEditor.apply(operation);
@@ -133,6 +144,7 @@ export const Menu = ({ editor, value, devValue }: Props) => {
           updateApp === "on" ? "bg-red-500 hover:bg-red-600" : "bg-gray-600"
         }`}
         onClick={onUpdateAppClick}
+        ref={updateAppRef}
       >
         Update app
       </button>

@@ -24,7 +24,6 @@ type DevtoolsProps = {
 
 export const Devtools = ({ value, editor }: DevtoolsProps) => {
   const [devValue, setDevValue] = useState<Node[]>(value);
- 
 
   return createPortal(
     <div className=" bg-hex-282a36 text-white rounded flex flex-col p-5 ">
@@ -33,7 +32,13 @@ export const Devtools = ({ value, editor }: DevtoolsProps) => {
       </div>
       <div className="h-400px min-h-100px  p-4 flex gap-x-100px ">
         <div>
-          <DevSlate value={value} editor={editor} key="devtools_editor" devValue={devValue} setDevValue={setDevValue} />
+          <DevSlate
+            value={value}
+            editor={editor}
+            key="devtools_editor"
+            devValue={devValue}
+            setDevValue={setDevValue}
+          />
         </div>
         <div>
           <PropertiesEditor />
