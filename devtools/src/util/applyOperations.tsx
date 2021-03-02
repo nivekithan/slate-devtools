@@ -2,13 +2,13 @@ import { Editor, Operation } from "slate";
 import { ReactEditor } from "slate-react";
 
 export const applyOperations = (
-  ref: { current: Operation[] },
+  operations :  Operation[] ,
   editor: ReactEditor
 ) => {
-  const { current } = ref;
+  
 
   Editor.withoutNormalizing(editor, () => {
-    for (const opertion of current) {
+    for (const opertion of operations) {
       editor.apply(opertion);
     }
   });

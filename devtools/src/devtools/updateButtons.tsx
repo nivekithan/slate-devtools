@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef } from "react";
-import { Editor, Node, Operation } from "slate";
+import { Editor, Node, Operation, Transforms } from "slate";
 import { ReactEditor } from "slate-react";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useUpdateApp } from "../atom/updateApp";
@@ -7,6 +7,7 @@ import { useUpdateDevtools } from "../atom/updateDevtools";
 import { useCallOnce } from "../hooks/useCallOnce";
 import { addOperations } from "../util/addOperations";
 import { applyOperations } from "../util/applyOperations";
+import { inverseOperations } from "../util/inverseOperations";
 
 type Props = {
   editor: ReactEditor;
@@ -79,7 +80,19 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
     e.preventDefault();
 
     isDevtoolsUpdating.current = true;
-    appOperations.current = applyOperations(appOperations, devEditor);
+    const operations: Operation[] = [];
+
+    if (updateApp === "on") {
+      for (const operation of inverseOperations(devtoolsOperations.current)) {
+        operations.push(operation);
+      }
+      devtoolsOperations.current = [];
+    }
+
+    appOperations.current = applyOperations(
+      operations.concat(appOperations.current),
+      devEditor
+    );
   };
 
   const onUpdateAppClick = (
@@ -88,7 +101,19 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
     e.preventDefault();
 
     isAppUpdating.current = true;
-    devtoolsOperations.current = applyOperations(devtoolsOperations, editor);
+    const operations: Operation[] = [];
+
+    if (updateDevtools === "on") {
+      for (const operation of inverseOperations(appOperations.current)) {
+        operations.push(operation);
+      }
+      appOperations.current = [];
+    }
+
+    devtoolsOperations.current = applyOperations(
+      operations.concat(devtoolsOperations.current),
+      editor
+    );
   };
 
   return (
