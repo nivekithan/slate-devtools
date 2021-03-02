@@ -1,15 +1,16 @@
 import { ReactEditor, RenderElementProps, useSlate } from "slate-react";
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, useEffect } from "react";
 import { useToggleOnClick } from "../hooks/useToggleOnClick";
 import { useCopyOnClick } from "../hooks/useCopyOnClick";
 
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useSelectedProperties } from "../atom/selectedProperties";
+import { useSearchedProperties } from "../atom/searchedPath";
+import { isEmptyProperties } from "../util/isEmptyProperties";
 
-export const RenderElement = ({
-  children,
-  element,
-}: RenderElementProps) => {
+import { isSubset } from "../util/isSubset";
+
+export const RenderElement = ({ children, element }: RenderElementProps) => {
   let { type, devtools_depth: depth, devtools_id: id } = element;
   if (typeof type !== "string") {
     type = "normal";
@@ -19,10 +20,12 @@ export const RenderElement = ({
   const path = ReactEditor.findPath(editor, element);
 
   const [selectedProperties, setSelectedProperties] = useSelectedProperties();
+  const [searchedProperties, setSearchedProperties] = useSearchedProperties();
 
   const [
     shouldShowChildren,
     onClickToggle,
+    setShouldShowChildren,
   ] = useToggleOnClick<HTMLButtonElement>(false);
 
   const depthStyle: CSSProperties = {
@@ -50,6 +53,25 @@ export const RenderElement = ({
       setSelectedProperties({ node: element, path: path });
     }
   }, [selectedProperties, id, element, path]);
+
+  useEffect(() => {
+    if (!isEmptyProperties(searchedProperties)) {
+      const {
+        node: { devtools_id: searchedId },
+        path: searchedPath,
+      } = searchedProperties;
+
+      if (isSubset(searchedPath, path)) {
+        setShouldShowChildren(true);
+
+        if (searchedId === id) {
+          setSelectedProperties({ node: element, path: path });
+          setSearchedProperties({ node: { children: [] }, path: [] });
+          setShouldShowChildren(false);
+        }
+      }
+    }
+  }, [searchedProperties]);
 
   return (
     <div style={{ ...depthStyle }} contentEditable={false}>

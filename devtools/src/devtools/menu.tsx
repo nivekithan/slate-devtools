@@ -1,8 +1,9 @@
 import { computeStyles } from "@popperjs/core";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Editor, Node, Operation } from "slate";
+import { Editor, Node, Operation, Path } from "slate";
 import { ReactEditor } from "slate-react";
 import { useDevEditorRead } from "../atom/devEditor";
+import { useSearchedPropertiesSet } from "../atom/searchedPath";
 import { useSelectedPropertiesRead } from "../atom/selectedProperties";
 import { useUpdateApp, useUpdateAppRead } from "../atom/updateApp";
 import { useUpdateDevtools } from "../atom/updateDevtools";
@@ -18,6 +19,8 @@ type Props = {
 
 export const Menu = ({ editor, value, devValue }: Props) => {
   const [{ path }] = useSelectedPropertiesRead();
+  const [devEditor] = useDevEditorRead();
+  const [, setSearchedProperties] = useSearchedPropertiesSet();
 
   const onSearchSubmit = (
     e: React.FormEvent<HTMLFormElement>,
@@ -25,8 +28,14 @@ export const Menu = ({ editor, value, devValue }: Props) => {
   ) => {
     e.preventDefault();
     try {
-      const parsedValue = JSON.parse(value);
-      console.log(parsedValue);
+      const path = JSON.parse(value);
+      if (!Path.isPath(path)) return false;
+      try {
+        const searchedNode = Node.get(devEditor, path);
+        setSearchedProperties({ node: searchedNode, path: path });
+      } catch (err) {
+        setSearchedProperties({ node: { children: [] }, path: [] });
+      }
       return true;
     } catch (err) {
       return false;
@@ -40,7 +49,7 @@ export const Menu = ({ editor, value, devValue }: Props) => {
         <div className="font-semibold text-green-500">Selected Path :</div>
         <RenderPath path={path} />
       </div>
-      <Search startValue={'"[  ]"'} onSubmit={onSearchSubmit} />
+      <Search startValue={`[  ]`} onSubmit={onSearchSubmit} />
     </div>
   );
 };

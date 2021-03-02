@@ -4,7 +4,11 @@ import { useState } from "react";
 
 export const useToggleOnClick = <T extends HTMLElement>(
   defaultState: boolean
-): [boolean, (e: React.MouseEvent<T, MouseEvent>) => void] => {
+): [
+  boolean,
+  (e: React.MouseEvent<T, MouseEvent>) => void,
+  React.Dispatch<React.SetStateAction<boolean>>
+] => {
   const [isState, setIsState] = useState<boolean>(defaultState);
 
   const onClick = (e: React.MouseEvent<T, MouseEvent>) => {
@@ -12,5 +16,5 @@ export const useToggleOnClick = <T extends HTMLElement>(
     setIsState((s) => !s);
   };
 
-  return [isState, onClick];
+  return [isState, onClick, setIsState];
 };

@@ -1,15 +1,22 @@
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, useEffect } from "react";
 import { ReactEditor, RenderLeafProps, useEditor, useSlate } from "slate-react";
 import useDeepCompareEffect from "use-deep-compare-effect";
+import {
+  useSearchedProperties,
+  useSearchedPropertiesSet,
+} from "../atom/searchedPath";
 import { useSelectedProperties } from "../atom/selectedProperties";
 import { useCopyOnClick } from "../hooks/useCopyOnClick";
 import { useToggleOnClick } from "../hooks/useToggleOnClick";
+import { isEmptyProperties } from "../util/isEmptyProperties";
+import { isSubset } from "../util/isSubset";
 
 export const RenderLeaf = ({ text }: RenderLeafProps) => {
   const { devtools_depth: depth, devtools_id: id } = text;
   const editor = useSlate();
 
   const [selectedProperties, setSelectedProperties] = useSelectedProperties();
+  const [searchedProperties, setSearchedProperties] = useSearchedProperties();
 
   const path = ReactEditor.findPath(editor, text);
 
@@ -19,7 +26,11 @@ export const RenderLeaf = ({ text }: RenderLeafProps) => {
     };
   };
 
-  const [shouldShowText, onClick] = useToggleOnClick<HTMLButtonElement>(false);
+  const [
+    shouldShowText,
+    onClick,
+    setShouldShowChildren,
+  ] = useToggleOnClick<HTMLButtonElement>(false);
 
   const copyOnClick = useCopyOnClick(
     JSON.stringify(ReactEditor.findPath(editor, text))
@@ -44,6 +55,25 @@ export const RenderLeaf = ({ text }: RenderLeafProps) => {
       setSelectedProperties({ node: text, path: path });
     }
   }, [path, text, selectedProperties, id]);
+
+  useEffect(() => {
+    if (!isEmptyProperties(searchedProperties)) {
+      const {
+        node: { devtools_id: searchedId },
+        path: searchedPath,
+      } = searchedProperties;
+
+      if (isSubset(searchedPath, path)) {
+        setShouldShowChildren(true);
+
+        if (searchedId === id) {
+          setSelectedProperties({ node: text, path: path });
+          setSearchedProperties({ node: { children: [] }, path: [] });
+          setShouldShowChildren(false);
+        }
+      }
+    }
+  });
 
   return (
     <div
