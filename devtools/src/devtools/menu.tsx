@@ -7,6 +7,7 @@ import { useSelectedPropertiesRead } from "../atom/selectedProperties";
 import { useUpdateApp, useUpdateAppRead } from "../atom/updateApp";
 import { useUpdateDevtools } from "../atom/updateDevtools";
 import { RenderPath } from "../components/renderPath";
+import { Search } from "../components/search";
 import { UpdateButtons } from "./updateButtons";
 
 type Props = {
@@ -18,6 +19,20 @@ type Props = {
 export const Menu = ({ editor, value, devValue }: Props) => {
   const [{ path }] = useSelectedPropertiesRead();
 
+  const onSearchSubmit = (
+    e: React.FormEvent<HTMLFormElement>,
+    value: string
+  ) => {
+    e.preventDefault();
+    try {
+      const parsedValue = JSON.parse(value);
+      console.log(parsedValue);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  };
+
   return (
     <div className="flex items-center gap-x-21">
       <UpdateButtons editor={editor} value={value} devValue={devValue} />
@@ -25,6 +40,7 @@ export const Menu = ({ editor, value, devValue }: Props) => {
         <div className="font-semibold text-green-500">Selected Path :</div>
         <RenderPath path={path} />
       </div>
+      <Search startValue={'"[  ]"'} onSubmit={onSearchSubmit} />
     </div>
   );
 };
