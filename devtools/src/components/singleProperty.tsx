@@ -21,14 +21,19 @@ export const SingleProperty = ({ keys, value }: Props) => {
 
   const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     try {
-      const parsedValue = JSON.parse(valueInputValue);
-      if (keys === "text") {
-        Transforms.insertText(devEditor, parsedValue, { at: path });
+      if (valueInputValue !== validValue.current) {
+        const parsedValue = JSON.parse(valueInputValue);
+
+        if (keys === "text") {
+          Transforms.insertText(devEditor, parsedValue, { at: path });
+        } else {
+          Transforms.setNodes(devEditor, { [keys]: parsedValue }, { at: path });
+        }
+        setIsEditing(false);
+        validValue.current = valueInputValue;
       } else {
-        Transforms.setNodes(devEditor, { [keys]: parsedValue }, { at: path });
+        setIsEditing(false)
       }
-      setIsEditing(false);
-      validValue.current = valueInputValue;
     } catch (err) {
       e.preventDefault();
       setValueInputValue(validValue.current);
