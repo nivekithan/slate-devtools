@@ -8,14 +8,18 @@ export const withHistory = <T extends Editor>(editor: T) => {
   e.history = [];
   e.shouldSave = true;
   e.isNormalizing = false;
+  e.shouldNormalize = true;
 
   e.normalizeNode = (entry) => {
-    e.isNormalizing = true;
-    normalizeNode(entry);
-    e.isNormalizing = false;
+    if (e.shouldNormalize) {
+      e.isNormalizing = true;
+      normalizeNode(entry);
+      e.isNormalizing = false;
+    }
   };
 
-  e.apply = (op) => {
+  e.apply = (op: Operation, shouldNormalize: boolean = true) => {
+    e.shouldNormalize = shouldNormalize;
     if (op.type === "set_selection") {
       return apply(op);
     }

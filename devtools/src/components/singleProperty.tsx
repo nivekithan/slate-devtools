@@ -32,7 +32,7 @@ export const SingleProperty = ({ keys, value }: Props) => {
         setIsEditing(false);
         validValue.current = valueInputValue;
       } else {
-        setIsEditing(false)
+        setIsEditing(false);
       }
     } catch (err) {
       e.preventDefault();

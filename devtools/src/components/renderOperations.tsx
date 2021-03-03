@@ -17,7 +17,6 @@ export const RenderOperations = ({ op, from, setFrom, to }: Props) => {
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    console.log(from, to);
     HistoryEditor.apply(
       devEditor,
       from || [

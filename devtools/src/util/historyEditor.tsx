@@ -1,5 +1,4 @@
 import { Editor, Operation } from "slate";
-import { ReactEditor } from "slate-react";
 
 export type Batch = {
   normalizing: boolean;
@@ -11,6 +10,8 @@ export type HistoryEditor = {
   history: Batch[];
   isNormalizing: boolean;
   shouldSave: boolean;
+  shouldNormalize: boolean;
+  apply: (op: Operation, shouldNormalize: boolean) => void;
 };
 
 type Location = [number, number];
@@ -20,6 +21,8 @@ type HistoryOptions = {
   to: Location;
   mode?: "top-bottom" | "bottom-top" | "auto";
   match?: (loc: Location, op: Operation) => boolean;
+  considerFrom?: boolean;
+  considerTo?: boolean;
 };
 
 export const HistoryEditor = {
@@ -34,6 +37,8 @@ export const HistoryEditor = {
     const {
       from: [fromBatch, fromOp],
       to: [toBatch, toOp],
+      considerFrom = true,
+      considerTo = false,
     } = options;
 
     let { mode = "auto", match = () => true } = options;
@@ -75,11 +80,11 @@ export const HistoryEditor = {
             }
 
             if (topToBottom) {
-              if (j < fromOp) {
+              if (considerFrom ? j < fromOp : j <= fromOp) {
                 continue;
               }
             } else {
-              if (j > fromOp) {
+              if (considerFrom ? j > fromOp : j >= fromOp) {
                 continue;
               }
             }
@@ -97,11 +102,11 @@ export const HistoryEditor = {
             }
 
             if (topToBottom) {
-              if (j >= toOp) {
+              if (considerTo ? j > toOp : j >= toOp) {
                 break;
               }
             } else {
-              if (j <= toOp) {
+              if (considerTo ? j < toOp : j <= toOp) {
                 break;
               }
             }
@@ -175,8 +180,10 @@ export const HistoryEditor = {
             from,
             to,
             mode: "bottom-top",
+            considerFrom: true,
+            considerTo: false,
           })) {
-            editor.apply(operation);
+            editor.apply(operation, false);
           }
         });
       });
@@ -187,8 +194,10 @@ export const HistoryEditor = {
             from,
             to,
             mode: "top-bottom",
+            considerFrom: false,
+            considerTo: true,
           })) {
-            editor.apply(operations);
+            editor.apply(operations, false);
           }
         });
       });
