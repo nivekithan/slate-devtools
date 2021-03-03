@@ -43,33 +43,14 @@ export const Menu = ({ editor, value, devValue }: Props) => {
     }
   };
 
-  // const onCheckClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-  //   e.preventDefault();
-  //   console.log(devEditor.history);
-  //   for (const operation of HistoryEditor.operations(devEditor, {
-  //     from: [2, 1],
-  //     to: [0, 4],
-  //     mode: "auto",
-  //   })) {
-  //     console.count();
-  //     console.log(operation);
-  //   }
-  //   console.countReset();
-  // };
-
   return (
     <div className="flex items-center gap-x-21">
       <UpdateButtons editor={editor} value={value} devValue={devValue} />
       <div className="flex gap-x-3">
-        <div className="font-semibold text-green-500">Selected Path :</div> 
+        <div className="font-semibold text-green-500">Selected Path :</div>
         <RenderPath path={path} />
       </div>
       <Search startValue={`[  ]`} onSubmit={onSearchSubmit} />
-      {/* <div>
-        <button className="p-2 bg-red-900 rounded" onClick={onCheckClick}>
-          Check
-        </button> */}
-      {/* </div> */}
     </div>
   );
 };

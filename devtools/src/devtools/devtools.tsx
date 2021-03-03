@@ -16,6 +16,7 @@ import { Menu } from "./menu";
 import { useUpdateAppSet } from "../atom/updateApp";
 import { useUpdateDevToolsSet } from "../atom/updateDevtools";
 import { useDevEditorRead } from "../atom/devEditor";
+import { RenderHistory } from "./renderHistory";
 
 type DevtoolsProps = {
   value: Node[]; // NodeList value to show in devtools
@@ -42,6 +43,9 @@ export const Devtools = ({ value, editor }: DevtoolsProps) => {
         </div>
         <div>
           <PropertiesEditor />
+        </div>
+        <div className="overflow-y-auto rounded w-400px bg-hex-272535 p-5">
+          <RenderHistory />
         </div>
       </div>
     </div>,

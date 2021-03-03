@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { Editor, Operation, Path } from "slate";
 import { Batch, HistoryEditor } from "../util/historyEditor";
 
@@ -45,6 +46,7 @@ export const withHistory = <T extends Editor>(editor: T) => {
       const batch: Batch = {
         normalizing: isNormalizing,
         data: [op],
+        id: nanoid(),
       };
 
       history.push(batch);

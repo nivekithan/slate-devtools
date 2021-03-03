@@ -1,9 +1,10 @@
-import { Operation } from "slate";
+import { Editor, Operation } from "slate";
 import { ReactEditor } from "slate-react";
 
 export type Batch = {
   normalizing: boolean;
   data: Operation[];
+  id: string;
 };
 
 export type HistoryEditor = {
@@ -134,5 +135,63 @@ export const HistoryEditor = {
     }
   },
 
+  *inverseOperations(editor: HistoryEditor, options: HistoryOptions) {
+    for (const operation of this.operations(editor, options)) {
+      yield Operation.inverse(operation);
+    }
+  },
 
+  apply(
+    editor: HistoryEditor & Editor,
+    from: [number, number],
+    to: [number, number]
+  ) {
+    const { history } = editor;
+    const [fromBatch, fromOp] = from;
+    const [toBatch, toOp] = to;
+
+    if (
+      !history[fromBatch] ||
+      !history[fromBatch].data[fromOp] ||
+      !history[toBatch] ||
+      !history[toBatch].data[toOp]
+    ) {
+      throw new Error(
+        "Either from or to is not valid" +
+          JSON.stringify({
+            from: [fromBatch, fromOp],
+            to: [toBatch, toOp],
+          })
+      );
+    }
+
+    const inverse =
+      fromBatch > toBatch || (fromBatch === toBatch && fromOp > toOp);
+
+    if (inverse) {
+      this.withoutSave(editor, () => {
+        Editor.withoutNormalizing(editor, () => {
+          for (const operation of this.inverseOperations(editor, {
+            from,
+            to,
+            mode: "bottom-top",
+          })) {
+            editor.apply(operation);
+          }
+        });
+      });
+    } else {
+      this.withoutSave(editor, () => {
+        Editor.withoutNormalizing(editor, () => {
+          for (const operations of this.operations(editor, {
+            from,
+            to,
+            mode: "top-bottom",
+          })) {
+            editor.apply(operations);
+          }
+        });
+      });
+    }
+  },
 };
