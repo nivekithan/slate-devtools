@@ -40,8 +40,8 @@ export const ScriptEditor = ({ module, editor }: Props) => {
         />
         <input
           type="submit"
-          className="p-2 bg-blue-500 rounded m-3 self-start text-sm cursor-pointer "
-          value="submit"
+          className="px-3 py-2 bg-blue-500 rounded-lg m-3 self-start text-sm cursor-pointer "
+          value="Run"
         />
       </form>
       <div className="text-red-500 text-xs px-3 py-1">
