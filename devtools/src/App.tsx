@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { createEditor, Node, Operation } from "slate";
+import { createEditor, Node, Operation, Transforms } from "slate";
 import { Editable, withReact, Slate } from "slate-react";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { SlateEditorErrorBoundry } from "./components/ErrorBoundry";
@@ -24,7 +24,7 @@ export const App = () => {
           </Slate>
         </div>
       </SlateEditorErrorBoundry>
-      <Devtools value={slateValue} editor={editor} />
+      <Devtools value={slateValue} editor={editor} module={{Node, Operation, Transforms}} />
     </div>
   );
 };

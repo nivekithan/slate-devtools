@@ -6,24 +6,23 @@ import React, {
   useLayoutEffect,
 } from "react";
 import { createPortal } from "react-dom";
-import { Node, createEditor, Operation, Range } from "slate";
-import { ReactEditor, withReact } from "slate-react";
-
-import { withDepth, withId, withIndex } from "../plugins";
+import { Node } from "slate";
+import { ReactEditor } from "slate-react";
 import { DevSlate } from "./devSlate";
 import { PropertiesEditor } from "./propertiesEditor";
 import { Menu } from "./menu";
-import { useUpdateAppSet } from "../atom/updateApp";
-import { useUpdateDevToolsSet } from "../atom/updateDevtools";
-import { useDevEditorRead } from "../atom/devEditor";
 import { RenderHistory } from "./renderHistory";
+import { ScriptEditor } from "./scriptEditor";
 
 type DevtoolsProps = {
   value: Node[]; // NodeList value to show in devtools
   editor: ReactEditor; // Corresponding editor
+  module ?: {
+    [index : string] : unknown
+  }
 };
 
-export const Devtools = ({ value, editor }: DevtoolsProps) => {
+export const Devtools = ({ value, editor, module={} }: DevtoolsProps) => {
   const [devValue, setDevValue] = useState<Node[]>(value);
 
   return createPortal(
@@ -47,6 +46,9 @@ export const Devtools = ({ value, editor }: DevtoolsProps) => {
         <div className="overflow-y-auto rounded w-400px bg-hex-272535 p-5">
           <RenderHistory />
         </div>
+      </div>
+      <div className="flex-end">
+        <ScriptEditor module={module} editor={editor} />
       </div>
     </div>,
     document.body
