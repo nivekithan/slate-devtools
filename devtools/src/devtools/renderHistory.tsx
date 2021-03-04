@@ -8,7 +8,6 @@ export const RenderHistory = () => {
 
   const { history } = devEditor;
 
-  const [from, setFrom] = useState<[number, number] | undefined>(undefined);
 
   if (history.length === 0) {
     return <div></div>;
@@ -21,8 +20,6 @@ export const RenderHistory = () => {
           <RenderBatch
             key={batch.id}
             batch={batch}
-            from={from}
-            setFrom={setFrom}
             num={i}
           />
         );

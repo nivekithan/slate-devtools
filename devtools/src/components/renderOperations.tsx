@@ -7,26 +7,29 @@ import { RenderFullOperation } from "./operations/renderFullOperation";
 
 type Props = {
   op: Operation;
-  from: [number, number] | undefined;
-  setFrom: (value: [number, number]) => void;
   to: [number, number];
 };
 
-export const RenderOperations = ({ op, from, setFrom, to }: Props) => {
+export const RenderOperations = ({ op, to }: Props) => {
   const [devEditor] = useDevEditorRead();
   const { history } = devEditor;
   const { type, path } = op;
-
   const [showFullOperation, onClickShowOperation] = useToggleOnClick(false);
 
-  const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
     HistoryEditor.apply(
       devEditor,
-      from || [history.length - 1, history[history.length - 1].data.length - 1],
+      devEditor.from || [
+        history.length - 1,
+        history[history.length - 1].data.length - 1,
+      ],
       to
     );
-    setFrom(to);
+    console.log(devEditor.from)
+    devEditor.from = to;
+    console.log(devEditor.from)
+
   };
 
   return (
@@ -36,12 +39,12 @@ export const RenderOperations = ({ op, from, setFrom, to }: Props) => {
         onClick={onClickShowOperation}
       >
         <div>{type.toUpperCase()}</div>
-        <button
+        <a
           className="border-1 px-2 rounded border-indigo-500 bg-indigo-700 "
           onClick={onClick}
         >
           Here
-        </button>
+        </a>
         <div>{JSON.stringify(path)}</div>
       </button>
       {showFullOperation ? (

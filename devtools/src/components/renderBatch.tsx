@@ -6,12 +6,10 @@ import { Location } from "slate";
 
 type Props = {
   batch: Batch;
-  from: [number, number] | undefined;
-  setFrom: (value: [number, number]) => void;
   num: number;
 };
 
-export const RenderBatch = ({ batch, from, setFrom, num }: Props) => {
+export const RenderBatch = ({ batch, num }: Props) => {
   const [showOperations, onClick] = useToggleOnClick<HTMLButtonElement>(false);
 
   return (
@@ -31,8 +29,6 @@ export const RenderBatch = ({ batch, from, setFrom, num }: Props) => {
               <RenderOperations
                 op={op}
                 key={`${batch.id}_${i}`}
-                from={from}
-                setFrom={setFrom}
                 to={[num, i]}
               />
             );

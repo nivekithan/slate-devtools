@@ -7,11 +7,12 @@ export type Batch = {
 };
 
 export type HistoryEditor = {
-  history: Batch[];
+  history: Batch[] ;
   isNormalizing: boolean;
   shouldSave: boolean;
   shouldNormalize: boolean;
   apply: (op: Operation, shouldNormalize: boolean) => void;
+  from : [number, number] | undefined
 };
 
 type Location = [number, number];
@@ -201,6 +202,36 @@ export const HistoryEditor = {
           }
         });
       });
+    }
+  },
+
+  giveTill(editor: HistoryEditor, till: [number, number]): Batch[] {
+    const { history } = editor;
+
+    if (!history[till[0]] || !history[till[0]].data[till[1]]) {
+      throw new Error("The till is not valid: " + JSON.stringify(till));
+    }
+
+    const sliceBatch = history.slice(0, till[0] + 1);
+    const lastBatch = sliceBatch[sliceBatch.length - 1];
+    const correctLastBatch = {
+      ...lastBatch,
+      data: lastBatch.data.slice(0, till[1] + 1),
+    };
+
+    sliceBatch.pop();
+    sliceBatch.push(correctLastBatch);
+
+    return sliceBatch;
+  },
+
+  isHistoryEditor(editor: any): editor is HistoryEditor {
+    const { history } = editor;
+
+    if (history) {
+      return true;
+    } else {
+      return false;
     }
   },
 };

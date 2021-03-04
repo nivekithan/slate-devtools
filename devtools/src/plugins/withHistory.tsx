@@ -9,6 +9,7 @@ export const withHistory = <T extends Editor>(editor: T) => {
   e.shouldSave = true;
   e.isNormalizing = false;
   e.shouldNormalize = true;
+  e.from = undefined;
 
   e.normalizeNode = (entry) => {
     if (e.shouldNormalize) {
@@ -24,11 +25,23 @@ export const withHistory = <T extends Editor>(editor: T) => {
       return apply(op);
     }
 
-    const { operations, history, isNormalizing, shouldSave } = e;
-
+    const { from, shouldSave } = e;
     if (!shouldSave) {
       return apply(op);
     }
+    const _lastBatch = e.history[e.history.length - 1] as Batch | undefined;
+    const _lastOp = _lastBatch && _lastBatch.data[_lastBatch.data.length - 1];
+
+    if (
+      !from ||
+      !_lastOp ||
+      (from[0] === _lastOp[0] && from[1] === _lastOp[1])
+    ) {
+    } else {
+      e.history = HistoryEditor.giveTill(e, from);
+    }
+
+    const { operations, history, isNormalizing } = e;
 
     const lastBatch = history[history.length - 1] as Batch | undefined;
     const lastOp = lastBatch && lastBatch.data[lastBatch.data.length - 1];
@@ -59,6 +72,10 @@ export const withHistory = <T extends Editor>(editor: T) => {
     if (history.length > 100) {
       history.shift();
     }
+    e.from = [
+      e.history.length - 1,
+      e.history[e.history.length - 1].data.length - 1,
+    ];
 
     apply(op);
   };

@@ -19,7 +19,6 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
   const [updateDevtools, setUpdateDevtools] = useUpdateDevtools();
   const [updateApp, setUpdateApp] = useUpdateApp();
   const [devEditor] = useDevEditorRead();
-
   const isAppUpdating = useRef<boolean>(false);
   const isDevtoolsUpdating = useRef<boolean>(false);
 
