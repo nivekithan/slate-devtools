@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { Node, Transforms } from "slate";
 import { ReactEditor } from "slate-react";
 import { DevSlate } from "./devSlate";
@@ -10,6 +10,8 @@ import { Resizable } from "re-resizable";
 import "../styles/scrollbar.css";
 import { useToggleOnClick } from "../hooks/useToggleOnClick";
 import ReactDOM from "react-dom";
+import "windi.css";
+
 type Props = {
   value: Node[]; // NodeList value to show in devtools
   editor: ReactEditor; // Corresponding editor
@@ -23,8 +25,12 @@ export const Devtools = ({ value, editor, module = {} }: Props) => {
   const [isOpen, onClickToggle] = useToggleOnClick<HTMLButtonElement>(false);
 
   return ReactDOM.createPortal(
-    isOpen ? (
-      <div className="fixed bg-hex-282a36 right-0 left-0 bottom-0 min-h-325px max-h-325px text-white flex flex-col p-2 gap-y-2 custom-scroll ">
+    <Fragment>
+      <div
+        className={`fixed bg-hex-282a36  min-h-325px max-h-325px text-white flex flex-col p-2 gap-y-2 custom-scroll ${
+          isOpen ? "right-0 left-0 bottom-0" : "-ml-10000px"
+        }`}
+      >
         <div className="flex justify-between">
           <Menu editor={editor} value={value} devValue={devValue} />
           <button
@@ -72,14 +78,15 @@ export const Devtools = ({ value, editor, module = {} }: Props) => {
           <ScriptEditor editor={editor} module={module} />
         </div>
       </div>
-    ) : (
-      <button
-        onClick={onClickToggle}
-        className="fixed left-0 bottom-0 ml-20px mb-20px bg-hex-282a36 w-50px h-50px text-white rounded-25px grid place-items-center text-xs"
-      >
-        Open
-      </button>
-    ),
+      {isOpen ? null : (
+        <button
+          onClick={onClickToggle}
+          className="fixed left-0 bottom-0 ml-20px mb-20px bg-hex-282a36 w-50px h-50px text-white rounded-25px grid place-items-center text-xs"
+        >
+          Open
+        </button>
+      )}
+    </Fragment>,
     document.body
   );
 };

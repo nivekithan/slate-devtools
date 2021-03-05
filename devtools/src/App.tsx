@@ -12,7 +12,7 @@ import { SlateEditorErrorBoundry } from "./components/ErrorBoundry";
 import { Devtools } from "./devtools";
 
 export const App = () => {
-  const [slateValue, setSlateValue] = useState<Node[]>(initalValue);
+  const [slateValue, setSlateValue] = useState<Node[]>(initialValue);
   const editor = useMemo(() => withReact(createEditor()), []);
 
   return (
@@ -28,35 +28,39 @@ export const App = () => {
     </div>
   );
 };
-
-const initalValue = [
+const initialValue = [
   {
-    type: "normal",
+    type: 'paragraph',
+    children: [
+      { text: 'This is editable ' },
+      { text: 'rich', bold: true },
+      { text: ' text, ' },
+      { text: 'much', italic: true },
+      { text: ' better than a ' },
+      { text: '<textarea>', code: true },
+      { text: '!' },
+    ],
+  },
+  {
+    type: 'paragraph',
     children: [
       {
-        type: "numbered-list",
-        children: [
-          {
-            text: "NUmbered list",
-          },
-        ],
+        text:
+          "Since it's rich text, you can do things like turn a selection of text ",
       },
+      { text: 'bold', bold: true },
       {
-        type: "bullet-list",
-        children: [
-          {
-            text: "bullet list",
-          },
-        ],
+        text:
+          ', or add a semantically rendered block quote in the middle of the page, like this:',
       },
     ],
   },
   {
-    type: "numbered-list",
-    children: [
-      {
-        text: "2 numberlist",
-      },
-    ],
+    type: 'block-quote',
+    children: [{ text: 'A wise quote.' }],
   },
-];
+  {
+    type: 'paragraph',
+    children: [{ text: 'Try it out for yourself!' }],
+  },
+]

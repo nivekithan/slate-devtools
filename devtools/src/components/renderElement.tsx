@@ -37,7 +37,7 @@ export const RenderElement = ({ children, element }: RenderElementProps) => {
   );
 
   const onClickUpdateSelectedProperties = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
     // console.log({element, path})
@@ -77,7 +77,9 @@ export const RenderElement = ({ children, element }: RenderElementProps) => {
     <div style={{ ...depthStyle }} contentEditable={false} className="text-sm">
       <div className="flex gap-x-3">
         <button onClick={onClickToggle}>+</button>
-        <div onClick={onClickUpdateSelectedProperties}>{`<${type} />`}</div>
+        <button
+          onClick={onClickUpdateSelectedProperties}
+        >{`<${type} />`}</button>
         <button onClick={onClickCopy} className="text-gray-500">
           C
         </button>

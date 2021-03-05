@@ -37,7 +37,7 @@ export const RenderLeaf = ({ text }: RenderLeafProps) => {
   );
 
   const onClickUpateSelectedProperties = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
     // console.log({ text, path });
@@ -84,7 +84,7 @@ export const RenderLeaf = ({ text }: RenderLeafProps) => {
       <div className="flex gap-x-3">
         <button onClick={onClick}>+</button>
 
-        <div onClick={onClickUpateSelectedProperties}>{`<Text />`}</div>
+        <button onClick={onClickUpateSelectedProperties}>{`<Text />`}</button>
         <button onClick={copyOnClick} className="text-gray-500">
           C
         </button>
