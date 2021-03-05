@@ -66,7 +66,6 @@ export const DevSlate = ({ value, editor, devValue, setDevValue }: Props) => {
     Editor.normalize(devEditor, { force: true });
   }, []);
 
-  // console.log(devValue);
 
   return (
     <SlateEditorErrorBoundry>
