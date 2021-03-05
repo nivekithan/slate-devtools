@@ -30,17 +30,17 @@ export const ScriptEditor = ({ module, editor }: Props) => {
   };
 
   return (
-    <div className="flex flex-col">
-      <form onSubmit={onSubmit} className="flex bg-hex-111219 rounded-3xl">
+    <div className="flex flex-col text-xs">
+      <form onSubmit={onSubmit} className="flex bg-hex-111219 rounded">
         <textarea
           value={codeValue}
           onChange={onChange}
-          className="w-full h-100px bg-hex-111219 p-5 rounded-3xl"
+          className="w-full  bg-hex-111219 py-2 px-1 rounded"
           placeholder="Javascript Code"
         />
         <input
           type="submit"
-          className="px-3 py-2 bg-blue-500 rounded-lg m-3 self-start text-sm cursor-pointer "
+          className="px-3 py-1 bg-blue-500 rounded-lg m-3 self-start  cursor-pointer "
           value="Run"
         />
       </form>

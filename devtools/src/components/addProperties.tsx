@@ -32,7 +32,7 @@ export const AddProperties = () => {
 
   return (
     <Fragment>
-      <div className="flex justify-end">
+      <div className="flex justify-end bg-hex-282a36 ">
         <button onClick={onPlusClick} ref={setReferenceElement}>
           +
         </button>

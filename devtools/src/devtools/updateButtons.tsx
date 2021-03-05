@@ -116,9 +116,9 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
   };
 
   return (
-    <div className="flex gap-x-5">
+    <div className="flex gap-x-5 text-xs">
       <button
-        className={`grid place-items-center p-2 rounded text-sm font-semibold ${
+        className={`grid place-items-center py-1 px-2 rounded  font-semibold ${
           updateDevtools === "on"
             ? "bg-rose-500 hover:bg-rose-600"
             : "bg-gray-600"
@@ -128,7 +128,7 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
         Update devtools
       </button>
       <button
-        className={`grid place-items-center p-2 rounded text-sm font-semibold ${
+        className={`grid place-items-center py-1 px-2 rounded  font-semibold ${
           updateApp === "on" ? "bg-red-500 hover:bg-red-600" : "bg-gray-600"
         }`}
         onClick={onUpdateAppClick}

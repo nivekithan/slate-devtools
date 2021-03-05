@@ -79,6 +79,7 @@ export const RenderLeaf = ({ text }: RenderLeafProps) => {
     <div
       style={{ ...depthStyle((depth as number) || 1) }}
       contentEditable={false}
+      className="text-sm"
     >
       <div className="flex gap-x-3">
         <button onClick={onClick}>+</button>

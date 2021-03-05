@@ -74,7 +74,7 @@ export const RenderElement = ({ children, element }: RenderElementProps) => {
   }, [searchedProperties]);
 
   return (
-    <div style={{ ...depthStyle }} contentEditable={false}>
+    <div style={{ ...depthStyle }} contentEditable={false} className="text-sm">
       <div className="flex gap-x-3">
         <button onClick={onClickToggle}>+</button>
         <div onClick={onClickUpdateSelectedProperties}>{`<${type} />`}</div>

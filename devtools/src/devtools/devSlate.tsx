@@ -70,13 +70,14 @@ export const DevSlate = ({ value, editor, devValue, setDevValue }: Props) => {
 
   return (
     <SlateEditorErrorBoundry>
-      <Slate value={devValue} editor={devEditor} onChange={setDevValue}>
-        <Editable
-          renderElement={renderElement}
-          renderLeaf={renderLeaf}
-          spellCheck={false}
-        />
-      </Slate>
+        <Slate value={devValue} editor={devEditor} onChange={setDevValue}  >
+          <Editable
+            renderElement={renderElement}
+            renderLeaf={renderLeaf}
+            spellCheck={false}
+            style={{wordWrap : "normal", whiteSpace : "normal"}}
+          />
+        </Slate>
     </SlateEditorErrorBoundry>
   );
 };

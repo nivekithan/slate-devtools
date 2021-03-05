@@ -26,10 +26,7 @@ export const RenderOperations = ({ op, to }: Props) => {
       ],
       to
     );
-    console.log(devEditor.from)
     devEditor.from = to;
-    console.log(devEditor.from)
-
   };
 
   return (

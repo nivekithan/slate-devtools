@@ -20,12 +20,12 @@ export const Search = ({ startValue = '""', onSubmit }: Props) => {
   };
 
   return (
-    <div className="flex gap-x-3 items-center">
-      <div className="font-semibold text-green-500">Search by path : </div>
+    <div className="flex gap-x-3 items-center text-sm">
+      <div className="font-semibold text-green-500 ">Search by path : </div>
       <form className="flex gap-x-2" onSubmit={onFormSubmit}>
         <input
           type="text"
-          className="bg-hex-0F0F0F px-2 py-1 rounded"
+          className="bg-hex-0F0F0F px-2 py-1 rounded "
           placeholder="JSON string"
           value={inputValue}
           onChange={onChange}
@@ -33,6 +33,7 @@ export const Search = ({ startValue = '""', onSubmit }: Props) => {
         <input
           type="submit"
           className="bg-blue-600 rounded text-sm px-2 cursor-pointer hover:bg-blue-500"
+          value="Search"
         />
       </form>
     </div>

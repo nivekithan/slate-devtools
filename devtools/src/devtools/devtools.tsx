@@ -1,11 +1,4 @@
-import React, {
-  useState,
-  useMemo,
-  useEffect,
-  useRef,
-  useLayoutEffect,
-} from "react";
-import { createPortal } from "react-dom";
+import React, { useState } from "react";
 import { Node } from "slate";
 import { ReactEditor } from "slate-react";
 import { DevSlate } from "./devSlate";
@@ -13,18 +6,10 @@ import { PropertiesEditor } from "./propertiesEditor";
 import { Menu } from "./menu";
 import { RenderHistory } from "./renderHistory";
 import { ScriptEditor } from "./scriptEditor";
-import { Properties } from "../components/operations/properties";
-import { SetNode } from "../components/operations/setNode";
-import { InsertNodes } from "../components/operations/insertNode";
-import { InsertText } from "../components/operations/insertText";
-import { MergeNode } from "../components/operations/mergeNode";
-import { MoveNode } from "../components/operations/moveNode";
-import { RemoveNode } from "../components/operations/removeNode";
-import { RemoveText } from "../components/operations/removeText";
-import { SplitNode } from "../components/operations/splitNode";
-import { HistoryEditor } from "../util/historyEditor";
+import { Resizable } from "re-resizable";
+import "../styles/scrollbar.css";
 
-type DevtoolsProps = {
+type Props = {
   value: Node[]; // NodeList value to show in devtools
   editor: ReactEditor; // Corresponding editor
   module?: {
@@ -32,42 +17,51 @@ type DevtoolsProps = {
   };
 };
 
-export const Devtools = ({ value, editor, module = {} }: DevtoolsProps) => {
+export const Devtools = ({ value, editor, module = {} }: Props) => {
   const [devValue, setDevValue] = useState<Node[]>(value);
 
-  return createPortal(
-    <div className=" bg-hex-282a36 text-white rounded flex flex-col p-5 ">
+  return (
+    <div className="fixed bg-hex-282a36 right-0 left-0 bottom-0 min-h-325px max-h-325px text-white flex flex-col p-2 gap-y-2 custom-scroll">
       <div>
-        <Menu value={value} editor={editor} devValue={devValue} />
+        <Menu editor={editor} value={value} devValue={devValue} />
       </div>
-      <div className="h-400px min-h-100px  p-4 flex gap-x-100px ">
-        <div>
+      <div className="flex gap-x-5 flex-1">
+        <div className="flex-1 overflow-x-auto max-h-195px ">
           <DevSlate
-            value={value}
-            editor={editor}
-            key="devtools_editor"
             devValue={devValue}
+            editor={editor}
             setDevValue={setDevValue}
+            value={value}
           />
         </div>
-        <div>
+        <Resizable
+          className="border-1 p-2 overflow-y-scroll "
+          defaultSize={{ width: "400px", height: "200px" }}
+        >
           <PropertiesEditor />
-        </div>
-        <div className="overflow-y-auto rounded w-400px bg-hex-272535 p-5  gap-x-3">
-          <RenderHistory />
-        </div>
+        </Resizable>
+        <Resizable
+          className="border-1 p-2 overflow-x-scroll min-w-100px"
+          defaultSize={{ width: "300px", height: "200px" }}
+          enable={{
+            left: true,
+            right: false,
+            bottom: false,
+            bottomLeft: false,
+            bottomRight: false,
+            top: false,
+            topLeft: false,
+            topRight: false,
+          }}
+        >
+          <div className="rounded w-full bg-hex-272535 p-5">
+            <RenderHistory />
+          </div>
+        </Resizable>
       </div>
       <div>
-        <ScriptEditor module={module} editor={editor} />
+        <ScriptEditor editor={editor} module={module} />
       </div>
-    </div>,
-    document.body
+    </div>
   );
-};
-
-const properties: Partial<Node> = {
-  type: "normal",
-  number: "233",
-  id: "23",
-  devtools_id: "23456afadg",
 };

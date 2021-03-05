@@ -15,7 +15,7 @@ const inputClassName = "bg-hex-0F0F0F px-2 py-1 rounded";
 export const AddPropertiesModal = ({ ParentModal, setShowModal }: Props) => {
   const [keyInputValue, setKeyInputValue] = useState<string>('""');
   const [valueInputValue, setValueInputValue] = useState<string>('""');
-  const [devEditor] = useDevEditorRead()
+  const [devEditor] = useDevEditorRead();
   const [{ path }] = useSelectedPropertiesRead();
 
   const onChange = (
@@ -66,7 +66,7 @@ export const AddPropertiesModal = ({ ParentModal, setShowModal }: Props) => {
 
   return createPortal(
     <ParentModal>
-      <div className="flex text-white bg-hex-282a36F shadow-normal p-2">
+      <div className="flex text-white bg-hex-282a36  shadow-normal p-2 text-sm">
         <form className="flex flex-col gap-y-3" onSubmit={onSubmit}>
           <div>Key : </div>
           <input
@@ -86,10 +86,10 @@ export const AddPropertiesModal = ({ ParentModal, setShowModal }: Props) => {
             <input
               type="submit"
               value="Okay"
-              className="bg-blue-600 rounded px-3 py-1   text-sm gird place-items-center cursor-pointer hover:bg-blue-500 "
+              className="bg-blue-600 rounded px-3 py-1 gird place-items-center cursor-pointer hover:bg-blue-500 "
             />
             <button
-              className="text-red-400 text-sm hover:text-red-300"
+              className="text-red-400  hover:text-red-300"
               onClick={onCancel}
             >
               Cancel
