@@ -1,5 +1,10 @@
 import { atom, useAtom } from "jotai";
 
+/**
+ * updateApp stores weather the button `Update app` is "on" or "off"
+ *
+ */
+
 const updateAppAtom = atom<"on" | "off">("off");
 
 const updateAppAtomRead = atom((get) => get(updateAppAtom));
@@ -9,19 +14,13 @@ const updateAppAtomSet = atom(null, (get, set, by: "on" | "off") =>
 );
 
 export const useUpdateApp = () => {
-  const atomValue = useAtom(updateAppAtom);
-
-  return atomValue;
+  return useAtom(updateAppAtom);
 };
 
 export const useUpdateAppRead = () => {
-  const atomValue = useAtom(updateAppAtomRead);
-
-  return atomValue;
+  return useAtom(updateAppAtomRead);
 };
 
 export const useUpdateAppSet = () => {
-  const atomValue = useAtom(updateAppAtomSet);
-
-  return atomValue;
+  return useAtom(updateAppAtomSet);
 };
