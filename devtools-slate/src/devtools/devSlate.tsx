@@ -40,11 +40,12 @@ export const DevSlate = ({ devValue, setDevValue }: Props) => {
       operations.push(operation);
     }
     devtoolsOperations.current = operations;
-  }, [devValue]);
+  }, [devValue, devEditor.operations]);
 
   // Normalize the editor
   useLayoutEffect(() => {
     Editor.normalize(devEditor, { force: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
