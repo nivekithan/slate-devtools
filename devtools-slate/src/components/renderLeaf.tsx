@@ -70,7 +70,15 @@ export const RenderLeaf = ({ text }: RenderLeafProps) => {
         }
       }
     }
-  });
+  }, [
+    id,
+    path,
+    searchedProperties,
+    setSearchedProperties,
+    setSelectedProperties,
+    setShouldShowChildren,
+    text,
+  ]);
 
   return (
     <div

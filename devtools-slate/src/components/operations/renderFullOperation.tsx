@@ -4,7 +4,6 @@ import { InsertNodes } from "./insertNode";
 import { InsertText } from "./insertText";
 import { MergeNode } from "./mergeNode";
 import { MoveNode } from "./moveNode";
-import { Properties } from "./properties";
 import { RemoveNode } from "./removeNode";
 import { SetNode } from "./setNode";
 import { SplitNode } from "./splitNode";

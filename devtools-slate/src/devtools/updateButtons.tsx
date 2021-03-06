@@ -38,7 +38,7 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
     }
 
     appOperations.current = addOperations(appOperations, editor.operations);
-  }, [value]);
+  }, [value, editor.operations]);
 
   useLayoutEffect(() => {
     if (isDevtoolsUpdating.current) {
@@ -50,7 +50,7 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
       devtoolsOperations,
       devEditor.operations
     );
-  }, [devValue]);
+  }, [devValue, devEditor.operations]);
 
   useEffect(() => {
     const { current } = appOperations;

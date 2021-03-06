@@ -1,4 +1,4 @@
-import { Node, Path, SetNodeOperation } from "slate";
+import { Node, Path } from "slate";
 import React from "react";
 import { Resizable } from "re-resizable";
 

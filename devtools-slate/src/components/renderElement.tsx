@@ -72,7 +72,15 @@ export const RenderElement = ({ children, element }: RenderElementProps) => {
         }
       }
     }
-  }, [searchedProperties]);
+  }, [
+    searchedProperties,
+    element,
+    path,
+    setShouldShowChildren,
+    id,
+    setSelectedProperties,
+    setSearchedProperties,
+  ]);
 
   return (
     <div style={{ ...depthStyle }} contentEditable={false} className="text-sm">

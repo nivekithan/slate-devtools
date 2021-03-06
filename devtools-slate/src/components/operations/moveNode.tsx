@@ -1,4 +1,3 @@
-import { left } from "@popperjs/core";
 import React from "react";
 import { MoveNodeOperation } from "slate";
 import { Properties } from "./properties";
