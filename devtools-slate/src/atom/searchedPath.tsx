@@ -1,6 +1,5 @@
 import { atom, useAtom } from "jotai";
 import { Node, Path } from "slate";
-import { Search } from "../components/search";
 
 type SearchedProperties = {
   node: Node;
@@ -17,7 +16,6 @@ export const useSearchedProperties = () => {
 
   return atomValue;
 };
-
 
 const searchedPropertiesAtomSet = atom(
   null,

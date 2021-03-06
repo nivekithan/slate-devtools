@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef } from "react";
-import { Editor, Node, Operation, Transforms } from "slate";
+import { Node, Operation } from "slate";
 import { ReactEditor } from "slate-react";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useUpdateApp } from "../atom/updateApp";

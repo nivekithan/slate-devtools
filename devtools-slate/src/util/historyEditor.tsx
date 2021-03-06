@@ -7,12 +7,12 @@ export type Batch = {
 };
 
 export type HistoryEditor = {
-  history: Batch[] ;
+  history: Batch[];
   isNormalizing: boolean;
   shouldSave: boolean;
   shouldNormalize: boolean;
   apply: (op: Operation, shouldNormalize: boolean) => void;
-  from : [number, number] | undefined
+  from: [number, number] | undefined;
 };
 
 type Location = [number, number];
@@ -42,7 +42,8 @@ export const HistoryEditor = {
       considerTo = false,
     } = options;
 
-    let { mode = "auto", match = () => true } = options;
+    let { mode = "auto" } = options;
+    const { match = () => true } = options;
 
     if (mode === "auto") {
       if (fromBatch > toBatch) {
@@ -225,6 +226,7 @@ export const HistoryEditor = {
     return sliceBatch;
   },
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   isHistoryEditor(editor: any): editor is HistoryEditor {
     const { history } = editor;
 

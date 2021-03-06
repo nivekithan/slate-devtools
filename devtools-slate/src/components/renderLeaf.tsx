@@ -1,10 +1,7 @@
 import React, { CSSProperties, useEffect } from "react";
-import { ReactEditor, RenderLeafProps, useEditor, useSlate } from "slate-react";
+import { ReactEditor, RenderLeafProps, useSlate } from "slate-react";
 import useDeepCompareEffect from "use-deep-compare-effect";
-import {
-  useSearchedProperties,
-  useSearchedPropertiesSet,
-} from "../atom/searchedPath";
+import { useSearchedProperties } from "../atom/searchedPath";
 import { useSelectedProperties } from "../atom/selectedProperties";
 import { useCopyOnClick } from "../hooks/useCopyOnClick";
 import { useToggleOnClick } from "../hooks/useToggleOnClick";

@@ -45,9 +45,9 @@ export const ScriptEditor = ({ module, editor }: Props) => {
         />
       </form>
       <div className="text-red-500 text-xs px-3 py-1">
-        {
-          isError ? "There is something wrong with the code you write check the console for more information" : " "
-        }
+        {isError
+          ? "There is something wrong with the code you write check the console for more information"
+          : " "}
       </div>
     </div>
   );

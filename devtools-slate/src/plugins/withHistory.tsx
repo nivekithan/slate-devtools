@@ -19,7 +19,7 @@ export const withHistory = <T extends Editor>(editor: T) => {
     }
   };
 
-  e.apply = (op: Operation, shouldNormalize: boolean = true) => {
+  e.apply = (op: Operation, shouldNormalize = true) => {
     e.shouldNormalize = shouldNormalize;
     if (op.type === "set_selection") {
       return apply(op);
@@ -37,6 +37,7 @@ export const withHistory = <T extends Editor>(editor: T) => {
       !_lastOp ||
       (from[0] === _lastOp[0] && from[1] === _lastOp[1])
     ) {
+      //
     } else {
       e.history = HistoryEditor.giveTill(e, from);
     }

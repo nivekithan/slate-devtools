@@ -14,11 +14,12 @@ export class SlateEditorErrorBoundry extends React.Component<Props, State> {
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error: any) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  static getDerivedStateFromError(error: unknown) {
     return { hasError: true };
   }
 
-  componentDidCatch(error: any) {
+  componentDidCatch(error: unknown) {
     console.error(error);
     this.setState({ hasError: false });
   }

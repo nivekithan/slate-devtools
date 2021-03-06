@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import React from "react";
 
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {

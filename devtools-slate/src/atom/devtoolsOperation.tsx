@@ -1,6 +1,5 @@
 import { atom, useAtom } from "jotai";
 import { Operation } from "slate";
-import React from "react";
 
 const devtoolsOperationsAtom = atom<Operation[]>([]);
 

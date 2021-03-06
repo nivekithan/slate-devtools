@@ -9,6 +9,5 @@ export const inverseOperations = (operations: Operation[]) => {
     inverseOperations.push(Operation.inverse(operation));
   }
 
-  return inverseOperations
-
+  return inverseOperations;
 };

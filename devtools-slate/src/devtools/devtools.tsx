@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Node, Transforms } from "slate";
+import { Node } from "slate";
 import { ReactEditor } from "slate-react";
 import { DevSlate } from "./devSlate";
 import { PropertiesEditor } from "./propertiesEditor";
@@ -42,12 +42,7 @@ export const Devtools = ({ value, editor, module = {} }: Props) => {
         </div>
         <div className="flex gap-x-5 flex-1">
           <div className="flex-1 overflow-x-auto max-h-195px ">
-            <DevSlate
-              devValue={devValue}
-              editor={editor}
-              setDevValue={setDevValue}
-              value={value}
-            />
+            <DevSlate devValue={devValue} setDevValue={setDevValue} />
           </div>
           <Resizable
             className="border-l-1 p-2 border-gray-500 overflow-y-scroll"

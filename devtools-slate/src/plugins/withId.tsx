@@ -12,7 +12,7 @@ export const withId = (editor: ReactEditor): ReactEditor => {
       Transforms.setNodes(editor, { devtools_id: nanoid() }, { at: path });
     }
 
-    normalizeNode(entry)
+    normalizeNode(entry);
   };
 
   return editor;

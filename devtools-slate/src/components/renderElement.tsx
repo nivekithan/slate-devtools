@@ -11,7 +11,8 @@ import { isEmptyProperties } from "../util/isEmptyProperties";
 import { isSubset } from "../util/isSubset";
 
 export const RenderElement = ({ children, element }: RenderElementProps) => {
-  let { type, devtools_depth: depth, devtools_id: id } = element;
+  let { type } = element;
+  const { devtools_depth: depth, devtools_id: id } = element;
   if (typeof type !== "string") {
     type = "normal";
   }

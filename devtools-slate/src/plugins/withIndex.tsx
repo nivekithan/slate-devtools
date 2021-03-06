@@ -1,4 +1,4 @@
-import { NodeEntry, Element, Editor, Transforms } from "slate";
+import { NodeEntry, Editor, Transforms } from "slate";
 import { ReactEditor } from "slate-react";
 
 export const withIndex = (editor: ReactEditor): ReactEditor => {

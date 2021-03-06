@@ -1,27 +1,10 @@
-import React, {
-  useMemo,
-  useState,
-  useEffect,
-  useCallback,
-  useLayoutEffect,
-  useRef,
-} from "react";
-import { withDepth, withId, withIndex } from "../plugins";
+import React, { useCallback, useLayoutEffect, useRef } from "react";
+import { Node, Editor, Operation } from "slate";
 import {
-  createEditor,
-  Node,
-  Editor,
-  Transforms,
-  Range,
-  Operation,
-} from "slate";
-import {
-  withReact,
   Slate,
   Editable,
   RenderElementProps,
   RenderLeafProps,
-  ReactEditor,
 } from "slate-react";
 import { RenderElement } from "../components/renderElement";
 import { RenderLeaf } from "../components/renderLeaf";
@@ -29,13 +12,11 @@ import { SlateEditorErrorBoundry } from "../components/ErrorBoundry";
 import { useDevEditorRead } from "../atom/devEditor";
 
 type Props = {
-  value: Node[];
-  editor: ReactEditor;
   devValue: Node[];
   setDevValue: (value: Node[]) => void;
 };
 
-export const DevSlate = ({ value, editor, devValue, setDevValue }: Props) => {
+export const DevSlate = ({ devValue, setDevValue }: Props) => {
   const [devEditor] = useDevEditorRead();
   const devtoolsOperations = useRef<Operation[]>([]);
 
@@ -66,17 +47,16 @@ export const DevSlate = ({ value, editor, devValue, setDevValue }: Props) => {
     Editor.normalize(devEditor, { force: true });
   }, []);
 
-
   return (
     <SlateEditorErrorBoundry>
-        <Slate value={devValue} editor={devEditor} onChange={setDevValue}  >
-          <Editable
-            renderElement={renderElement}
-            renderLeaf={renderLeaf}
-            spellCheck={false}
-            style={{wordWrap : "normal", whiteSpace : "normal"}}
-          />
-        </Slate>
+      <Slate value={devValue} editor={devEditor} onChange={setDevValue}>
+        <Editable
+          renderElement={renderElement}
+          renderLeaf={renderLeaf}
+          spellCheck={false}
+          style={{ wordWrap: "normal", whiteSpace: "normal" }}
+        />
+      </Slate>
     </SlateEditorErrorBoundry>
   );
 };

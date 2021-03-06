@@ -1,5 +1,5 @@
 import { Operation } from "slate";
-import React, { useEffect } from "react";
+import React from "react";
 import { HistoryEditor } from "../util/historyEditor";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useToggleOnClick } from "../hooks/useToggleOnClick";

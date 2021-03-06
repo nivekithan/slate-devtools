@@ -2,7 +2,6 @@ import { useToggleOnClick } from "../hooks/useToggleOnClick";
 import { Batch } from "../util/historyEditor";
 import React from "react";
 import { RenderOperations } from "./renderOperations";
-import { Location } from "slate";
 
 type Props = {
   batch: Batch;

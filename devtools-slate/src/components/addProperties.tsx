@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from "react";
-import { useOuterClick } from "../hooks/useOuterClick";
 import { AddPropertiesModal } from "./addPropertiesModal";
 import { usePopper } from "react-popper";
 

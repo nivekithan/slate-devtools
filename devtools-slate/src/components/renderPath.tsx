@@ -6,7 +6,9 @@ export const RenderPath = ({ path }: { path: Path }) => {
     <div className="flex gap-x-1 items-center">
       <div className="text-blue-300 text-sm">{"["}</div>
       {path.map((value, i) => {
-        return <div key={`${value}_${i}`} className="text-sm">{`${value},`}</div>;
+        return (
+          <div key={`${value}_${i}`} className="text-sm">{`${value},`}</div>
+        );
       })}
       <div className="text-blue-300 text-sm">{"]"}</div>
     </div>

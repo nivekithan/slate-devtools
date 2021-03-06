@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { createPortal } from "react-dom";
-import { usePopper } from "react-popper";
 import { Transforms } from "slate";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useSelectedPropertiesRead } from "../atom/selectedProperties";

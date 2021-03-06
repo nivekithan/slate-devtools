@@ -9,6 +9,7 @@ export const useOuterClick = <T extends HTMLElement>(callback: Callback) => {
     const targelElement = ref.current;
     if (!targelElement) return;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (!targelElement.contains(e.target as any)) {
       callback(e);
     } else {

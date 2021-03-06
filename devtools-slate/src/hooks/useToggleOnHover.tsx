@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { ReactEditor } from "slate-react";
 
 export const useToggleOnHover = <T extends HTMLDivElement>(
-  defaultState: boolean = false
+  defaultState = false
 ): [
   boolean,
   (e: React.MouseEvent<T, MouseEvent>) => void,

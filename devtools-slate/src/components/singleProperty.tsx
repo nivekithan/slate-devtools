@@ -1,6 +1,5 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Node, Transforms } from "slate";
-import { ReactEditor } from "slate-react";
+import React, { useLayoutEffect, useRef, useState } from "react";
+import { Transforms } from "slate";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useSelectedPropertiesRead } from "../atom/selectedProperties";
 import { InlineEdit } from "./inlineEdit";

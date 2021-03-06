@@ -1,5 +1,4 @@
 import { atom, useAtom } from "jotai";
-import { useState } from "react";
 
 const updateDevToolsAtom = atom<"on" | "off">("off");
 
@@ -9,21 +8,19 @@ const updateDevToolsAtomSet = atom(null, (get, set, by: "on" | "off") =>
   set(updateDevToolsAtom, by)
 );
 
-
 export const useUpdateDevtools = () => {
   const atomValue = useAtom(updateDevToolsAtom);
-  return atomValue 
-}
+  return atomValue;
+};
 
 export const useUpdateDevToolsRead = () => {
-    const atomValue = useAtom(updateDevToolsAtomRead);
+  const atomValue = useAtom(updateDevToolsAtomRead);
 
-    return atomValue
-}
+  return atomValue;
+};
 
 export const useUpdateDevToolsSet = () => {
-    const atomValue = useAtom(updateDevToolsAtomSet);
+  const atomValue = useAtom(updateDevToolsAtomSet);
 
-    return atomValue
-}
-
+  return atomValue;
+};

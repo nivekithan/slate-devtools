@@ -6,5 +6,5 @@ export const useCopyOnClick = <T extends HTMLElement>(data: string) => {
     navigator.clipboard.writeText(data);
   };
 
-  return onClick
+  return onClick;
 };
