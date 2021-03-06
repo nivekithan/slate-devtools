@@ -16,7 +16,17 @@ export const RenderOperations = ({ op, to }: Props) => {
   const { type, path } = op;
   const [showFullOperation, onClickShowOperation] = useToggleOnClick(false);
 
-  const onClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  /**
+   * When clicking here we call HistoryEditor.apply
+   *
+   * if devEditor.from is undefined then we will use lastOperation as from
+   *
+   * After that we will set devEditor.from to `to`
+   */
+
+  const onClickingHere = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
     e.preventDefault();
     HistoryEditor.apply(
       devEditor,
@@ -38,7 +48,7 @@ export const RenderOperations = ({ op, to }: Props) => {
         <div>{type.toUpperCase()}</div>
         <a
           className="border-1 px-2 rounded border-indigo-500 bg-indigo-700 "
-          onClick={onClick}
+          onClick={onClickingHere}
         >
           Here
         </a>
