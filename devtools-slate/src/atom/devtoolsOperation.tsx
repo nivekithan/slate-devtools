@@ -1,15 +1,13 @@
 import { atom, useAtom } from "jotai";
 import { Operation } from "slate";
 
+/**
+ * devtoolsOperation stores operation applied to devEditor
+ */
+
 const devtoolsOperationsAtom = atom<Operation[]>([]);
 
 const devtoolsOperationsAtomRead = atom((get) => get(devtoolsOperationsAtom));
-
-export const useDevtoolsOperationsRead = () => {
-  const atomValue = useAtom(devtoolsOperationsAtomRead);
-
-  return atomValue;
-};
 
 type ByActions =
   | {
@@ -33,7 +31,10 @@ const devtoolsOperationsAtomSet = atom(null, (get, set, by: ByActions) => {
   }
 });
 
+export const useDevtoolsOperationsRead = () => {
+  return useAtom(devtoolsOperationsAtomRead);
+};
+
 export const useDevtoolsOperationsSet = () => {
-  const atomValue = useAtom(devtoolsOperationsAtomSet);
-  return atomValue;
+  return useAtom(devtoolsOperationsAtomSet);
 };
