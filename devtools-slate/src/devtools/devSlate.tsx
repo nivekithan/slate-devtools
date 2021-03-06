@@ -6,10 +6,9 @@ import {
   RenderElementProps,
   RenderLeafProps,
 } from "slate-react";
-import { RenderElement } from "../components/renderElement";
-import { RenderLeaf } from "../components/renderLeaf";
 import { SlateEditorErrorBoundry } from "../components/ErrorBoundry";
 import { useDevEditorRead } from "../atom/devEditor";
+import { RenderNode } from "../components/renderNode";
 
 type Props = {
   devValue: Node[];
@@ -21,12 +20,12 @@ export const DevSlate = ({ devValue, setDevValue }: Props) => {
   const devtoolsOperations = useRef<Operation[]>([]);
 
   const renderElement = useCallback(
-    (props: RenderElementProps) => <RenderElement {...props} />,
+    (props: RenderElementProps) => <RenderNode {...props} />,
     []
   );
 
   const renderLeaf = useCallback(
-    (props: RenderLeafProps) => <RenderLeaf {...props} />,
+    (props: RenderLeafProps) => <RenderNode {...props} />,
     []
   );
 
