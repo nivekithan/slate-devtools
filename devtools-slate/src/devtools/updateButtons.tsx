@@ -101,7 +101,7 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
     } else {
       setUpdateDevtools("off");
     }
-  }, [appOperations, setUpdateDevtools]);
+  });
 
   /**
    * We will check if devtoolsOperations is empty if thats the case then we will set `Update App`
