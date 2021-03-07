@@ -3,7 +3,7 @@ import React from "react";
 import { HistoryEditor } from "../util/historyEditor";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useToggleOnClick } from "../hooks/useToggleOnClick";
-import { RenderFullOperation } from "./operations/renderFullOperation";
+import { RenderDetailedOperation } from "./renderDetailedOperation";
 
 type Props = {
   op: Operation;
@@ -56,7 +56,7 @@ export const RenderOperations = ({ op, to }: Props) => {
       </button>
       {showFullOperation ? (
         <div className="my-2">
-          <RenderFullOperation op={op} />
+          <RenderDetailedOperation op={op} />
         </div>
       ) : null}
     </div>
