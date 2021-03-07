@@ -9,7 +9,7 @@ To know about features take loot at this [issue](https://github.com/ianstormtayl
 
 I am planning to release the project in npm after I finished these tasks
 
-- [ ] Refractor Code 
+- [X] Refactor Code 
 - [ ] Add storybook
 - [ ] Convert windicss to css-in-js libary
 
