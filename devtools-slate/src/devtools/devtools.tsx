@@ -6,11 +6,12 @@ import { PropertiesEditor } from "./propertiesEditor";
 import { Menu } from "./menu";
 import { RenderHistory } from "./renderHistory";
 import { ScriptEditor } from "./scriptEditor";
-import { Resizable } from "re-resizable";
 import "../styles/scrollbar.css";
 import { useToggleOnClick } from "../hooks/useToggleOnClick";
 import ReactDOM from "react-dom";
 import "windi.css";
+import { Resizable } from "../components/resizable";
+import clone from "clone";
 
 type Props = {
   value: Node[]; // NodeList value to show in devtools
@@ -18,11 +19,17 @@ type Props = {
   module?: {
     [index: string]: unknown;
   };
+  open?: boolean;
 };
 
-export const Devtools = ({ value, editor, module = {} }: Props) => {
-  const [devValue, setDevValue] = useState<Node[]>(value);
-  const [isOpen, onClickToggle] = useToggleOnClick<HTMLButtonElement>(false);
+export const Devtools = ({
+  value,
+  editor,
+  module = {},
+  open = false,
+}: Props) => {
+  const [devValue, setDevValue] = useState<Node[]>(clone(value));
+  const [isOpen, onClickToggle] = useToggleOnClick<HTMLButtonElement>(open);
 
   return ReactDOM.createPortal(
     <Fragment>
@@ -40,34 +47,24 @@ export const Devtools = ({ value, editor, module = {} }: Props) => {
             Close
           </button>
         </div>
-        <div className="flex gap-x-5 flex-1">
-          <div className="flex-1 overflow-x-auto max-h-195px ">
+        <div className="flex gap-x-5 flex-1 h-195px">
+          <div className="flex-1 overflow-auto max-h-195px  ">
             <DevSlate devValue={devValue} setDevValue={setDevValue} />
           </div>
-          <Resizable
-            className="border-l-1 p-2 border-gray-500 overflow-y-scroll"
-            defaultSize={{ width: "400px", height: "200px" }}
-          >
-            <PropertiesEditor />
-          </Resizable>
-          <Resizable
-            className="border-l-1 p-2 overflow-x-scroll min-w-100px border-gray-500"
-            defaultSize={{ width: "300px", height: "200px" }}
-            enable={{
-              left: true,
-              right: false,
-              bottom: false,
-              bottomLeft: false,
-              bottomRight: false,
-              top: false,
-              topLeft: false,
-              topRight: false,
-            }}
-          >
-            <div className="rounded w-full bg-hex-272535 p-5">
-              <RenderHistory />
-            </div>
-          </Resizable>
+          <div>
+            <Resizable width="400px">
+              <div className="ml-5">
+                <PropertiesEditor />
+              </div>
+            </Resizable>
+          </div>
+          <div>
+            <Resizable width="400px">
+              <div className="rounded w-full bg-hex-272535 p-5">
+                <RenderHistory />
+              </div>
+            </Resizable>
+          </div>
         </div>
         <div>
           <ScriptEditor editor={editor} module={module} />
@@ -76,7 +73,9 @@ export const Devtools = ({ value, editor, module = {} }: Props) => {
       {isOpen ? null : (
         <button
           onClick={onClickToggle}
-          className="fixed left-0 bottom-0 ml-20px mb-20px bg-hex-282a36 w-50px h-50px text-white rounded-25px grid place-items-center text-xs"
+          className={`fixed left-0 bottom-0 ml-20px mb-20px
+           bg-hex-282a36 w-50px h-50px text-white rounded-25px 
+           grid place-items-center text-xs`}
         >
           Open
         </button>

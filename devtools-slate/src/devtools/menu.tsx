@@ -19,6 +19,23 @@ export const Menu = ({ editor, value, devValue }: Props) => {
   const [devEditor] = useDevEditorRead();
   const [, setSearchedProperties] = useSearchedPropertiesSet();
 
+  /**
+   * If onSearchSubmit returns true then input will set to startValue, else there will be no change
+   * in input
+   *
+   * We will parse the value with JSON.parse() if it throws error then we will catch that error and
+   * will return false
+   *
+   * IF the parsed value is not an path then we ourself will throw an error
+   *
+   * if parsed value is path then we get the node located at that path and set that as searchedProperties
+   * and return true
+   *
+   * if there is no node at that path then Node.get itself will throw error we will just catch that in another block and
+   * set a emptyProperty as searchedProperty and return true
+   *
+   */
+
   const onSearchSubmit = (
     e: React.FormEvent<HTMLFormElement>,
     value: string
@@ -26,7 +43,7 @@ export const Menu = ({ editor, value, devValue }: Props) => {
     e.preventDefault();
     try {
       const path = JSON.parse(value);
-      if (!Path.isPath(path)) return false;
+      if (!Path.isPath(path)) throw new Error("The parsed value is not path");
       try {
         const searchedNode = Node.get(devEditor, path);
         setSearchedProperties({ node: searchedNode, path: path });

@@ -2,6 +2,9 @@ import { useEffect, useRef } from "react";
 
 type Callback = (e: MouseEvent) => void;
 
+/**
+ * Run a function when mouse clicks outside of an element
+ */
 export const useOuterClick = <T extends HTMLElement>(callback: Callback) => {
   const ref = useRef<T>(null);
 

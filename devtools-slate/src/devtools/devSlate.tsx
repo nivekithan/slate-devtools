@@ -1,15 +1,14 @@
-import React, { useCallback, useLayoutEffect, useRef } from "react";
-import { Node, Editor, Operation } from "slate";
+import React, { useCallback, useEffect } from "react";
+import { Node, Editor } from "slate";
 import {
   Slate,
   Editable,
   RenderElementProps,
   RenderLeafProps,
 } from "slate-react";
-import { RenderElement } from "../components/renderElement";
-import { RenderLeaf } from "../components/renderLeaf";
 import { SlateEditorErrorBoundry } from "../components/ErrorBoundry";
 import { useDevEditorRead } from "../atom/devEditor";
+import { RenderNode } from "../components/renderNode";
 
 type Props = {
   devValue: Node[];
@@ -18,32 +17,25 @@ type Props = {
 
 export const DevSlate = ({ devValue, setDevValue }: Props) => {
   const [devEditor] = useDevEditorRead();
-  const devtoolsOperations = useRef<Operation[]>([]);
 
   const renderElement = useCallback(
-    (props: RenderElementProps) => <RenderElement {...props} />,
+    (props: RenderElementProps) => <RenderNode {...props} />,
     []
   );
 
   const renderLeaf = useCallback(
-    (props: RenderLeafProps) => <RenderLeaf {...props} />,
+    (props: RenderLeafProps) => <RenderNode {...props} />,
     []
   );
 
-  useLayoutEffect(() => {
-    const operations = devtoolsOperations.current;
+  /**
+   * Normalize the editor after the first rendering
+   *
+   * Cant use useCallOnce since we have to normalize once devValue is set to devEditor not before.
+   * Calling before will lead to absolutely nothing
+   */
 
-    for (const operation of devEditor.operations) {
-      if (operation.type === "set_selection") {
-        continue;
-      }
-      operations.push(operation);
-    }
-    devtoolsOperations.current = operations;
-  }, [devValue, devEditor.operations]);
-
-  // Normalize the editor
-  useLayoutEffect(() => {
+  useEffect(() => {
     Editor.normalize(devEditor, { force: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

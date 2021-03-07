@@ -5,6 +5,16 @@ type Props = {
   path: Path;
 };
 
+/**
+ * Will check if the given properties is equal to the object
+ * {
+ *   path : [],
+ *   node : {
+ *      children : []
+ *    }
+ * }
+ */
+
 export const isEmptyProperties = (properties: Props): boolean => {
   const { node, path } = properties;
 

@@ -1,5 +1,9 @@
 import { atom, useAtom } from "jotai";
 
+/**
+ * UpdateDevtools stores weather the button `Update devtools` is "on" or "off"
+ */
+
 const updateDevToolsAtom = atom<"on" | "off">("off");
 
 const updateDevToolsAtomRead = atom((get) => get(updateDevToolsAtom));
@@ -9,18 +13,13 @@ const updateDevToolsAtomSet = atom(null, (get, set, by: "on" | "off") =>
 );
 
 export const useUpdateDevtools = () => {
-  const atomValue = useAtom(updateDevToolsAtom);
-  return atomValue;
+  return useAtom(updateDevToolsAtom);
 };
 
 export const useUpdateDevToolsRead = () => {
-  const atomValue = useAtom(updateDevToolsAtomRead);
-
-  return atomValue;
+  return useAtom(updateDevToolsAtomRead);
 };
 
 export const useUpdateDevToolsSet = () => {
-  const atomValue = useAtom(updateDevToolsAtomSet);
-
-  return atomValue;
+  return useAtom(updateDevToolsAtomSet);
 };

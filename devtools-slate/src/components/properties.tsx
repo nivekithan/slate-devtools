@@ -2,6 +2,11 @@ import { Node, Path } from "slate";
 import React from "react";
 import { Resizable } from "re-resizable";
 
+/**
+ * For keys I am using the index of array. But I dont think it will lead to any problems in
+ * this case
+ */
+
 type Props = {
   properties: Partial<Node>;
   path: Path;

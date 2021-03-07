@@ -1,6 +1,11 @@
 import { atom, useAtom } from "jotai";
 import { Node, Path } from "slate";
 
+/**
+ * selectedProperties stores result from either selecting a property from DevSlate or
+ * after a valid serach from `serach by path`
+ */
+
 type SelectedProperties = {
   node: Node;
   path: Path;
@@ -11,15 +16,12 @@ const selectedPropertiesAtom = atom<SelectedProperties>({
   path: [],
 });
 
-export const useSelectedProperties = () => {
-  const atomValue = useAtom(selectedPropertiesAtom);
-  return atomValue;
-};
-
 const selectedPropertiesAtomRead = atom((get) => get(selectedPropertiesAtom));
 
-export const useSelectedPropertiesRead = () => {
-  const readOnlyAtomValue = useAtom(selectedPropertiesAtomRead);
+export const useSelectedProperties = () => {
+  return useAtom(selectedPropertiesAtom);
+};
 
-  return readOnlyAtomValue;
+export const useSelectedPropertiesRead = () => {
+  return useAtom(selectedPropertiesAtomRead);
 };

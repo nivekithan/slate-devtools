@@ -11,6 +11,12 @@ export const PropertiesEditor = () => {
       <AddProperties />
       <div>
         {Object.keys(node).map((keys) => {
+          /**
+           * If the result matched the /devtools_/ then that property
+           * is created by our plugin not by them so we should
+           * not render those properties
+           */
+
           const result = keys.match(/devtools_/);
 
           if (result) {

@@ -1,6 +1,14 @@
 import { useEffect, useRef } from "react";
 import React from "react";
 
+/**
+ * TODO:
+ *
+ * [ ] Instead of having two compoents span and input there should be only one component input when it is not focussed the background color will
+ *     transperent and when it is foccussed the bg the color changes
+ * [ ] Outline on input is rendering weird dont know why, have to figure it out
+ */
+
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -32,7 +40,7 @@ export const InlineEdit = ({
   return isEditing ? (
     <div className="flex gap-x-3">
       <input
-        className=" outline-none bg-hex-0F0F0F bg-opacity-30 px-2  rounded"
+        className="outline-none bg-hex-0F0F0F bg-opacity-30 px-2  rounded"
         {...inputProps}
         value={value}
         onChange={onChange}

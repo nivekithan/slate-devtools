@@ -19,18 +19,46 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
   const [updateDevtools, setUpdateDevtools] = useUpdateDevtools();
   const [updateApp, setUpdateApp] = useUpdateApp();
   const [devEditor] = useDevEditorRead();
+  /**
+   * isAppUpdating stores weather the app is updating after
+   * clicking `Update App`
+   */
   const isAppUpdating = useRef<boolean>(false);
+
+  /**
+   * isDevtoolsUpdating stores weather the devtools is updating after clicking
+   * `update Devtools
+   */
   const isDevtoolsUpdating = useRef<boolean>(false);
 
+  /**
+   * Stores every operation applied to app (editor)
+   */
   const appOperations = useRef<Operation[]>([]);
+
+  /**
+   * stores every operation applied to devtools (devEditor)
+   */
   const devtoolsOperations = useRef<Operation[]>([]);
 
+  /**
+   * Ref for the button `Update App`
+   */
   const updateAppRef = useRef<HTMLButtonElement | null>(null);
 
+  // Function runs only one time
   const clickUpdateAppButtonOnce = useCallOnce(() => {
     updateAppRef.current?.click();
   });
 
+  /**
+   * At first we will check if the operation applied to app (editor) is due to cliking `Update App` if thats the case
+   * then we wont add those operation to appOperation and we set isAppUpdating to false
+   *
+   * IF thats not case then we will those operations to appOperations.
+   *
+   * Works only on useLayoutEffect not on useEffect
+   */
   useLayoutEffect(() => {
     if (isAppUpdating.current) {
       isAppUpdating.current = false;
@@ -40,6 +68,14 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
     appOperations.current = addOperations(appOperations, editor.operations);
   }, [value, editor.operations]);
 
+  /**
+   * At first we will check if the operation applied to devtools (devEditor) is due to clicking `update devtools` if thats the case
+   * then we wont add those operation to devtoolsOperation and we set isDevtoolsUpdating to false
+   *
+   * If thats not the case then we will add those operations to devtoolsOperations
+   *
+   * Works only on useLayoutEffect not on useEffect
+   */
   useLayoutEffect(() => {
     if (isDevtoolsUpdating.current) {
       isDevtoolsUpdating.current = false;
@@ -52,6 +88,11 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
     );
   }, [devValue, devEditor.operations]);
 
+  /**
+   * We will check if appOperations is empty if thats the case then we will set
+   * `Update Devtools ` to "off" and if thats not case then we will set `Update Devtools`
+   * to "on"
+   */
   useEffect(() => {
     const { current } = appOperations;
 
@@ -62,6 +103,10 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
     }
   });
 
+  /**
+   * We will check if devtoolsOperations is empty if thats the case then we will set `Update App`
+   * to "off" and if thats not case then we will set `Update App` to "on"
+   */
   useEffect(() => {
     const { current } = devtoolsOperations;
 
@@ -72,6 +117,17 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
       setUpdateApp("off");
     }
   });
+
+  /**
+   * At first we will set isDevtoolsUpdating to true
+   *
+   * Then we will check if updateApp is "on" this means that user has applied some
+   * operation to devtools but before syncing that opeartion with app the user also applied some operation
+   * to app.
+   *
+   * As a result we have reverse those changes to devtools before updating the devtools
+   *
+   */
 
   const onUpdateDevtoolsClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -93,6 +149,17 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
       devEditor
     );
   };
+
+  /**
+   * At first we will set isAppUpdating to true
+   *
+   * Then we will check if updateDevtools is "on" this means that user has applied some
+   * operation to app but before syncing that opeartion with devtools the user also applied some operation
+   * to devtools.
+   *
+   * As a result we have reverse those changes to app before updating the app
+   *
+   */
 
   const onUpdateAppClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>

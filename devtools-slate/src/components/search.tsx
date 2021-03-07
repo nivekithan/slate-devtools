@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { useFormInputs } from "../hooks/useFormInputs";
 
 type Props = {
   startValue?: string;
@@ -6,11 +7,11 @@ type Props = {
 };
 
 export const Search = ({ startValue = '""', onSubmit }: Props) => {
-  const [inputValue, setInputValue] = useState<string>(startValue);
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.currentTarget.value);
-  };
+  const [
+    inputValue,
+    onChangeUpdateInput,
+    setInputValue,
+  ] = useFormInputs<HTMLInputElement>(startValue);
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,7 +29,7 @@ export const Search = ({ startValue = '""', onSubmit }: Props) => {
           className="bg-hex-0F0F0F px-2 py-1 rounded "
           placeholder="JSON string"
           value={inputValue}
-          onChange={onChange}
+          onChange={onChangeUpdateInput}
         />
         <input
           type="submit"

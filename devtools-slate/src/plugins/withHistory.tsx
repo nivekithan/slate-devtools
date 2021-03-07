@@ -2,14 +2,26 @@ import { nanoid } from "nanoid";
 import { Editor, Operation, Path } from "slate";
 import { Batch, HistoryEditor } from "../util/historyEditor";
 
+/**
+ * My plan to interact with this api is to directly change the value like
+ *
+ * editor.shouldNormalize = false
+ * editor.apply(someoperation)
+ *
+ * I am not sure weather it is okat to that but since its working, I am not planning to change it
+ * but you do know for the fact that interacting like that will lead to some problems open an issue or an
+ * pr with the correct way
+ *
+ */
+
 export const withHistory = <T extends Editor>(editor: T) => {
   const e = editor as T & HistoryEditor;
   const { apply, normalizeNode } = e;
-  e.history = [];
-  e.shouldSave = true;
-  e.isNormalizing = false;
-  e.shouldNormalize = true;
-  e.from = undefined;
+  e.history = []; // Stores the history
+  e.shouldSave = true; // Says weather we should save the operations to history
+  e.isNormalizing = false; // Says weather an operation is due to normalizing
+  e.shouldNormalize = true; // Says weather we should normalize after that operation
+  e.from = undefined; // Stores the current state in History
 
   e.normalizeNode = (entry) => {
     if (e.shouldNormalize) {
@@ -20,10 +32,20 @@ export const withHistory = <T extends Editor>(editor: T) => {
   };
 
   e.apply = (op: Operation, shouldNormalize = true) => {
+    /**
+     * We dont record set_selection operation so if the operation is set_selection we will
+     * just apply it
+     */
+
     e.shouldNormalize = shouldNormalize;
     if (op.type === "set_selection") {
       return apply(op);
     }
+    /**
+     * When user gone to previous state in RenderHistory and then the user applied some operation
+     * then we have to remove the operation from the previous state (not including) to last state (including)
+     *
+     */
 
     const { from, shouldSave } = e;
     if (!shouldSave) {
@@ -31,6 +53,12 @@ export const withHistory = <T extends Editor>(editor: T) => {
     }
     const _lastBatch = e.history[e.history.length - 1] as Batch | undefined;
     const _lastOp = _lastBatch && _lastBatch.data[_lastBatch.data.length - 1];
+    /**
+     * We are checking if there is no from or no _lastOp or from is _lastOp in that case
+     * the user is correct state and we dont have to remove anything
+     *
+     * if thats not case then we will remove
+     */
 
     if (
       !from ||
@@ -44,6 +72,13 @@ export const withHistory = <T extends Editor>(editor: T) => {
 
     const { operations, history, isNormalizing } = e;
 
+    /**
+     * Most of the code below is copied from slate-history there are 
+     * some additions to code
+     * 
+    
+     */
+
     const lastBatch = history[history.length - 1] as Batch | undefined;
     const lastOp = lastBatch && lastBatch.data[lastBatch.data.length - 1];
     let merge = false;
@@ -51,6 +86,11 @@ export const withHistory = <T extends Editor>(editor: T) => {
     if (!lastBatch) {
       merge = false;
     } else if (lastBatch.normalizing !== isNormalizing) {
+      /**
+       * If the lastBatch normalizing is not equal to current isNormalizing then
+       * we wont merge those operations
+       */
+
       merge = false;
     } else if (operations.length !== 0) {
       merge = true;
@@ -61,6 +101,11 @@ export const withHistory = <T extends Editor>(editor: T) => {
     if (lastBatch && merge) {
       lastBatch.data.push(op);
     } else {
+      /**
+       * We create unqiue id so that we can pass a key when rendering a
+       * list of batches
+       */
+
       const batch: Batch = {
         normalizing: isNormalizing,
         data: [op],
@@ -73,6 +118,11 @@ export const withHistory = <T extends Editor>(editor: T) => {
     if (history.length > 100) {
       history.shift();
     }
+    /**
+     * After every single operation we set the from to the last
+     * operation
+     */
+
     e.from = [
       e.history.length - 1,
       e.history[e.history.length - 1].data.length - 1,
@@ -83,6 +133,9 @@ export const withHistory = <T extends Editor>(editor: T) => {
 
   return e;
 };
+/**
+ * Copied from slate-history
+ */
 
 const shouldMerge = (op: Operation, prev: Operation | undefined): boolean => {
   if (

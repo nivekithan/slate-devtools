@@ -1,10 +1,16 @@
 import { NodeEntry, Transforms, Editor } from "slate";
 import { ReactEditor } from "slate-react";
 
+/**
+ * This plugin will make sure that each node will have devtools_depth field
+ * and its value will be the length of its path
+ *
+ * It is use render the marginLeft on DevSlate
+ */
+
 export const withDepth = (editor: ReactEditor) => {
   const { normalizeNode } = editor;
 
-  // Overwriting the normalize node functionality of editor
   editor.normalizeNode = (entry) => {
     const [node, path] = entry;
 

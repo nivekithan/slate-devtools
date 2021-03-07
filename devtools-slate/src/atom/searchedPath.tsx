@@ -1,6 +1,10 @@
 import { atom, useAtom } from "jotai";
 import { Node, Path } from "slate";
 
+/**
+ * SearchedProperties hold result from `search by path`
+ */
+
 type SearchedProperties = {
   node: Node;
   path: Path;
@@ -11,12 +15,6 @@ const searchedPropertiesAtom = atom<SearchedProperties>({
   path: [],
 });
 
-export const useSearchedProperties = () => {
-  const atomValue = useAtom(searchedPropertiesAtom);
-
-  return atomValue;
-};
-
 const searchedPropertiesAtomSet = atom(
   null,
   (get, set, by: SearchedProperties) => {
@@ -24,8 +22,10 @@ const searchedPropertiesAtomSet = atom(
   }
 );
 
-export const useSearchedPropertiesSet = () => {
-  const atomValue = useAtom(searchedPropertiesAtomSet);
+export const useSearchedProperties = () => {
+  return useAtom(searchedPropertiesAtom);
+};
 
-  return atomValue;
+export const useSearchedPropertiesSet = () => {
+  return useAtom(searchedPropertiesAtomSet);
 };

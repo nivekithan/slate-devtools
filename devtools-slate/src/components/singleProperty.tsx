@@ -2,7 +2,14 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import { Transforms } from "slate";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useSelectedPropertiesRead } from "../atom/selectedProperties";
+import { useFormInputs } from "../hooks/useFormInputs";
 import { InlineEdit } from "./inlineEdit";
+
+/**
+ * TODO:
+ *
+ * [ ] Have better feedback when JSON.parse throws error
+ */
 
 type Props = {
   keys: string;
@@ -12,11 +19,30 @@ type Props = {
 export const SingleProperty = ({ keys, value }: Props) => {
   const [devEditor] = useDevEditorRead();
   const [{ path }] = useSelectedPropertiesRead();
-  const [valueInputValue, setValueInputValue] = useState<string>(value);
+
+  const [
+    valueInputValue,
+    onChangeUpdateValueInput,
+    setValueInputValue,
+  ] = useFormInputs<HTMLInputElement>(value);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const validValue = useRef<string>(value);
+
+  const validValue = useRef<string>(value); // Stores previous valid Value
 
   const allowEdit = keys !== "children";
+
+  /**
+   * At first we will check if the current valueInputValue is same as  validValue if thats the case then we just off
+   * the editing without applying any operation
+   *
+   * Then JSON.parse the value if the value is not of valid type we will set the valueInputValue
+   * to validValue and off the editing
+   *
+   * Since Transformers.setNodes wont support text and children we have to use Transfromes.insertText for editing text fields
+   * and for everything else we will just use Transfromes.setNodes and then update the validValue.
+   *
+   * The path at which these operations will apply will be path we get from selectedProperties
+   */
 
   const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     try {
@@ -39,16 +65,19 @@ export const SingleProperty = ({ keys, value }: Props) => {
       setIsEditing(false);
     }
   };
+  1;
+  /**
+   * Change to editing mode when someone clicks on component
+   */
 
   const onSpanClick = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     e.preventDefault();
     setIsEditing(true);
   };
 
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setValueInputValue(e.currentTarget.value);
-  };
+  /**
+   * Remove the property when someone clicks the X
+   */
 
   const onRemoveClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -57,9 +86,14 @@ export const SingleProperty = ({ keys, value }: Props) => {
     Transforms.unsetNodes(devEditor, keys, { at: path });
   };
 
+  /**
+   * IF the value  changes outside of this component (like due to Transfromes.setNodes) we will update
+   * that value to valueInputValue
+   */
+
   useLayoutEffect(() => {
     setValueInputValue(value);
-  }, [value]);
+  }, [value, setValueInputValue]);
 
   return (
     <div className="flex gap-x-3">
@@ -69,7 +103,7 @@ export const SingleProperty = ({ keys, value }: Props) => {
         {allowEdit ? (
           <InlineEdit
             value={valueInputValue}
-            onChange={onInputChange}
+            onChange={onChangeUpdateValueInput}
             onBlur={onBlur}
             isEditing={isEditing}
             spanProps={{ onClick: onSpanClick }}
