@@ -11,6 +11,7 @@ import { useToggleOnClick } from "../hooks/useToggleOnClick";
 import ReactDOM from "react-dom";
 import "windi.css";
 import { Resizable } from "../components/resizable";
+import clone from "clone";
 
 type Props = {
   value: Node[]; // NodeList value to show in devtools
@@ -27,7 +28,7 @@ export const Devtools = ({
   module = {},
   open = false,
 }: Props) => {
-  const [devValue, setDevValue] = useState<Node[]>(value);
+  const [devValue, setDevValue] = useState<Node[]>(clone(value));
   const [isOpen, onClickToggle] = useToggleOnClick<HTMLButtonElement>(open);
 
   return ReactDOM.createPortal(
