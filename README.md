@@ -17,6 +17,7 @@ I am planning to release the project in npm after I finished these tasks
 # Roadmap
 
 - [ ] Release the tool in npm
+- [ ] Write tests
 - [ ] Add support for multiple editors
 - [ ] Improve the RenderHistory to show more usefull information
 - [ ] Improve the look
