@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import { Transforms } from "slate";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useSelectedPropertiesRead } from "../atom/selectedProperties";
+import { useFormInputs } from "../hooks/useFormInputs";
 import { InlineEdit } from "./inlineEdit";
 
 /**
@@ -19,7 +20,11 @@ export const SingleProperty = ({ keys, value }: Props) => {
   const [devEditor] = useDevEditorRead();
   const [{ path }] = useSelectedPropertiesRead();
 
-  const [valueInputValue, setValueInputValue] = useState<string>(value);
+  const [
+    valueInputValue,
+    onChangeUpdateValueInput,
+    setValueInputValue,
+  ] = useFormInputs<HTMLInputElement>(value);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const validValue = useRef<string>(value); // Stores previous valid Value
@@ -71,15 +76,6 @@ export const SingleProperty = ({ keys, value }: Props) => {
   };
 
   /**
-   * Update the value of Input
-   */
-
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setValueInputValue(e.currentTarget.value);
-  };
-
-  /**
    * Remove the property when someone clicks the X
    */
 
@@ -97,7 +93,7 @@ export const SingleProperty = ({ keys, value }: Props) => {
 
   useLayoutEffect(() => {
     setValueInputValue(value);
-  }, [value]);
+  }, [value, setValueInputValue]);
 
   return (
     <div className="flex gap-x-3">
@@ -107,7 +103,7 @@ export const SingleProperty = ({ keys, value }: Props) => {
         {allowEdit ? (
           <InlineEdit
             value={valueInputValue}
-            onChange={onInputChange}
+            onChange={onChangeUpdateValueInput}
             onBlur={onBlur}
             isEditing={isEditing}
             spanProps={{ onClick: onSpanClick }}

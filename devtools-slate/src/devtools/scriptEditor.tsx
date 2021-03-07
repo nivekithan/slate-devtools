@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Editor } from "slate";
 import { useDevEditorRead } from "../atom/devEditor";
+import { useFormInputs } from "../hooks/useFormInputs";
 import { exceute } from "../util/excecute";
 
 type Props = {
@@ -11,14 +12,11 @@ type Props = {
 };
 
 export const ScriptEditor = ({ module, editor }: Props) => {
-  const [codeValue, setCodeValue] = useState<string>("");
+  const [codeValue, onChangeUpdateCode] = useFormInputs<HTMLTextAreaElement>(
+    ""
+  );
   const [isError, setIsError] = useState<boolean>(false);
   const [devEditor] = useDevEditorRead();
-
-  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    e.preventDefault();
-    setCodeValue(e.currentTarget.value);
-  };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,7 +32,7 @@ export const ScriptEditor = ({ module, editor }: Props) => {
       <form onSubmit={onSubmit} className="flex bg-hex-111219 rounded">
         <textarea
           value={codeValue}
-          onChange={onChange}
+          onChange={onChangeUpdateCode}
           className="w-full  bg-hex-111219 py-2 px-1 rounded"
           placeholder="Javascript Code"
         />

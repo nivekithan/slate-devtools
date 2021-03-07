@@ -8,7 +8,7 @@ import {
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useSearchedProperties } from "../atom/searchedPath";
 import { useSelectedProperties } from "../atom/selectedProperties";
-import { useCopyOnClick } from "../hooks/useCopyOnClick";
+import { copyOnClick } from "../util/copyOnClick";
 import { useToggleOnClick } from "../hooks/useToggleOnClick";
 import { isEmptyProperties } from "../util/isEmptyProperties";
 import { isRenderElementProps } from "../util/isRenderElementProps";
@@ -35,7 +35,7 @@ export const RenderNode = (props: RenderElementProps | RenderLeafProps) => {
     false
   );
 
-  const copyOnClick = useCopyOnClick(
+  const onClickCopy = copyOnClick(
     JSON.stringify(ReactEditor.findPath(devEditor, ele))
   );
 
@@ -136,7 +136,7 @@ export const RenderNode = (props: RenderElementProps | RenderLeafProps) => {
         <button onClick={onClickUpdateSelectedProperties}>{`<${
           isRenderElementProps(props) ? type || "normal" : "text"
         } />`}</button>
-        <button onClick={copyOnClick} className="text-gray-500">
+        <button onClick={onClickCopy} className="text-gray-500">
           C
         </button>
       </div>

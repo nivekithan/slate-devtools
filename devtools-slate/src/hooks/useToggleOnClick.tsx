@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 
+/**
+ * Toggle the state when clicked
+ */
 export const useToggleOnClick = <T extends HTMLElement>(
   defaultState: boolean
 ): [

@@ -4,6 +4,7 @@ import { usePopper } from "react-popper";
 import { Transforms } from "slate";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useSelectedPropertiesRead } from "../atom/selectedProperties";
+import { useFormInputs } from "../hooks/useFormInputs";
 
 /**
  * TODO:
@@ -22,8 +23,14 @@ export const AddPropertiesModal = ({
   setShowModal,
   referenceElement,
 }: Props) => {
-  const [keyInputValue, setKeyInputValue] = useState<string>('""'); // state for key input
-  const [valueInputValue, setValueInputValue] = useState<string>('""'); // state for value input
+  const [
+    keyInputValue,
+    onChangeUpdateKeyInput,
+  ] = useFormInputs<HTMLInputElement>('""');
+  const [
+    valueInputValue,
+    onChangeUpdateValueInput,
+  ] = useFormInputs<HTMLInputElement>('""');
   const [devEditor] = useDevEditorRead();
   const [{ path }] = useSelectedPropertiesRead();
 
@@ -36,23 +43,6 @@ export const AddPropertiesModal = ({
     referenceElement,
     addPropertiesModal
   );
-
-  /**
-   * When there is change on either key input or value input we will update
-   * their respective state.
-   */
-
-  const onChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    name: "keyInputValue" | "valueInputValue"
-  ) => {
-    e.preventDefault();
-    if (name === "keyInputValue") {
-      setKeyInputValue(e.currentTarget.value);
-    } else {
-      setValueInputValue(e.currentTarget.value);
-    }
-  };
 
   /**
    * onSubmit we will parse the keyInputValue and valueInputValue using JSON if either one of them is
@@ -129,14 +119,14 @@ export const AddPropertiesModal = ({
             className={inputClassName}
             placeholder="Enter the key"
             value={keyInputValue}
-            onChange={(e) => onChange(e, "keyInputValue")}
+            onChange={onChangeUpdateKeyInput}
           />
           <div>Value : </div>
           <input
             placeholder="Enter the value"
             className={inputClassName}
             value={valueInputValue}
-            onChange={(e) => onChange(e, "valueInputValue")}
+            onChange={onChangeUpdateValueInput}
           />
           <div className="flex gap-x-3">
             <input
