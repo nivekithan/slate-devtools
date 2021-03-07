@@ -27,11 +27,20 @@ type HistoryOptions = {
 };
 
 export const HistoryEditor = {
+  /**
+   * Calls an function without saving any of the operations applied beacause
+   * of that function to history
+   */
+
   withoutSave(editor: HistoryEditor, callback: () => unknown) {
     editor.shouldSave = false;
     callback();
     editor.shouldSave = true;
   },
+
+  /**
+   * Retuns an generator of Opeartions
+   */
 
   *operations(editor: HistoryEditor, options: HistoryOptions) {
     const { history } = editor;
@@ -49,6 +58,12 @@ export const HistoryEditor = {
       if (fromBatch > toBatch) {
         mode = "bottom-top";
       } else if (fromBatch < toBatch) {
+        mode = "top-bottom";
+      } else if (fromBatch === toBatch && fromOp > toOp) {
+        mode = "bottom-top";
+      } else if (fromBatch === toBatch && fromOp < toOp) {
+        mode = "top-bottom";
+      } else {
         mode = "top-bottom";
       }
     }
@@ -141,12 +156,19 @@ export const HistoryEditor = {
       );
     }
   },
+  /**
+   * Generator yields inverse of operations based on options
+   */
 
   *inverseOperations(editor: HistoryEditor, options: HistoryOptions) {
     for (const operation of this.operations(editor, options)) {
       yield Operation.inverse(operation);
     }
   },
+  /**
+   * Applies operations to the given editor. The function will take care if we should
+   * apply the inverse of the operations or not
+   */
 
   apply(
     editor: HistoryEditor & Editor,
@@ -156,6 +178,10 @@ export const HistoryEditor = {
     const { history } = editor;
     const [fromBatch, fromOp] = from;
     const [toBatch, toOp] = to;
+
+    /**
+     * If the given from or to is invalid throw error
+     */
 
     if (
       !history[fromBatch] ||
@@ -171,11 +197,21 @@ export const HistoryEditor = {
           })
       );
     }
+    /**
+     * Finds out if we have to inverse the operation or not
+     */
 
     const inverse =
       fromBatch > toBatch || (fromBatch === toBatch && fromOp > toOp);
 
     if (inverse) {
+      /**
+       * We wont have to consider the operation in `to` since we have to go to that state
+       * if we consider the `to`then we will apply the inverse of that operation thus making us go
+       * to the previous state
+       *
+       */
+
       this.withoutSave(editor, () => {
         Editor.withoutNormalizing(editor, () => {
           for (const operation of this.inverseOperations(editor, {
@@ -190,6 +226,11 @@ export const HistoryEditor = {
         });
       });
     } else {
+      /**
+       * If we are not inversing then we wont have to consider from
+       * since we already applied that operation.
+       */
+
       this.withoutSave(editor, () => {
         Editor.withoutNormalizing(editor, () => {
           for (const operations of this.operations(editor, {
@@ -205,6 +246,10 @@ export const HistoryEditor = {
       });
     }
   },
+  /**
+   * Given an HistoryEditor and `till` the function will return
+   * operations till `till`
+   */
 
   giveTill(editor: HistoryEditor, till: [number, number]): Batch[] {
     const { history } = editor;
@@ -225,6 +270,10 @@ export const HistoryEditor = {
 
     return sliceBatch;
   },
+
+  /**
+   * Checks if the editor is HistoryEditor
+   */
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   isHistoryEditor(editor: any): editor is HistoryEditor {
