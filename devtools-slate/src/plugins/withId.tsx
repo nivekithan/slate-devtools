@@ -2,6 +2,13 @@ import { Editor, Node, Transforms } from "slate";
 import { ReactEditor } from "slate-react";
 import { nanoid } from "nanoid";
 
+/**
+ * This is plugin will make sure that each node will have a devtools_id field and its
+ * value will be an unique id
+ *
+ * This is used to identify the node
+ */
+
 export const withId = (editor: ReactEditor): ReactEditor => {
   const { normalizeNode } = editor;
 
