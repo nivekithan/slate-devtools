@@ -73,9 +73,7 @@ export const Devtools = ({
       {isOpen ? null : (
         <button
           onClick={onClickToggle}
-          className={`fixed left-0 bottom-0 ml-20px mb-20px
-           bg-hex-282a36 w-50px h-50px text-white rounded-25px 
-           grid place-items-center text-xs`}
+          className={`fixed left-0 bottom-0 ml-20px mb-20px bg-hex-282a36 w-50px h-50px text-white rounded-25px  grid place-items-center text-xs`}
         >
           Open
         </button>
