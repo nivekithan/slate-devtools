@@ -3,6 +3,7 @@ import { Editor } from "slate";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useFormInputs } from "../hooks/useFormInputs";
 import { exceute } from "../util/excecute";
+import { InputSubmit } from "../components/button";
 
 type Props = {
   module: {
@@ -36,11 +37,9 @@ export const ScriptEditor = ({ module, editor }: Props) => {
           className="w-full  bg-hex-111219 py-2 px-1 rounded"
           placeholder="Javascript Code"
         />
-        <input
-          type="submit"
-          className="px-3 py-1 bg-blue-500 rounded-lg m-3 self-start  cursor-pointer "
-          value="Run"
-        />
+        <div style={{ alignSelf: "flex-start", padding: "0.25rem 1rem" }}>
+          <InputSubmit color="blue">Run</InputSubmit>
+        </div>
       </form>
       <div className="text-red-500 text-xs px-3 py-1">
         {isError

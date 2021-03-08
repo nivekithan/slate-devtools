@@ -4,6 +4,7 @@ import { usePopper } from "react-popper";
 import { Transforms } from "slate";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useSelectedPropertiesRead } from "../atom/selectedProperties";
+import { Button, InputSubmit } from "./button";
 import { useFormInputs } from "../hooks/useFormInputs";
 
 /**
@@ -129,17 +130,11 @@ export const AddPropertiesModal = ({
             onChange={onChangeUpdateValueInput}
           />
           <div className="flex gap-x-3">
-            <input
-              type="submit"
-              value="Okay"
-              className="bg-blue-600 rounded px-3 py-1 gird place-items-center cursor-pointer hover:bg-blue-500 "
-            />
-            <button
-              className="text-red-400  hover:text-red-300"
-              onClick={onCancel}
-            >
+            <InputSubmit color="blue">Add</InputSubmit>
+
+            <Button color="red" onClick={onCancel}>
               Cancel
-            </button>
+            </Button>
           </div>
         </form>
       </div>

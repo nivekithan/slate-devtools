@@ -1,4 +1,5 @@
 import React from "react";
+import { InputSubmit } from "./button";
 import { useFormInputs } from "../hooks/useFormInputs";
 
 type Props = {
@@ -31,11 +32,7 @@ export const Search = ({ startValue = '""', onSubmit }: Props) => {
           value={inputValue}
           onChange={onChangeUpdateInput}
         />
-        <input
-          type="submit"
-          className="bg-blue-600 rounded text-sm px-2 cursor-pointer hover:bg-blue-500"
-          value="Search"
-        />
+        <InputSubmit color="blue">Run</InputSubmit>
       </form>
     </div>
   );

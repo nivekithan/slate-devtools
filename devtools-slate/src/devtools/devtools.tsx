@@ -12,6 +12,7 @@ import ReactDOM from "react-dom";
 import "windi.css";
 import { Resizable } from "../components/resizable";
 import clone from "clone";
+import { Button } from "../components/button";
 
 type Props = {
   value: Node[]; // NodeList value to show in devtools
@@ -40,12 +41,9 @@ export const Devtools = ({
       >
         <div className="flex justify-between">
           <Menu editor={editor} value={value} devValue={devValue} />
-          <button
-            className="text-xs px-2 py-1 bg-red-700 hover:bg-red-600 "
-            onClick={onClickToggle}
-          >
+          <Button onClick={onClickToggle} color="red">
             Close
-          </button>
+          </Button>
         </div>
         <div className="flex gap-x-5 flex-1 h-195px">
           <div className="flex-1 overflow-auto max-h-195px  ">
