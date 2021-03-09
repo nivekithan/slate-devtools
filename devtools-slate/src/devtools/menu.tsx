@@ -4,7 +4,8 @@ import { ReactEditor } from "slate-react";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useSearchedPropertiesSet } from "../atom/searchedPath";
 import { useSelectedPropertiesRead } from "../atom/selectedProperties";
-import { RenderPath } from "../components/renderPath";
+import { GreenLabel } from "../components/greenLabel";
+import { RenderPath } from "../components/path";
 import { Search } from "../components/search";
 import { UpdateButtons } from "./updateButtons";
 
@@ -60,9 +61,7 @@ export const Menu = ({ editor, value, devValue }: Props) => {
     <div className="flex items-center gap-x-21">
       <UpdateButtons editor={editor} value={value} devValue={devValue} />
       <div className="flex gap-x-3">
-        <div className="font-semibold text-green-500 text-sm">
-          Selected Path :
-        </div>
+        <GreenLabel>Selected Path :</GreenLabel>
         <RenderPath path={path} />
       </div>
       <Search startValue={`[  ]`} onSubmit={onSearchSubmit} />

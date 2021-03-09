@@ -1,6 +1,9 @@
 import { Node, Path } from "slate";
 import React from "react";
 import { Resizable } from "re-resizable";
+import { GreenLabel } from "./greenLabel";
+import { RenderPath } from "./path";
+import { css } from "../styles/stitches.config";
 
 /**
  * For keys I am using the index of array. But I dont think it will lead to any problems in
@@ -28,8 +31,14 @@ export const Properties = ({
       enable={{ left, right }}
     >
       <div className="inline-flex flex-col w-full gap-y-1   items-center p-2 ">
-        <div className="text-green-500 font-semibold text-sm ">
-          Path : {JSON.stringify(path)}
+        <div
+          className={css({
+            $flex: "",
+            columnGap: "0.5rem",
+          })}
+        >
+          <GreenLabel>{`Path :`}</GreenLabel>
+          <RenderPath path={path} />
         </div>
         <div className="flex flex-col gap-y-1 w-full  text-xs ">
           {Object.keys(properties).map((val, i) => {

@@ -19,5 +19,9 @@ export const { styled, css } = createStyled({
       display: "grid",
       placeItems: "center",
     }),
+    $flex: () => () => ({
+      display: "flex",
+      alignItems: "center",
+    }),
   },
 });

@@ -47,12 +47,14 @@ export const AddPropertiesModal = ({
 
   /**
    * onSubmit we will parse the keyInputValue and valueInputValue using JSON if either one of them is
-   * not valid JSON will throw error which we will catch and console.error that error. In this case we wont close the modal
+   * not valid, JSON will throw error which we will catch and console.error that error.
+   * In this case we wont close the modal
    *
-   * If the typeof parsed keyInputValue is not string then we will throw another error. In this case we wont close the modal
+   * If the typeof parsed keyInputValue is not string then we will throw another error.
+   * In this case we wont close the modal
    *
-   * If there is no error and parsedKeyValue is value but it is empty or contians only line-breaks or white-space then
-   *  we will just close the modal but not updating the devEditor
+   * If there is no error and parsedKeyValue is value but it is empty or contians only line-breaks or
+   * white-space then we will just close the modal but not updating the devEditor
    *
    * If the key is either text or children we will throw the error which will be catched by our catch block. In this case
    * we wont close the modal

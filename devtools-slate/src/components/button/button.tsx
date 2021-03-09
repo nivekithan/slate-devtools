@@ -27,6 +27,7 @@ export const StyledButton = styled("button", {
   color: "white",
   borderRadius: "0.25rem",
   fontSize: "0.75rem",
+  lineHeight: "1rem",
   cursor: "pointer",
   variants: {
     color: {

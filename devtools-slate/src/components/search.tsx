@@ -1,6 +1,7 @@
 import React from "react";
 import { InputSubmit } from "./button";
 import { useFormInputs } from "../hooks/useFormInputs";
+import { GreenLabel } from "./greenLabel";
 
 type Props = {
   startValue?: string;
@@ -23,7 +24,7 @@ export const Search = ({ startValue = '""', onSubmit }: Props) => {
 
   return (
     <div className="flex gap-x-3 items-center text-sm">
-      <div className="font-semibold text-green-500 ">Search by path : </div>
+      <GreenLabel>Search by Path :</GreenLabel>
       <form className="flex gap-x-2" onSubmit={onFormSubmit}>
         <input
           type="text"
@@ -32,7 +33,7 @@ export const Search = ({ startValue = '""', onSubmit }: Props) => {
           value={inputValue}
           onChange={onChangeUpdateInput}
         />
-        <InputSubmit color="blue">Run</InputSubmit>
+        <InputSubmit color="blue">Search</InputSubmit>
       </form>
     </div>
   );
