@@ -14,8 +14,8 @@ import { isEmptyProperties } from "../util/isEmptyProperties";
 import { isRenderElementProps } from "../util/isRenderElementProps";
 import { isSubset } from "../util/isSubset";
 import React from "react";
-import { css } from "../styles/stitches.config";
 import { NodeLayout } from "./layout";
+import { PlainButton } from "./button";
 
 export const RenderNode = (props: RenderElementProps | RenderLeafProps) => {
   const ele = isRenderElementProps(props) ? props.element : props.text;
@@ -133,13 +133,13 @@ export const RenderNode = (props: RenderElementProps | RenderLeafProps) => {
       contentEditable={false}
     >
       <div>
-        <button onClick={onClickShowChildren}>+</button>
-        <button onClick={onClickUpdateSelectedProperties}>{`<${
+        <PlainButton onClick={onClickShowChildren}>+</PlainButton>
+        <PlainButton onClick={onClickUpdateSelectedProperties}>{`<${
           isRenderElementProps(props) ? type || "normal" : "text"
-        } />`}</button>
-        <button onClick={onClickCopy} className="gray">
+        } />`}</PlainButton>
+        <PlainButton onClick={onClickCopy} className="gray">
           C
-        </button>
+        </PlainButton>
       </div>
       {showChildren ? (
         isRenderElementProps(props) ? (

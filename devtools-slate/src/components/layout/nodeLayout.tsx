@@ -11,12 +11,8 @@ export const NodeLayout = styled("div", {
       display: "flex",
       columnGap: "0.75rem",
 
-      button: {
-        $reset: "",
-
-        "&.gray": {
-          color: "#6B7280",
-        },
+      ".gray": {
+        color: "#6B7280",
       },
     },
   },
