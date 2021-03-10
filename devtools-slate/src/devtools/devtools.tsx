@@ -11,7 +11,7 @@ import { useToggleOnClick } from "../hooks/useToggleOnClick";
 import ReactDOM from "react-dom";
 import "windi.css";
 import clone from "clone";
-import { Button } from "../components/button";
+import { Button, RoundButton } from "../components/button";
 import { MenuLayout } from "../components/layout/menuLayout";
 import { Layout } from "../components/layout/layout";
 
@@ -22,6 +22,7 @@ type Props = {
     [index: string]: unknown;
   };
   open?: boolean;
+  height?: string;
 };
 
 export const Devtools = ({
@@ -29,13 +30,14 @@ export const Devtools = ({
   editor,
   module = {},
   open = false,
+  height = "325px",
 }: Props) => {
   const [devValue, setDevValue] = useState<Node[]>(clone(value));
   const [isOpen, onClickToggle] = useToggleOnClick<HTMLButtonElement>(open);
 
   return ReactDOM.createPortal(
     <Fragment>
-      <Layout show={isOpen ? "yes" : "no"} height="325px">
+      <Layout show={isOpen ? "yes" : "no"} height={height}>
         <MenuLayout className="row-1">
           <Menu editor={editor} value={value} devValue={devValue} />
           <Button onClick={onClickToggle} color="red">
@@ -52,12 +54,9 @@ export const Devtools = ({
         </div>
       </Layout>
       {isOpen ? null : (
-        <button
-          onClick={onClickToggle}
-          className={`fixed left-0 bottom-0 ml-20px mb-20px bg-hex-282a36 w-50px h-50px text-white rounded-25px  grid place-items-center text-xs`}
-        >
+        <RoundButton onClick={onClickToggle} size="50px">
           Open
-        </button>
+        </RoundButton>
       )}
     </Fragment>,
     document.body
