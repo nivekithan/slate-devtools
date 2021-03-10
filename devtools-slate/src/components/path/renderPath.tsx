@@ -22,12 +22,7 @@ const StyledPath = styled("div", {
   columnGap: "0.25rem",
   color: "white",
 
-  "& > div": {
-    fontSize: "0.875rem",
-    lineHeight: "1.25rem",
-  },
-
-  ":before": {
+  "&::before": {
     content: `"["`,
     $reset: "",
     fontSize: "1rem",
@@ -35,11 +30,15 @@ const StyledPath = styled("div", {
     color: "#93c5fd",
   },
 
-  ":after": {
+  "&::after": {
     content: `"]"`,
     $reset: "",
     fontSize: "1rem",
     lineHeight: "1.25rrm",
     color: "#93c5fd",
+  },
+  "& > div": {
+    fontSize: "0.875rem",
+    lineHeight: "1.25rem",
   },
 });

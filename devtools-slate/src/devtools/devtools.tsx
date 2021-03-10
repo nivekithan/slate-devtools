@@ -13,6 +13,7 @@ import "windi.css";
 import { Resizable } from "../components/resizable";
 import clone from "clone";
 import { Button } from "../components/button";
+import { StyledLayout } from "../components/layout/styledLayout";
 
 type Props = {
   value: Node[]; // NodeList value to show in devtools
@@ -35,38 +36,40 @@ export const Devtools = ({
   return ReactDOM.createPortal(
     <Fragment>
       <div
-        className={`fixed bg-hex-282a36  min-h-325px max-h-325px text-white flex flex-col p-2 gap-y-2 custom-scroll ${
+        className={`fixed bg-hex-282a36 ${
           isOpen ? "right-0 left-0 bottom-0" : "-ml-10000px"
         }`}
       >
-        <div className="flex justify-between">
-          <Menu editor={editor} value={value} devValue={devValue} />
-          <Button onClick={onClickToggle} color="red">
-            Close
-          </Button>
-        </div>
-        <div className="flex gap-x-5 flex-1 h-195px">
-          <div className="flex-1 overflow-auto max-h-195px  ">
+        <StyledLayout style={{ height: "325px" }}>
+          <div className="row-1">
+            <div className="flex justify-between pt-1 px-2 w-full">
+              <Menu editor={editor} value={value} devValue={devValue} />
+              <Button onClick={onClickToggle} color="red">
+                Close
+              </Button>
+            </div>
+          </div>
+          <div className="row-2">
             <DevSlate devValue={devValue} setDevValue={setDevValue} />
+            <div>
+              <Resizable width="400px">
+                <div className="ml-5">
+                  <PropertiesEditor />
+                </div>
+              </Resizable>
+            </div>
+            <div>
+              <Resizable width="400px">
+                <div className="rounded w-full bg-hex-272535 p-5">
+                  <RenderHistory />
+                </div>
+              </Resizable>
+            </div>
           </div>
-          <div>
-            <Resizable width="400px">
-              <div className="ml-5">
-                <PropertiesEditor />
-              </div>
-            </Resizable>
+          <div className="row-3">
+            <ScriptEditor editor={editor} module={module} />
           </div>
-          <div>
-            <Resizable width="400px">
-              <div className="rounded w-full bg-hex-272535 p-5">
-                <RenderHistory />
-              </div>
-            </Resizable>
-          </div>
-        </div>
-        <div>
-          <ScriptEditor editor={editor} module={module} />
-        </div>
+        </StyledLayout>
       </div>
       {isOpen ? null : (
         <button

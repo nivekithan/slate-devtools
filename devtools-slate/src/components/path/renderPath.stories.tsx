@@ -15,7 +15,7 @@ const WithText: Story<RenderPathProps> = (props) => (
     className={css({
       $flex: "",
       columnGap: "0.5rem",
-    })}
+    })()}
   >
     <GreenLabel>Search by path: </GreenLabel>
     <RenderPath {...props} />

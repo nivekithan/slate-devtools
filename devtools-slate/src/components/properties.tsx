@@ -35,7 +35,7 @@ export const Properties = ({
           className={css({
             $flex: "",
             columnGap: "0.5rem",
-          })}
+          })()}
         >
           <GreenLabel>{`Path :`}</GreenLabel>
           <RenderPath path={path} />

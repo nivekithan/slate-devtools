@@ -60,7 +60,7 @@ export const Menu = ({ editor, value, devValue }: Props) => {
   return (
     <div className="flex items-center gap-x-21">
       <UpdateButtons editor={editor} value={value} devValue={devValue} />
-      <div className="flex gap-x-3">
+      <div className="flex gap-x-3 items-center">
         <GreenLabel>Selected Path :</GreenLabel>
         <RenderPath path={path} />
       </div>

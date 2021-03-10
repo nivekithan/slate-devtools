@@ -1,6 +1,6 @@
-import { createStyled } from "@stitches/react";
+import { createCss } from "@stitches/react";
 
-export const { styled, css } = createStyled({
+export const { styled, css } = createCss({
   utils: {
     $reset: () => () => ({
       outline: "none",
@@ -10,7 +10,6 @@ export const { styled, css } = createStyled({
       fontFamily:
         "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol,Noto Color Emoji",
       border: "none",
-      backgroundColor: "transparent",
       WebkitAppearance: "none",
       appearance: "none",
       boxSizing: "border-box",

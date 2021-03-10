@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.8.4",
-    "@stitches/react": "0.0.2",
+    "@stitches/react": "0.1.0-canary.15",
     "clone": "^2.1.2",
     "jotai": "^0.15.0",
     "nanoid": "^3.1.20",

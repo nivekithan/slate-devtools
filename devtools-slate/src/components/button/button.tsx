@@ -37,19 +37,19 @@ export const StyledButton = styled("button", {
       },
       rose: {
         backgroundColor: "#e11d48",
-        ":hover": {
+        "&:hover": {
           backgroundColor: "#f43f5e",
         },
       },
       blue: {
         backgroundColor: "#2563eb",
-        ":hover": {
+        "&:hover": {
           backgroundColor: "#3b82f6",
         },
       },
       red: {
         backgroundColor: "#dc2626",
-        ":hover": { backgroundColor: "#ef4444" },
+        "&:hover": { backgroundColor: "#ef4444" },
       },
     },
   },
