@@ -12,8 +12,7 @@ import ReactDOM from "react-dom";
 import "windi.css";
 import clone from "clone";
 import { Button, RoundButton } from "../components/button";
-import { MenuLayout } from "../components/layout/menuLayout";
-import { Layout } from "../components/layout/layout";
+import { Layout, MenuLayout } from "../components/layout";
 
 type Props = {
   value: Node[]; // NodeList value to show in devtools

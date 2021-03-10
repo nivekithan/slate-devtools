@@ -14,6 +14,8 @@ import { isEmptyProperties } from "../util/isEmptyProperties";
 import { isRenderElementProps } from "../util/isRenderElementProps";
 import { isSubset } from "../util/isSubset";
 import React from "react";
+import { css } from "../styles/stitches.config";
+import { NodeLayout } from "./layout";
 
 export const RenderNode = (props: RenderElementProps | RenderLeafProps) => {
   const ele = isRenderElementProps(props) ? props.element : props.text;
@@ -126,17 +128,16 @@ export const RenderNode = (props: RenderElementProps | RenderLeafProps) => {
   };
 
   return (
-    <div
+    <NodeLayout
       style={{ ...depthStyle(depth as number) }}
       contentEditable={false}
-      className="text-sm"
     >
-      <div className="flex gap-x-3">
+      <div>
         <button onClick={onClickShowChildren}>+</button>
         <button onClick={onClickUpdateSelectedProperties}>{`<${
           isRenderElementProps(props) ? type || "normal" : "text"
         } />`}</button>
-        <button onClick={onClickCopy} className="text-gray-500">
+        <button onClick={onClickCopy} className="gray">
           C
         </button>
       </div>
@@ -149,6 +150,6 @@ export const RenderNode = (props: RenderElementProps | RenderLeafProps) => {
           </div>
         )
       ) : null}
-    </div>
+    </NodeLayout>
   );
 };
