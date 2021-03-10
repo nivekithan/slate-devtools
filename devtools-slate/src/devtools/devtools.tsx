@@ -10,10 +10,10 @@ import "../styles/scrollbar.css";
 import { useToggleOnClick } from "../hooks/useToggleOnClick";
 import ReactDOM from "react-dom";
 import "windi.css";
-import { Resizable } from "../components/resizable";
 import clone from "clone";
 import { Button } from "../components/button";
-import { StyledLayout } from "../components/layout/styledLayout";
+import { MenuLayout } from "../components/layout/menuLayout";
+import { Layout } from "../components/layout/layout";
 
 type Props = {
   value: Node[]; // NodeList value to show in devtools
@@ -35,42 +35,22 @@ export const Devtools = ({
 
   return ReactDOM.createPortal(
     <Fragment>
-      <div
-        className={`fixed bg-hex-282a36 ${
-          isOpen ? "right-0 left-0 bottom-0" : "-ml-10000px"
-        }`}
-      >
-        <StyledLayout style={{ height: "325px" }}>
-          <div className="row-1">
-            <div className="flex justify-between pt-1 px-2 w-full">
-              <Menu editor={editor} value={value} devValue={devValue} />
-              <Button onClick={onClickToggle} color="red">
-                Close
-              </Button>
-            </div>
-          </div>
-          <div className="row-2">
-            <DevSlate devValue={devValue} setDevValue={setDevValue} />
-            <div>
-              <Resizable width="400px">
-                <div className="ml-5">
-                  <PropertiesEditor />
-                </div>
-              </Resizable>
-            </div>
-            <div>
-              <Resizable width="400px">
-                <div className="rounded w-full bg-hex-272535 p-5">
-                  <RenderHistory />
-                </div>
-              </Resizable>
-            </div>
-          </div>
-          <div className="row-3">
-            <ScriptEditor editor={editor} module={module} />
-          </div>
-        </StyledLayout>
-      </div>
+      <Layout show={isOpen ? "yes" : "no"} height="325px">
+        <MenuLayout className="row-1">
+          <Menu editor={editor} value={value} devValue={devValue} />
+          <Button onClick={onClickToggle} color="red">
+            Close
+          </Button>
+        </MenuLayout>
+        <div className="row-2">
+          <DevSlate devValue={devValue} setDevValue={setDevValue} />
+          <PropertiesEditor />
+          <RenderHistory />
+        </div>
+        <div className="row-3">
+          <ScriptEditor editor={editor} module={module} />
+        </div>
+      </Layout>
       {isOpen ? null : (
         <button
           onClick={onClickToggle}
