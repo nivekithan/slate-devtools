@@ -22,5 +22,10 @@ export const { styled, css } = createCss({
       display: "flex",
       alignItems: "center",
     }),
+    $truncate: () => () => ({
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+    }),
   },
 });

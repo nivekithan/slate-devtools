@@ -3,13 +3,14 @@ import { SingleProperty } from "../components/singleProperty";
 import { AddProperties } from "../components/addProperties";
 import { useSelectedPropertiesRead } from "../atom/selectedProperties";
 import { Resizable } from "../components/resizable";
+import { PropertiesEditorLayout } from "../components/layout";
 
 export const PropertiesEditor = () => {
   const [{ node }] = useSelectedPropertiesRead();
 
   return (
     <Resizable width="400px">
-      <div className="flex flex-col gap-y-4 text-sm p-2 max-h-320px ml-5 ">
+      <PropertiesEditorLayout>
         <AddProperties />
         <div>
           {Object.keys(node).map((keys) => {
@@ -36,7 +37,7 @@ export const PropertiesEditor = () => {
             }
           })}
         </div>
-      </div>
+      </PropertiesEditorLayout>
     </Resizable>
   );
 };

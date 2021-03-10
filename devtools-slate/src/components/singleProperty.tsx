@@ -1,8 +1,10 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { Fragment, useLayoutEffect, useRef, useState } from "react";
 import { Transforms } from "slate";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useSelectedPropertiesRead } from "../atom/selectedProperties";
 import { useFormInputs } from "../hooks/useFormInputs";
+import { css } from "../styles/stitches.config";
+import { PlainButton } from "./button";
 import { InlineEdit } from "./inlineEdit";
 
 /**
@@ -96,10 +98,10 @@ export const SingleProperty = ({ keys, value }: Props) => {
   }, [value, setValueInputValue]);
 
   return (
-    <div className="flex gap-x-3">
-      <div className="w-100px truncate text-blue-500">{keys}</div>
+    <Fragment>
+      <div className={css({ $truncate: "", color: "#3B82F6" })()}>{keys}</div>
       <div>:</div>
-      <div className="w-200px truncate">
+      <div className={css({ $truncate: "" })()}>
         {allowEdit ? (
           <InlineEdit
             value={valueInputValue}
@@ -112,11 +114,18 @@ export const SingleProperty = ({ keys, value }: Props) => {
           <span>{valueInputValue}</span>
         )}
       </div>
-      {allowEdit && keys !== "text" ? (
-        <button className="text-red-400 pl-2" onClick={onRemoveClick}>
-          X
-        </button>
-      ) : null}
-    </div>
+      <PlainButton
+        className={css({
+          color: "#F87171",
+          paddingLeft: "0.5rem",
+          visibility: allowEdit && keys !== "text" ? "visible" : "hidden",
+        })()}
+        onClick={onRemoveClick}
+      >
+        X
+      </PlainButton>
+    </Fragment>
   );
 };
+// className="text-red-400 pl-2"
+// truncate text-blue-500
