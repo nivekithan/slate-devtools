@@ -2,6 +2,7 @@ import { useToggleOnClick } from "../hooks/useToggleOnClick";
 import { Batch } from "../util/historyEditor";
 import React from "react";
 import { RenderOperations } from "./renderOperations";
+import { css, styled } from "../styles/stitches.config";
 
 /**
  * RenderBatch renders each seperate batch in RenderHistory and based wheather batch.normalizing is true or not the colour
@@ -23,18 +24,19 @@ export const RenderBatch = ({ batch, num }: Props) => {
   const [showOperations, onClick] = useToggleOnClick<HTMLButtonElement>(false);
 
   return (
-    <div className="flex flex-col gap-y-2 text-xs">
+    <StyledRenderBatch>
       <button
         onClick={onClick}
-        className={`${
-          batch.normalizing ? "bg-indigo-500" : "bg-purple-900"
-        }  p-2 rounded-lg`}
+        className={css({
+          background: batch.normalizing
+            ? "$batchNormalizing"
+            : "$batchOperations",
+        })()}
       >
         {batch.normalizing ? "Normalizing" : "Operation"}
       </button>
-      {showOperations ? (
-        <div className="flex flex-col gap-y-2 ">
-          {batch.data.map((op, i) => {
+      {showOperations
+        ? batch.data.map((op, i) => {
             return (
               <RenderOperations
                 op={op}
@@ -42,9 +44,21 @@ export const RenderBatch = ({ batch, num }: Props) => {
                 to={[num, i]}
               />
             );
-          })}
-        </div>
-      ) : null}
-    </div>
+          })
+        : null}
+    </StyledRenderBatch>
   );
 };
+
+const StyledRenderBatch = styled("div", {
+  $reset: "",
+  display: "flex",
+  flexDirection: "column",
+  rowGap: "0.5rem",
+  fontSize: "0.75rem",
+
+  "& > button": {
+    padding: "0.5rem",
+    borderRadius: "5px",
+  },
+});

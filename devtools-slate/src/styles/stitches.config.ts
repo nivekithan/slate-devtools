@@ -39,6 +39,8 @@ export const { styled, css } = createCss({
       buttonRed: "rgb(220,40,40)",
       buttonRedHover: "rgb(239,67,67)",
       buttonGray: "rgb(75,85,99)",
+      batchNormalizing: "rgb(99,102,241)",
+      batchOperations: "rgb(88,28,135)",
     },
   },
 });
