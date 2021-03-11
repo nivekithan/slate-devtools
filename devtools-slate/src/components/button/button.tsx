@@ -32,24 +32,24 @@ export const StyledButton = styled("button", {
   variants: {
     color: {
       gray: {
-        backgroundColor: "#4B5563",
+        backgroundColor: "$buttonGray",
         cursor: "default",
       },
       rose: {
-        backgroundColor: "#e11d48",
+        backgroundColor: "$buttonRose",
         "&:hover": {
-          backgroundColor: "#f43f5e",
+          backgroundColor: "$buttonRoseHover",
         },
       },
       blue: {
-        backgroundColor: "#2563eb",
+        backgroundColor: "$buttonBlue",
         "&:hover": {
-          backgroundColor: "#3b82f6",
+          backgroundColor: "$buttonBlueHover",
         },
       },
       red: {
-        backgroundColor: "#dc2626",
-        "&:hover": { backgroundColor: "#ef4444" },
+        backgroundColor: "$buttonRed",
+        "&:hover": { backgroundColor: "$buttonRedHover" },
       },
     },
   },

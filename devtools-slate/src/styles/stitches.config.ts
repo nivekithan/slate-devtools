@@ -30,8 +30,15 @@ export const { styled, css } = createCss({
   },
   theme: {
     colors: {
-      bg: "#282a36",
+      bg: "rgb(39,41,53)",
       bgInput: "rgba(13, 17, 23, 0.3)",
+      buttonBlue: "rgb(36,99,235)",
+      buttonBlueHover: "rgb(60,131,246)",
+      buttonRose: "rgb(226,29,72)",
+      buttonRoseHover: "rgb(244,62,92)",
+      buttonRed: "rgb(220,40,40)",
+      buttonRedHover: "rgb(239,67,67)",
+      buttonGray: "rgb(75,85,99)",
     },
   },
 });
