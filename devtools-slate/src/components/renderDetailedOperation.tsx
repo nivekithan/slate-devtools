@@ -4,11 +4,13 @@ import { Properties } from "./properties";
 import { convertOperation } from "../util/convertOperation";
 import { styled } from "../styles/stitches.config";
 
-type Props = {
+export type RenderDetailedOperationProps = {
   op: Operation;
 };
 
-export const RenderDetailedOperation = ({ op }: Props) => {
+export const RenderDetailedOperation = ({
+  op,
+}: RenderDetailedOperationProps) => {
   /**
    * Since typescript does not support narrowing after one level of propagation
    * we cannot destructure the newProperties, offset and position
