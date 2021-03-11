@@ -25,12 +25,28 @@ export const Properties = ({
 }: Props) => {
   return (
     <Resizable
-      className="border-1 inline-flex rounded-xl h-full"
+      className={css({
+        $reset: "",
+        border: "1px solid white",
+        display: "inline-flex",
+        borderRadius: "10px",
+        height: "100%",
+      })()}
       defaultSize={{ width: "120px", height: "auto" }}
       maxWidth="100%"
       enable={{ left, right }}
     >
-      <div className="inline-flex flex-col w-full gap-y-1   items-center p-2 ">
+      <div
+        className={css({
+          $reset: "",
+          display: "inline-flex",
+          flexDirection: "column",
+          width: "100%",
+          rowGap: "0.25rem",
+          padding: "0.5rem",
+          alignItems: "center",
+        })()}
+      >
         <div
           className={css({
             $flex: "",
@@ -40,13 +56,35 @@ export const Properties = ({
           <GreenLabel>{`Path :`}</GreenLabel>
           <RenderPath path={path} />
         </div>
-        <div className="flex flex-col gap-y-1 w-full  text-xs ">
+        <div
+          className={css({
+            $reset: "",
+            display: "flex",
+            flexDirection: "column",
+            rowGap: "0.25rem",
+            width: "100%",
+            fontSize: "0.75rem",
+          })()}
+        >
           {Object.keys(properties).map((val, i) => {
             return (
-              <div className="flex gap-x-1 " key={i}>
-                <div className="truncate">{val} </div>
+              <div
+                className={css({
+                  $reset: "",
+                  display: "flex",
+                  columnGap: "0.25rem",
+                })()}
+                key={i}
+              >
+                <div
+                  className={css({
+                    $truncate: "",
+                  })()}
+                >
+                  {val}{" "}
+                </div>
                 <div>:</div>
-                <div className="truncate">
+                <div className={css({ $truncate: "" })()}>
                   {JSON.stringify(properties[val])}{" "}
                 </div>
               </div>
