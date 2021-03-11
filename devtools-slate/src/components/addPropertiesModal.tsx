@@ -7,6 +7,7 @@ import { useSelectedPropertiesRead } from "../atom/selectedProperties";
 import { Button, InputSubmit } from "./button";
 import { useFormInputs } from "../hooks/useFormInputs";
 import { InlineEdit } from "./input";
+import { styled } from "../styles/stitches.config";
 
 /**
  * TODO:
@@ -114,32 +115,52 @@ export const AddPropertiesModal = ({
       style={styles.popper}
       {...attributes.popper}
     >
-      <div className="flex text-white bg-hex-282a36  shadow-normal p-2 text-sm">
-        <form className="flex flex-col gap-y-3" onSubmit={onSubmit}>
-          <div>Key : </div>
-          <InlineEdit
-            value={keyInputValue}
-            onChange={onChangeUpdateKeyInput}
-            placeholder="Key"
-            css={{ background: "$bgInput" }}
-          />
-          <div>Value : </div>
-          <InlineEdit
-            value={valueInputValue}
-            onChange={onChangeUpdateValueInput}
-            placeholder="Value"
-            css={{ background: "$bgInput" }}
-          />
-          <div className="flex gap-x-3">
-            <InputSubmit color="blue">Add</InputSubmit>
+      <AddPropertiesModalLayout onSubmit={onSubmit}>
+        <div>Key : </div>
+        <InlineEdit
+          value={keyInputValue}
+          onChange={onChangeUpdateKeyInput}
+          placeholder="Key"
+          css={{ background: "$bgInput" }}
+        />
+        <div>Value : </div>
+        <InlineEdit
+          value={valueInputValue}
+          onChange={onChangeUpdateValueInput}
+          placeholder="Value"
+          css={{ background: "$bgInput" }}
+        />
+        <div>
+          <InputSubmit color="blue">Add</InputSubmit>
 
-            <Button color="red" onClick={onCancel}>
-              Cancel
-            </Button>
-          </div>
-        </form>
-      </div>
+          <Button color="red" onClick={onCancel}>
+            Cancel
+          </Button>
+        </div>
+      </AddPropertiesModalLayout>
     </div>,
     document.body
   );
 };
+
+const AddPropertiesModalLayout = styled("form", {
+  $reset: "",
+  display: "flex",
+  flexDirection: "column",
+  rowGap: "0.75rem",
+  color: "white",
+  backgroundColor: "$bg",
+  padding: "0.5rem",
+  fontSize: "0.875rem",
+  boxShadow: "3px 3px 13px 2px rgba(0,0,0,0.6)",
+  borderRadius: "10px",
+
+  "& > div": {
+    $reset: "",
+
+    "&:last-child": {
+      display: "flex",
+      columnGap: "0.75rem",
+    },
+  },
+});

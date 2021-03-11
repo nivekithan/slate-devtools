@@ -63,6 +63,10 @@ export const RenderNode = (props: RenderElementProps | RenderLeafProps) => {
    */
 
   useDeepCompareEffect(() => {
+    if (!selectedId) {
+      return;
+    }
+
     if (id === selectedId) {
       setSelectedProperties({ node: ele, path: path });
     }
