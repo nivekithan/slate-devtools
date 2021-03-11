@@ -9,6 +9,7 @@ import { addOperations } from "../util/addOperations";
 import { applyOperations } from "../util/applyOperations";
 import { inverseOperations } from "../util/inverseOperations";
 import { Button } from "../components/button/button";
+import { styled } from "../styles/stitches.config";
 
 type Props = {
   editor: ReactEditor;
@@ -184,7 +185,7 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
   };
 
   return (
-    <div className="flex gap-x-5 text-xs">
+    <StyledUpdateButtons>
       <Button
         color={updateDevtools === "on" ? "rose" : "gray"}
         onClick={onUpdateDevtoolsClick}
@@ -198,6 +199,13 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
       >
         Update App
       </Button>
-    </div>
+    </StyledUpdateButtons>
   );
 };
+
+const StyledUpdateButtons = styled("div", {
+  $reset: "",
+  display: "flex",
+  columnGap: "1.25rem",
+  fontSize: "0.75rem",
+});

@@ -4,6 +4,7 @@ import { useDevEditorRead } from "../atom/devEditor";
 import { useFormInputs } from "../hooks/useFormInputs";
 import { exceute } from "../util/excecute";
 import { InputSubmit } from "../components/button";
+import { styled } from "../styles/stitches.config";
 
 type Props = {
   module: {
@@ -29,18 +30,46 @@ export const ScriptEditor = ({ module, editor }: Props) => {
   };
 
   return (
-    <div className="flex flex-col text-xs">
-      <form onSubmit={onSubmit} className="flex bg-hex-111219 rounded">
+    <ScriptEditorStyled>
+      <form onSubmit={onSubmit}>
         <textarea
           value={codeValue}
           onChange={onChangeUpdateCode}
-          className="w-full  bg-hex-111219 py-2 px-1 rounded"
           placeholder="Javascript Code"
         />
-        <div style={{ alignSelf: "flex-start", padding: "0.25rem 1rem" }}>
+        <div>
           <InputSubmit color="blue">Run</InputSubmit>
         </div>
       </form>
-    </div>
+    </ScriptEditorStyled>
   );
 };
+
+const ScriptEditorStyled = styled("div", {
+  $reset: "",
+  display: "flex",
+  flexDirection: "column",
+  fontSize: "0.75rem",
+
+  "& > form": {
+    $reset: "",
+    display: "flex",
+    backgroundColor: "$bgScriptEditor",
+    borderRadius: "2px",
+
+    "& > textarea": {
+      $reset: "",
+      width: "100%",
+      backgroundColor: "$bgScriptEditor",
+      padding: "0.5rem 0.25rem",
+      borderRadius: "2px",
+      resize: "none",
+    },
+
+    "& > div": {
+      $reset: "",
+      alignSelf: "flex-start",
+      padding: "0.25rem 1rem",
+    },
+  },
+});

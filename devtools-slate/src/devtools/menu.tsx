@@ -7,6 +7,7 @@ import { useSelectedPropertiesRead } from "../atom/selectedProperties";
 import { GreenLabel } from "../components/greenLabel";
 import { RenderPath } from "../components/path";
 import { Search } from "../components/search";
+import { styled } from "../styles/stitches.config";
 import { UpdateButtons } from "./updateButtons";
 
 type Props = {
@@ -58,13 +59,29 @@ export const Menu = ({ editor, value, devValue }: Props) => {
   };
 
   return (
-    <div className="flex items-center gap-x-21">
+    <MenuStyled>
       <UpdateButtons editor={editor} value={value} devValue={devValue} />
-      <div className="flex gap-x-3 items-center">
+      <div>
         <GreenLabel>Selected Path :</GreenLabel>
         <RenderPath path={path} />
       </div>
       <Search startValue={`[  ]`} onSubmit={onSearchSubmit} />
-    </div>
+    </MenuStyled>
   );
 };
+
+const MenuStyled = styled("div", {
+  $reset: "",
+  display: "flex",
+  alignItems: "center",
+  columnGap: "5.25rem",
+
+  "& > div": {
+    $reset: "",
+    "&:nth-child(2)": {
+      display: "flex",
+      columnGap: "0.75rem",
+      alignItems: "center",
+    },
+  },
+});

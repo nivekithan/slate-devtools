@@ -31,6 +31,7 @@ export const { styled, css } = createCss({
   theme: {
     colors: {
       bg: "rgb(39,41,53)",
+      bgScriptEditor: "rgb(17,18,25)",
       bgInput: "rgba(13, 17, 23, 0.3)",
       buttonBlue: "rgb(36,99,235)",
       buttonBlueHover: "rgb(60,131,246)",

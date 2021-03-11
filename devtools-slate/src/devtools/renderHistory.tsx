@@ -2,6 +2,7 @@ import { useDevEditorRead } from "../atom/devEditor";
 import React from "react";
 import { RenderBatch } from "../components/renderBatch";
 import { Resizable } from "../components/resizable";
+import { styled } from "../styles/stitches.config";
 
 export const RenderHistory = () => {
   const [devEditor] = useDevEditorRead();
@@ -14,11 +15,22 @@ export const RenderHistory = () => {
 
   return (
     <Resizable width="400px">
-      <div className="flex flex-col gap-y-2 text-xs rounded w-full bg-hex-272535 p-5">
+      <RenderHistoryStyled>
         {history.map((batch, i) => {
           return <RenderBatch key={batch.id} batch={batch} num={i} />;
         })}
-      </div>
+      </RenderHistoryStyled>
     </Resizable>
   );
 };
+
+const RenderHistoryStyled = styled("div", {
+  $reset: "",
+  display: "flex",
+  flexDirection: "column",
+  rowGap: "0.5rem",
+  fontSize: "0.75rem",
+  borderRadius: "5px",
+  width: "100%",
+  padding: "1.25rem",
+});
