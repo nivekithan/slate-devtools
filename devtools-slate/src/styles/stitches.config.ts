@@ -43,6 +43,7 @@ export const { styled, css } = createCss({
       batchNormalizing: "rgb(99,102,241)",
       batchOperations: "rgb(88,28,135)",
       operationHere: "rgb(67,56,202)",
+      textBlue: "rgb(191,219,254)",
     },
   },
 });
