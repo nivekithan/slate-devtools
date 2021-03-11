@@ -13,6 +13,9 @@ export const { styled, css } = createCss({
       WebkitAppearance: "none",
       appearance: "none",
       boxSizing: "border-box",
+      padding: "0px",
+      margin: "0px",
+      backgroundColor: "inherit",
     }),
     $gridCenter: () => () => ({
       display: "grid",
