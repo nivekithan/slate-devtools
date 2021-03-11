@@ -2,7 +2,7 @@ import { useToggleOnClick } from "../hooks/useToggleOnClick";
 import { Batch } from "../util/historyEditor";
 import React from "react";
 import { RenderOperations } from "./renderOperations";
-import { css, styled } from "../styles/stitches.config";
+import { styled } from "../styles/stitches.config";
 
 /**
  * RenderBatch renders each seperate batch in RenderHistory and based wheather batch.normalizing is true or not the colour
@@ -15,26 +15,22 @@ import { css, styled } from "../styles/stitches.config";
  *     to have supply keys like this
  */
 
-type Props = {
+export type RenderBranchProps = {
   batch: Batch;
   num: number;
 };
 
-export const RenderBatch = ({ batch, num }: Props) => {
+export const RenderBatch = ({ batch, num }: RenderBranchProps) => {
   const [showOperations, onClick] = useToggleOnClick<HTMLButtonElement>(false);
 
   return (
     <StyledRenderBatch>
-      <button
+      <StyledBatchButton
         onClick={onClick}
-        className={css({
-          background: batch.normalizing
-            ? "$batchNormalizing"
-            : "$batchOperations",
-        })()}
+        op={batch.normalizing ? "no" : "yes"}
       >
         {batch.normalizing ? "Normalizing" : "Operation"}
-      </button>
+      </StyledBatchButton>
       {showOperations
         ? batch.data.map((op, i) => {
             return (
@@ -49,6 +45,21 @@ export const RenderBatch = ({ batch, num }: Props) => {
     </StyledRenderBatch>
   );
 };
+
+const StyledBatchButton = styled("button", {
+  $reset: "",
+  cursor: "pointer",
+  variants: {
+    op: {
+      yes: {
+        backgroundColor: "$batchOperations",
+      },
+      no: {
+        backgroundColor: "$batchNormalizing",
+      },
+    },
+  },
+});
 
 const StyledRenderBatch = styled("div", {
   $reset: "",
