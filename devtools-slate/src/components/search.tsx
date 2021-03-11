@@ -3,6 +3,7 @@ import { InputSubmit } from "./button";
 import { useFormInputs } from "../hooks/useFormInputs";
 import { GreenLabel } from "./greenLabel";
 import { InlineEdit } from "./input";
+import { styled } from "../styles/stitches.config";
 
 type Props = {
   startValue?: string;
@@ -24,9 +25,9 @@ export const Search = ({ startValue = '""', onSubmit }: Props) => {
   };
 
   return (
-    <div className="flex gap-x-3 items-center text-sm">
+    <SearchStyled>
       <GreenLabel>Search by Path :</GreenLabel>
-      <form className="flex gap-x-2" onSubmit={onFormSubmit}>
+      <form onSubmit={onFormSubmit}>
         <InlineEdit
           value={startValue}
           css={{ background: "rgba(13, 17, 23, 0.3)" }}
@@ -34,6 +35,20 @@ export const Search = ({ startValue = '""', onSubmit }: Props) => {
         />
         <InputSubmit color="blue">Search</InputSubmit>
       </form>
-    </div>
+    </SearchStyled>
   );
 };
+
+const SearchStyled = styled("div", {
+  $reset: "",
+  display: "flex",
+  columnGap: "0.75rem",
+  alignItems: "center",
+  fontSize: "0.875rem",
+
+  "& > form": {
+    $reset: "",
+    display: "flex",
+    columnGap: "0.5rem",
+  },
+});
