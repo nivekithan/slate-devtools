@@ -6,6 +6,7 @@ import { useDevEditorRead } from "../atom/devEditor";
 import { useSelectedPropertiesRead } from "../atom/selectedProperties";
 import { Button, InputSubmit } from "./button";
 import { useFormInputs } from "../hooks/useFormInputs";
+import { InlineEdit } from "./input";
 
 /**
  * TODO:
@@ -107,8 +108,6 @@ export const AddPropertiesModal = ({
     setShowModal(false);
   };
 
-  const inputClassName = "bg-hex-0F0F0F px-2 py-1 rounded";
-
   return createPortal(
     <div
       ref={setaddPropertiesModal}
@@ -118,18 +117,18 @@ export const AddPropertiesModal = ({
       <div className="flex text-white bg-hex-282a36  shadow-normal p-2 text-sm">
         <form className="flex flex-col gap-y-3" onSubmit={onSubmit}>
           <div>Key : </div>
-          <input
-            className={inputClassName}
-            placeholder="Enter the key"
+          <InlineEdit
             value={keyInputValue}
             onChange={onChangeUpdateKeyInput}
+            placeholder="Key"
+            css={{ background: "$bgInput" }}
           />
           <div>Value : </div>
-          <input
-            placeholder="Enter the value"
-            className={inputClassName}
+          <InlineEdit
             value={valueInputValue}
             onChange={onChangeUpdateValueInput}
+            placeholder="Value"
+            css={{ background: "$bgInput" }}
           />
           <div className="flex gap-x-3">
             <InputSubmit color="blue">Add</InputSubmit>

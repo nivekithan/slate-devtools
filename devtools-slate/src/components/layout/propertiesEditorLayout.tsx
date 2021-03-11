@@ -20,6 +20,8 @@ export const PropertiesEditorLayout = styled("div", {
       display: "grid",
       gridTemplateColumns: "100px 2px 1fr 20px",
       columnGap: "0.5rem",
+      placeItems: "center start",
+      gridAutoRows: "1.5rem",
     },
   },
 });

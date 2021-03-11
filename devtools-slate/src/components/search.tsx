@@ -2,6 +2,7 @@ import React from "react";
 import { InputSubmit } from "./button";
 import { useFormInputs } from "../hooks/useFormInputs";
 import { GreenLabel } from "./greenLabel";
+import { InlineEdit } from "./input";
 
 type Props = {
   startValue?: string;
@@ -26,12 +27,9 @@ export const Search = ({ startValue = '""', onSubmit }: Props) => {
     <div className="flex gap-x-3 items-center text-sm">
       <GreenLabel>Search by Path :</GreenLabel>
       <form className="flex gap-x-2" onSubmit={onFormSubmit}>
-        <input
-          type="text"
-          className="bg-hex-0F0F0F px-2 py-1 rounded "
-          placeholder="JSON string"
-          value={inputValue}
-          onChange={onChangeUpdateInput}
+        <InlineEdit
+          value={startValue}
+          css={{ background: "rgba(13, 17, 23, 0.3)" }}
         />
         <InputSubmit color="blue">Search</InputSubmit>
       </form>

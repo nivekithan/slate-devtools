@@ -28,4 +28,10 @@ export const { styled, css } = createCss({
       whiteSpace: "nowrap",
     }),
   },
+  theme: {
+    colors: {
+      bg: "#282a36",
+      bgInput: "rgba(13, 17, 23, 0.3)",
+    },
+  },
 });

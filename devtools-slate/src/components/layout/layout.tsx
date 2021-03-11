@@ -19,7 +19,7 @@ export const Layout = ({ children, show, height }: LayoutProps) => {
 const TopLayout = styled("div", {
   $reset: "",
   position: "fixed",
-  backgroundColor: "#282a36",
+  backgroundColor: "$bg",
   variants: {
     show: {
       yes: {
