@@ -1,9 +1,11 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { Fragment, useLayoutEffect, useRef } from "react";
 import { Transforms } from "slate";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useSelectedPropertiesRead } from "../atom/selectedProperties";
 import { useFormInputs } from "../hooks/useFormInputs";
-import { InlineEdit } from "./inlineEdit";
+import { css } from "../styles/stitches.config";
+import { PlainButton } from "./button";
+import { InlineEdit } from "./input";
 
 /**
  * TODO:
@@ -25,18 +27,17 @@ export const SingleProperty = ({ keys, value }: Props) => {
     onChangeUpdateValueInput,
     setValueInputValue,
   ] = useFormInputs<HTMLInputElement>(value);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const validValue = useRef<string>(value); // Stores previous valid Value
 
   const allowEdit = keys !== "children";
 
   /**
-   * At first we will check if the current valueInputValue is same as  validValue if thats the case then we just off
-   * the editing without applying any operation
+   * At first we will check if the current valueInputValue is same as  validValue if thats the case then we dont apply any
+   * operation
    *
    * Then JSON.parse the value if the value is not of valid type we will set the valueInputValue
-   * to validValue and off the editing
+   * to validValue.
    *
    * Since Transformers.setNodes wont support text and children we have to use Transfromes.insertText for editing text fields
    * and for everything else we will just use Transfromes.setNodes and then update the validValue.
@@ -54,26 +55,14 @@ export const SingleProperty = ({ keys, value }: Props) => {
         } else {
           Transforms.setNodes(devEditor, { [keys]: parsedValue }, { at: path });
         }
-        setIsEditing(false);
         validValue.current = valueInputValue;
-      } else {
-        setIsEditing(false);
       }
     } catch (err) {
       e.preventDefault();
       setValueInputValue(validValue.current);
-      setIsEditing(false);
     }
   };
   1;
-  /**
-   * Change to editing mode when someone clicks on component
-   */
-
-  const onSpanClick = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    e.preventDefault();
-    setIsEditing(true);
-  };
 
   /**
    * Remove the property when someone clicks the X
@@ -96,27 +85,34 @@ export const SingleProperty = ({ keys, value }: Props) => {
   }, [value, setValueInputValue]);
 
   return (
-    <div className="flex gap-x-3">
-      <div className="w-100px truncate text-blue-500">{keys}</div>
+    <Fragment>
+      <div className={css({ $reset: "", $truncate: "", color: "#3B82F6" })()}>
+        {keys}
+      </div>
       <div>:</div>
-      <div className="w-200px truncate">
+      <div className={css({ $reset: "", $truncate: "", width: "100%" })()}>
         {allowEdit ? (
           <InlineEdit
             value={valueInputValue}
-            onChange={onChangeUpdateValueInput}
             onBlur={onBlur}
-            isEditing={isEditing}
-            spanProps={{ onClick: onSpanClick }}
+            onChange={onChangeUpdateValueInput}
           />
         ) : (
           <span>{valueInputValue}</span>
         )}
       </div>
-      {allowEdit && keys !== "text" ? (
-        <button className="text-red-400 pl-2" onClick={onRemoveClick}>
-          X
-        </button>
-      ) : null}
-    </div>
+      <PlainButton
+        className={css({
+          color: "#F87171",
+          paddingLeft: "0.5rem",
+          visibility: allowEdit && keys !== "text" ? "visible" : "hidden",
+        })()}
+        onClick={onRemoveClick}
+      >
+        X
+      </PlainButton>
+    </Fragment>
   );
 };
+// className="text-red-400 pl-2"
+// truncate text-blue-500

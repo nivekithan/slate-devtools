@@ -1,0 +1,1 @@
+export { GreenLabel } from "./greenLabel";

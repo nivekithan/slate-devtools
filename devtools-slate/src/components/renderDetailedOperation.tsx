@@ -2,12 +2,15 @@ import { Operation } from "slate";
 import React from "react";
 import { Properties } from "./properties";
 import { convertOperation } from "../util/convertOperation";
+import { styled } from "../styles/stitches.config";
 
-type Props = {
+export type RenderDetailedOperationProps = {
   op: Operation;
 };
 
-export const RenderDetailedOperation = ({ op }: Props) => {
+export const RenderDetailedOperation = ({
+  op,
+}: RenderDetailedOperationProps) => {
   /**
    * Since typescript does not support narrowing after one level of propagation
    * we cannot destructure the newProperties, offset and position
@@ -26,15 +29,15 @@ export const RenderDetailedOperation = ({ op }: Props) => {
   } = convertOperation(op);
 
   return (
-    <div className="flex flex-col gap-y-3">
-      <div className="flex text-sm text-blue-200 font-semibold gap-x-3">
+    <StyledRenderDetailedOperation>
+      <div>
         <div>{type.toUpperCase()}</div>
         {offset.renderOffset ? <div>Offset : {offset.offset} </div> : null}
         {position.renderPosition ? (
           <div>Position : {position.position} </div>
         ) : null}
       </div>
-      <div className="flex gap-x-3 justify-between">
+      <div>
         <Properties path={path} properties={properties} right={true} />
         {newProperties.renderNewProperties ? (
           <Properties
@@ -44,6 +47,31 @@ export const RenderDetailedOperation = ({ op }: Props) => {
           />
         ) : null}
       </div>
-    </div>
+    </StyledRenderDetailedOperation>
   );
 };
+
+const StyledRenderDetailedOperation = styled("div", {
+  $reset: "",
+  display: "flex",
+  flexDirection: "column",
+  rowGap: "0.75rem",
+
+  "& > div": {
+    $reset: "",
+
+    "&:first-child": {
+      display: "flex",
+      fontSize: "0.875rem",
+      columnGap: "0.75rem",
+      fontWeight: 500,
+      color: "$textBlue",
+    },
+
+    "&:nth-child(2)": {
+      display: "flex",
+      columnGap: "0.75rem",
+      justifyContent: "space-between",
+    },
+  },
+});

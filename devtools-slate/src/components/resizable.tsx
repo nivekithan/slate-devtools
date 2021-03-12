@@ -1,5 +1,6 @@
 import React from "react";
 import { Resizable as Re } from "re-resizable";
+import { css } from "../styles/stitches.config";
 
 type Props = {
   children: React.ReactNode;
@@ -8,9 +9,14 @@ type Props = {
 
 export const Resizable = ({ children, width }: Props) => {
   return (
-    <div className="h-full relative">
+    <div
+      className={css({ $reset: "", height: "100%", position: "relative" })()}
+    >
       <Re
-        className="overflow-auto border-gray-500"
+        className={css({
+          $reset: "",
+          overflow: "auto",
+        })()}
         style={{ position: "static" }}
         defaultSize={{ width: width, height: "100%" }}
         enable={{
@@ -24,13 +30,17 @@ export const Resizable = ({ children, width }: Props) => {
           topRight: false,
         }}
         handleClasses={{
-          left: "bg-gray-500 border-l-2 pl-5px border-gray-500 ",
+          left: css({
+            $reset: "",
+            borderLeft: "2px solid $buttonGray",
+            padding: "0px 4px",
+          })(),
         }}
         handleStyles={{
           left: {
-            width: "0px",
             left: "0px",
             backgroundColor: "inherit",
+            width: "1px",
           },
         }}
       >

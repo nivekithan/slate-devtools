@@ -14,6 +14,8 @@ import { isEmptyProperties } from "../util/isEmptyProperties";
 import { isRenderElementProps } from "../util/isRenderElementProps";
 import { isSubset } from "../util/isSubset";
 import React from "react";
+import { NodeLayout } from "./layout";
+import { PlainButton } from "./button";
 
 export const RenderNode = (props: RenderElementProps | RenderLeafProps) => {
   const ele = isRenderElementProps(props) ? props.element : props.text;
@@ -61,6 +63,10 @@ export const RenderNode = (props: RenderElementProps | RenderLeafProps) => {
    */
 
   useDeepCompareEffect(() => {
+    if (!selectedId) {
+      return;
+    }
+
     if (id === selectedId) {
       setSelectedProperties({ node: ele, path: path });
     }
@@ -126,19 +132,18 @@ export const RenderNode = (props: RenderElementProps | RenderLeafProps) => {
   };
 
   return (
-    <div
+    <NodeLayout
       style={{ ...depthStyle(depth as number) }}
       contentEditable={false}
-      className="text-sm"
     >
-      <div className="flex gap-x-3">
-        <button onClick={onClickShowChildren}>+</button>
-        <button onClick={onClickUpdateSelectedProperties}>{`<${
+      <div>
+        <PlainButton onClick={onClickShowChildren}>+</PlainButton>
+        <PlainButton onClick={onClickUpdateSelectedProperties}>{`<${
           isRenderElementProps(props) ? type || "normal" : "text"
-        } />`}</button>
-        <button onClick={onClickCopy} className="text-gray-500">
+        } />`}</PlainButton>
+        <PlainButton onClick={onClickCopy} className="gray">
           C
-        </button>
+        </PlainButton>
       </div>
       {showChildren ? (
         isRenderElementProps(props) ? (
@@ -149,6 +154,6 @@ export const RenderNode = (props: RenderElementProps | RenderLeafProps) => {
           </div>
         )
       ) : null}
-    </div>
+    </NodeLayout>
   );
 };

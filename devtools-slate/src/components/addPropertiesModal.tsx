@@ -4,7 +4,10 @@ import { usePopper } from "react-popper";
 import { Transforms } from "slate";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useSelectedPropertiesRead } from "../atom/selectedProperties";
+import { Button, InputSubmit } from "./button";
 import { useFormInputs } from "../hooks/useFormInputs";
+import { InlineEdit } from "./input";
+import { styled } from "../styles/stitches.config";
 
 /**
  * TODO:
@@ -46,12 +49,14 @@ export const AddPropertiesModal = ({
 
   /**
    * onSubmit we will parse the keyInputValue and valueInputValue using JSON if either one of them is
-   * not valid JSON will throw error which we will catch and console.error that error. In this case we wont close the modal
+   * not valid, JSON will throw error which we will catch and console.error that error.
+   * In this case we wont close the modal
    *
-   * If the typeof parsed keyInputValue is not string then we will throw another error. In this case we wont close the modal
+   * If the typeof parsed keyInputValue is not string then we will throw another error.
+   * In this case we wont close the modal
    *
-   * If there is no error and parsedKeyValue is value but it is empty or contians only line-breaks or white-space then
-   *  we will just close the modal but not updating the devEditor
+   * If there is no error and parsedKeyValue is value but it is empty or contians only line-breaks or
+   * white-space then we will just close the modal but not updating the devEditor
    *
    * If the key is either text or children we will throw the error which will be catched by our catch block. In this case
    * we wont close the modal
@@ -104,46 +109,58 @@ export const AddPropertiesModal = ({
     setShowModal(false);
   };
 
-  const inputClassName = "bg-hex-0F0F0F px-2 py-1 rounded";
-
   return createPortal(
     <div
       ref={setaddPropertiesModal}
       style={styles.popper}
       {...attributes.popper}
     >
-      <div className="flex text-white bg-hex-282a36  shadow-normal p-2 text-sm">
-        <form className="flex flex-col gap-y-3" onSubmit={onSubmit}>
-          <div>Key : </div>
-          <input
-            className={inputClassName}
-            placeholder="Enter the key"
-            value={keyInputValue}
-            onChange={onChangeUpdateKeyInput}
-          />
-          <div>Value : </div>
-          <input
-            placeholder="Enter the value"
-            className={inputClassName}
-            value={valueInputValue}
-            onChange={onChangeUpdateValueInput}
-          />
-          <div className="flex gap-x-3">
-            <input
-              type="submit"
-              value="Okay"
-              className="bg-blue-600 rounded px-3 py-1 gird place-items-center cursor-pointer hover:bg-blue-500 "
-            />
-            <button
-              className="text-red-400  hover:text-red-300"
-              onClick={onCancel}
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
+      <AddPropertiesModalLayout onSubmit={onSubmit}>
+        <div>Key : </div>
+        <InlineEdit
+          value={keyInputValue}
+          onChange={onChangeUpdateKeyInput}
+          placeholder="Key"
+          css={{ background: "$bgInput" }}
+        />
+        <div>Value : </div>
+        <InlineEdit
+          value={valueInputValue}
+          onChange={onChangeUpdateValueInput}
+          placeholder="Value"
+          css={{ background: "$bgInput" }}
+        />
+        <div>
+          <InputSubmit color="blue">Add</InputSubmit>
+
+          <Button color="red" onClick={onCancel}>
+            Cancel
+          </Button>
+        </div>
+      </AddPropertiesModalLayout>
     </div>,
     document.body
   );
 };
+
+const AddPropertiesModalLayout = styled("form", {
+  $reset: "",
+  display: "flex",
+  flexDirection: "column",
+  rowGap: "0.75rem",
+  color: "white",
+  backgroundColor: "$bg",
+  padding: "0.5rem",
+  fontSize: "0.875rem",
+  boxShadow: "3px 3px 13px 2px rgba(0,0,0,0.6)",
+  borderRadius: "10px",
+
+  "& > div": {
+    $reset: "",
+
+    "&:last-child": {
+      display: "flex",
+      columnGap: "0.75rem",
+    },
+  },
+});

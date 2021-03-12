@@ -4,6 +4,7 @@ import { HistoryEditor } from "../util/historyEditor";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useToggleOnClick } from "../hooks/useToggleOnClick";
 import { RenderDetailedOperation } from "./renderDetailedOperation";
+import { styled } from "../styles/stitches.config";
 
 type Props = {
   op: Operation;
@@ -40,25 +41,54 @@ export const RenderOperations = ({ op, to }: Props) => {
   };
 
   return (
-    <div className="flex flex-col">
-      <button
-        className="bg-cyan-700 rounded text-xs flex justify-between p-1 items-center"
-        onClick={onClickShowOperation}
-      >
+    <StyledRenderOpeartion>
+      <button onClick={onClickShowOperation}>
         <div>{type.toUpperCase()}</div>
-        <a
-          className="border-1 px-2 rounded border-indigo-500 bg-indigo-700 "
-          onClick={onClickingHere}
-        >
-          Here
-        </a>
+        <a onClick={onClickingHere}>Here</a>
         <div>{JSON.stringify(path)}</div>
       </button>
       {showFullOperation ? (
-        <div className="my-2">
+        <div>
           <RenderDetailedOperation op={op} />
         </div>
       ) : null}
-    </div>
+    </StyledRenderOpeartion>
   );
 };
+
+const StyledRenderOpeartion = styled("div", {
+  $reset: "",
+  display: "flex",
+  flexDirection: "column",
+  rowGap: "0.5rem",
+
+  "& > button": {
+    $reset: "",
+    display: "grid",
+    backgroundColor: "$buttonGreen",
+    borderRadius: "5px",
+    gridTemplateColumns: "5rem 1fr 4rem",
+    fontSize: "0.75rem",
+    padding: "0.25rem",
+
+    "& > *": {
+      $reset: "",
+
+      "&:first-child": {
+        justifySelf: "start",
+      },
+
+      "&:nth-child(2)": {
+        justifySelf: "center",
+        border: "1px",
+        padding: "0 0.5rem",
+        borderRadius: "3px",
+        backgroundColor: "$operationHere",
+      },
+
+      "&:nth-child(3)": {
+        justifySelf: "end",
+      },
+    },
+  },
+});

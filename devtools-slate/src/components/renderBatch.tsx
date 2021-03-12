@@ -2,6 +2,7 @@ import { useToggleOnClick } from "../hooks/useToggleOnClick";
 import { Batch } from "../util/historyEditor";
 import React from "react";
 import { RenderOperations } from "./renderOperations";
+import { styled } from "../styles/stitches.config";
 
 /**
  * RenderBatch renders each seperate batch in RenderHistory and based wheather batch.normalizing is true or not the colour
@@ -14,27 +15,24 @@ import { RenderOperations } from "./renderOperations";
  *     to have supply keys like this
  */
 
-type Props = {
+export type RenderBranchProps = {
   batch: Batch;
   num: number;
 };
 
-export const RenderBatch = ({ batch, num }: Props) => {
+export const RenderBatch = ({ batch, num }: RenderBranchProps) => {
   const [showOperations, onClick] = useToggleOnClick<HTMLButtonElement>(false);
 
   return (
-    <div className="flex flex-col gap-y-2 text-xs">
-      <button
+    <StyledRenderBatch>
+      <StyledBatchButton
         onClick={onClick}
-        className={`${
-          batch.normalizing ? "bg-indigo-500" : "bg-purple-900"
-        }  p-2 rounded-lg`}
+        op={batch.normalizing ? "no" : "yes"}
       >
         {batch.normalizing ? "Normalizing" : "Operation"}
-      </button>
-      {showOperations ? (
-        <div className="flex flex-col gap-y-2 ">
-          {batch.data.map((op, i) => {
+      </StyledBatchButton>
+      {showOperations
+        ? batch.data.map((op, i) => {
             return (
               <RenderOperations
                 op={op}
@@ -42,9 +40,36 @@ export const RenderBatch = ({ batch, num }: Props) => {
                 to={[num, i]}
               />
             );
-          })}
-        </div>
-      ) : null}
-    </div>
+          })
+        : null}
+    </StyledRenderBatch>
   );
 };
+
+const StyledBatchButton = styled("button", {
+  $reset: "",
+  cursor: "pointer",
+  variants: {
+    op: {
+      yes: {
+        backgroundColor: "$batchOperations",
+      },
+      no: {
+        backgroundColor: "$batchNormalizing",
+      },
+    },
+  },
+});
+
+const StyledRenderBatch = styled("div", {
+  $reset: "",
+  display: "flex",
+  flexDirection: "column",
+  rowGap: "0.5rem",
+  fontSize: "0.75rem",
+
+  "& > button": {
+    padding: "0.5rem",
+    borderRadius: "5px",
+  },
+});

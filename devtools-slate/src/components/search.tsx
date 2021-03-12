@@ -1,12 +1,16 @@
 import React from "react";
+import { InputSubmit } from "./button";
 import { useFormInputs } from "../hooks/useFormInputs";
+import { GreenLabel } from "./greenLabel";
+import { InlineEdit } from "./input";
+import { styled } from "../styles/stitches.config";
 
-type Props = {
+export type SearchProps = {
   startValue?: string;
   onSubmit: (e: React.FormEvent<HTMLFormElement>, value: string) => boolean;
 };
 
-export const Search = ({ startValue = '""', onSubmit }: Props) => {
+export const Search = ({ startValue = '""', onSubmit }: SearchProps) => {
   const [
     inputValue,
     onChangeUpdateInput,
@@ -21,22 +25,30 @@ export const Search = ({ startValue = '""', onSubmit }: Props) => {
   };
 
   return (
-    <div className="flex gap-x-3 items-center text-sm">
-      <div className="font-semibold text-green-500 ">Search by path : </div>
-      <form className="flex gap-x-2" onSubmit={onFormSubmit}>
-        <input
-          type="text"
-          className="bg-hex-0F0F0F px-2 py-1 rounded "
-          placeholder="JSON string"
+    <SearchStyled>
+      <GreenLabel>Search by Path :</GreenLabel>
+      <form onSubmit={onFormSubmit}>
+        <InlineEdit
           value={inputValue}
+          css={{ background: "$bgInput" }}
           onChange={onChangeUpdateInput}
         />
-        <input
-          type="submit"
-          className="bg-blue-600 rounded text-sm px-2 cursor-pointer hover:bg-blue-500"
-          value="Search"
-        />
+        <InputSubmit color="blue">Search</InputSubmit>
       </form>
-    </div>
+    </SearchStyled>
   );
 };
+
+const SearchStyled = styled("div", {
+  $reset: "",
+  display: "flex",
+  columnGap: "0.75rem",
+  alignItems: "center",
+  fontSize: "0.875rem",
+
+  "& > form": {
+    $reset: "",
+    display: "flex",
+    columnGap: "0.5rem",
+  },
+});

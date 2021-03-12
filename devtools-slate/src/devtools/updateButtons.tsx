@@ -8,6 +8,8 @@ import { useCallOnce } from "../hooks/useCallOnce";
 import { addOperations } from "../util/addOperations";
 import { applyOperations } from "../util/applyOperations";
 import { inverseOperations } from "../util/inverseOperations";
+import { Button } from "../components/button/button";
+import { styled } from "../styles/stitches.config";
 
 type Props = {
   editor: ReactEditor;
@@ -183,26 +185,27 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
   };
 
   return (
-    <div className="flex gap-x-5 text-xs">
-      <button
-        className={`grid place-items-center py-1 px-2 rounded  font-semibold ${
-          updateDevtools === "on"
-            ? "bg-rose-500 hover:bg-rose-600"
-            : "bg-gray-600"
-        }`}
+    <StyledUpdateButtons>
+      <Button
+        color={updateDevtools === "on" ? "rose" : "gray"}
         onClick={onUpdateDevtoolsClick}
       >
-        Update devtools
-      </button>
-      <button
-        className={`grid place-items-center py-1 px-2 rounded  font-semibold ${
-          updateApp === "on" ? "bg-red-500 hover:bg-red-600" : "bg-gray-600"
-        }`}
+        Update Devtools
+      </Button>
+      <Button
+        color={updateApp === "on" ? "rose" : "gray"}
         onClick={onUpdateAppClick}
         ref={updateAppRef}
       >
-        Update app
-      </button>
-    </div>
+        Update App
+      </Button>
+    </StyledUpdateButtons>
   );
 };
+
+const StyledUpdateButtons = styled("div", {
+  $reset: "",
+  display: "flex",
+  columnGap: "1.25rem",
+  fontSize: "0.75rem",
+});

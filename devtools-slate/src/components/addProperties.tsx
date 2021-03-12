@@ -1,6 +1,7 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import { AddPropertiesModal } from "./addPropertiesModal";
 import { useToggleOnClick } from "../hooks/useToggleOnClick";
+import { PlainButton } from "./button";
 
 export const AddProperties = () => {
   const [
@@ -15,18 +16,16 @@ export const AddProperties = () => {
   ] = useToggleOnClick<HTMLButtonElement>(false);
 
   return (
-    <Fragment>
-      <div className="flex justify-end bg-hex-282a36 ">
-        <button onClick={onClickToggleModal} ref={setplusButtonElement}>
-          +
-        </button>
-      </div>
+    <div>
+      <PlainButton onClick={onClickToggleModal} ref={setplusButtonElement}>
+        +
+      </PlainButton>
       {showModal ? (
         <AddPropertiesModal
           setShowModal={setShowModal}
           referenceElement={plusButtonElement}
         />
       ) : null}
-    </Fragment>
+    </div>
   );
 };
