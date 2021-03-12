@@ -59,6 +59,10 @@ const ScriptEditorStyled = styled("div", {
       padding: "0.5rem 0.25rem",
       borderRadius: "2px",
       resize: "none",
+
+      "&:focus": {
+        $focus: "",
+      },
     },
 
     "& > div": {

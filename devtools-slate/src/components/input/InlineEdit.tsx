@@ -10,8 +10,7 @@ export const InlineEdit = styled("input", {
 
   "&:focus": {
     backgroundColor: "$bgInput",
-    boxShadow: "rgb(12, 45, 107) 0px 0px 0px 3px",
-    border: "1px solid rgb(56, 139, 253)",
+    $focus: "",
     padding: "0.20rem",
   },
 });

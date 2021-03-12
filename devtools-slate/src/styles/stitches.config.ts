@@ -30,6 +30,10 @@ export const { styled, css } = createCss({
       textOverflow: "ellipsis",
       whiteSpace: "nowrap",
     }),
+    $focus: () => () => ({
+      boxShadow: "rgb(12, 45, 107) 0px 0px 0px 3px",
+      border: "1px solid rgb(56, 139, 253)",
+    }),
   },
   theme: {
     colors: {

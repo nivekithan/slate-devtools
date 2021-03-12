@@ -23,13 +23,11 @@ const TopLayout = styled("div", {
 
   "& button": {
     cursor: "pointer",
-  },
-
-  "& button, input,textarea": {
     "&:focus": {
       outline: "black solid 1px",
     },
   },
+
   variants: {
     show: {
       yes: {
