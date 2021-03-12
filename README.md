@@ -1,7 +1,7 @@
 
 # The project is in development
 
-`devtools-slate` as name suggests it is devtool for [slatejs](https://github.com/ianstormtaylor/slate) which will assist you in debugging the code
+`slate-devtools` as name suggests it is devtool for [slatejs](https://github.com/ianstormtaylor/slate) which will assist you in debugging the code
 
 To know about features take loot at this [issue](https://github.com/ianstormtaylor/slate/issues/4112)
 
@@ -12,7 +12,7 @@ I am planning to release the project in npm after I finished these tasks
 - [X] Refactor Code 
 - [X] Add storybook
 - [X] Convert windicss to css-in-js libary
-- [ ] Solve perfomance issue
+- [X] Solve perfomance issue
 
 
 # Roadmap
