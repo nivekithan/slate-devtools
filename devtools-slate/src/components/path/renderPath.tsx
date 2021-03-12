@@ -25,7 +25,7 @@ const StyledPath = styled("div", {
   "&::before": {
     content: `"["`,
     $reset: "",
-    fontSize: "1rem",
+    fontSize: "0.875rem",
     lineHeight: "1.25rrm",
     color: "#93c5fd",
   },
@@ -33,7 +33,7 @@ const StyledPath = styled("div", {
   "&::after": {
     content: `"]"`,
     $reset: "",
-    fontSize: "1rem",
+    fontSize: "0.875rem",
     lineHeight: "1.25rrm",
     color: "#93c5fd",
   },
