@@ -65,7 +65,7 @@ const StyledRenderDetailedOperation = styled("div", {
       fontSize: "0.875rem",
       columnGap: "0.75rem",
       fontWeight: 500,
-      color: "$textBlue",
+      color: "$textOperationBlue",
     },
 
     "&:nth-child(2)": {

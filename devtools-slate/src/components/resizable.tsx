@@ -9,14 +9,9 @@ type Props = {
 
 export const Resizable = ({ children, width }: Props) => {
   return (
-    <div
-      className={css({ $reset: "", height: "100%", position: "relative" })()}
-    >
+    <div className={ResizableHandleClassName}>
       <Re
-        className={css({
-          $reset: "",
-          overflow: "auto",
-        })()}
+        className={reClasName}
         style={{ position: "static" }}
         defaultSize={{ width: width, height: "100%" }}
         enable={{
@@ -30,11 +25,7 @@ export const Resizable = ({ children, width }: Props) => {
           topRight: false,
         }}
         handleClasses={{
-          left: css({
-            $reset: "",
-            borderLeft: "2px solid $buttonGray",
-            padding: "0px 4px",
-          })(),
+          left: leftHandleClass,
         }}
         handleStyles={{
           left: {
@@ -49,3 +40,20 @@ export const Resizable = ({ children, width }: Props) => {
     </div>
   );
 };
+
+const ResizableHandleClassName = css({
+  $reset: "",
+  height: "100%",
+  position: "relative",
+})();
+
+const reClasName = css({
+  $reset: "",
+  overflow: "auto",
+})();
+
+const leftHandleClass = css({
+  $reset: "",
+  borderLeft: "2px solid $buttonGray",
+  padding: "0px 4px",
+})();

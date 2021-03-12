@@ -86,11 +86,9 @@ export const SingleProperty = ({ keys, value }: Props) => {
 
   return (
     <Fragment>
-      <div className={css({ $reset: "", $truncate: "", color: "#3B82F6" })()}>
-        {keys}
-      </div>
+      <div className={keyCSS}>{keys}</div>
       <div>:</div>
-      <div className={css({ $reset: "", $truncate: "", width: "100%" })()}>
+      <div className={valueCSS}>
         {allowEdit ? (
           <InlineEdit
             value={valueInputValue}
@@ -102,11 +100,11 @@ export const SingleProperty = ({ keys, value }: Props) => {
         )}
       </div>
       <PlainButton
-        className={css({
+        css={{
           color: "#F87171",
           paddingLeft: "0.5rem",
           visibility: allowEdit && keys !== "text" ? "visible" : "hidden",
-        })()}
+        }}
         onClick={onRemoveClick}
       >
         X
@@ -116,3 +114,15 @@ export const SingleProperty = ({ keys, value }: Props) => {
 };
 // className="text-red-400 pl-2"
 // truncate text-blue-500
+
+const keyCSS = css({
+  $reset: "",
+  $truncate: "",
+  color: "$textPropertiesBlue",
+})();
+
+const valueCSS = css({
+  $reset: "",
+  $truncate: "",
+  width: "100%",
+})();
