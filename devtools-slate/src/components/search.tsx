@@ -5,12 +5,12 @@ import { GreenLabel } from "./greenLabel";
 import { InlineEdit } from "./input";
 import { styled } from "../styles/stitches.config";
 
-type Props = {
+export type SearchProps = {
   startValue?: string;
   onSubmit: (e: React.FormEvent<HTMLFormElement>, value: string) => boolean;
 };
 
-export const Search = ({ startValue = '""', onSubmit }: Props) => {
+export const Search = ({ startValue = '""', onSubmit }: SearchProps) => {
   const [
     inputValue,
     onChangeUpdateInput,
@@ -29,7 +29,7 @@ export const Search = ({ startValue = '""', onSubmit }: Props) => {
       <GreenLabel>Search by Path :</GreenLabel>
       <form onSubmit={onFormSubmit}>
         <InlineEdit
-          value={startValue}
+          value={inputValue}
           css={{ background: "$bgInput" }}
           onChange={onChangeUpdateInput}
         />
