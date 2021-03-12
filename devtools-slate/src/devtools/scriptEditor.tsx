@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Editor } from "slate";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useFormInputs } from "../hooks/useFormInputs";
@@ -17,16 +17,11 @@ export const ScriptEditor = ({ module, editor }: Props) => {
   const [codeValue, onChangeUpdateCode] = useFormInputs<HTMLTextAreaElement>(
     ""
   );
-  const [isError, setIsError] = useState<boolean>(false);
   const [devEditor] = useDevEditorRead();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (exceute(codeValue, module, editor, devEditor)) {
-      setIsError(false);
-    } else {
-      setIsError(true);
-    }
+    exceute(codeValue, module, editor, devEditor);
   };
 
   return (
