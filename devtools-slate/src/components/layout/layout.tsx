@@ -20,6 +20,16 @@ const TopLayout = styled("div", {
   $reset: "",
   position: "fixed",
   backgroundColor: "$bg",
+
+  "& button": {
+    cursor: "pointer",
+  },
+
+  "& button, input,textarea": {
+    "&:focus": {
+      outline: "black solid 1px",
+    },
+  },
   variants: {
     show: {
       yes: {
