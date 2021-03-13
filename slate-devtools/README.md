@@ -1,6 +1,6 @@
 
 
-# Project is in development, there a lot of bugs and lot of useful features are missing 
+# Project is in development
 
 You can try the `slate-devtools` in your project by
 
@@ -63,7 +63,7 @@ The props for `Devtools` are
 
 ## module
 
-The `module` takes an object whose `value` will be exposed by their name of `keys` in `ScriptEditor`
+The `module` takes an object whose `value` will be exposed by their `keys` in `ScriptEditor`
 
 ## open
 
@@ -83,5 +83,5 @@ Use it to change the position of the `Open Button`
 
 The project is in super early life of its development as a result I still didnt implement any animations, visual feedback is not good enough, its not responsive, styling can be improved a lot, `RenderHistory` does not provide a lot of useful information and it is filled with unnecessary information.
 
-I am working fixing these but will take time
+I am working fixing these as soon as possible
 
