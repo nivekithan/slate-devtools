@@ -11,6 +11,7 @@ import ReactDOM from "react-dom";
 import clone from "clone";
 import { Button, RoundButton } from "../components/button";
 import { Layout, MenuLayout } from "../components/layout";
+import { CSSProperties } from "react";
 
 export type DevtoolsProps = {
   value: Node[]; // NodeList value to show in devtools
@@ -20,6 +21,7 @@ export type DevtoolsProps = {
   };
   open?: boolean;
   height?: string;
+  style?: CSSProperties;
 };
 
 export const Devtools = ({
@@ -28,6 +30,7 @@ export const Devtools = ({
   module = {},
   open = false,
   height = "325px",
+  style,
 }: DevtoolsProps) => {
   const [devValue, setDevValue] = useState<Node[]>(clone(value));
   const [isOpen, onClickToggle] = useToggleOnClick<HTMLButtonElement>(open);
@@ -51,7 +54,7 @@ export const Devtools = ({
         </div>
       </Layout>
       {isOpen ? null : (
-        <RoundButton onClick={onClickToggle} size="50px">
+        <RoundButton onClick={onClickToggle} size="50px" style={style}>
           Open
         </RoundButton>
       )}
