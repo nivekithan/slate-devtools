@@ -1,6 +1,14 @@
 {
   "name": "slate-devtools",
-  "version": "0.0.002",
+  "version": "0.0.3",
+  "description": "`slate-devtools` as name suggests it is devtool for [slatejs](https://github.com/ianstormtaylor/slate) which will assist you in debugging the code",
+  "license": "ISC",
+  "keywords": [
+    "slate",
+    "slate-react",
+    "devtools",
+    "slate-devtools"
+  ],
   "peerDependencies": {
     "react-dom": "^17.0.0",
     "react": "^17.0.0",
@@ -37,5 +45,9 @@
   "lint-staged": {
     "*.{js,tsx,ts}": "eslint --cache --fix",
     "*.{js,css,md,tsx,ts}": "prettier --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nivekithan/slate-devtools.git"
   }
 }

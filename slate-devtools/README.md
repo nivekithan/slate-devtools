@@ -1,5 +1,3 @@
-
-
 # Project is in development
 
 You can try the `slate-devtools` in your project by
@@ -8,7 +6,7 @@ You can try the `slate-devtools` in your project by
 npm i -D slate-devtools jotai
 ```
 
-We need to install `jotai` because for some reason `esbuild` is throwing error when I tried to build. You can check the issue [here](https://github.com/pmndrs/jotai/issues/354) 
+We need to install `jotai` because for some reason `esbuild` is throwing error when I tried to build. You can check the issue [here](https://github.com/pmndrs/jotai/issues/354)
 
 If you know solution for this please let me know.
 
@@ -37,12 +35,10 @@ const Editor = () => {
 
 ```
 
-
 The props for `Devtools` are
 
 ```typescript
-
- type DevtoolsProps = {
+type DevtoolsProps = {
   value: Node[]; // NodeList value to show in devtools
   editor: ReactEditor; // Corresponding editor
   module?: {
@@ -59,6 +55,7 @@ The props for `Devtools` are
 `value` takes `Node[]` which you pass to `editor`
 
 ## `editor`
+
 `editor` takes `ReactEditor` of the `value` you passed
 
 ## module
@@ -67,7 +64,7 @@ The `module` takes an object whose `value` will be exposed by their `keys` in `S
 
 ## open
 
-Setting `open` to `true` will make the `Devtools` to open by default. 
+Setting `open` to `true` will make the `Devtools` to open by default.
 
 By default it is set to `false`
 
@@ -83,5 +80,4 @@ Use it to change the position of the `Open Button`
 
 The project is in super early life of its development as a result I still didnt implement any animations, visual feedback is not good enough, its not responsive, styling can be improved a lot, `RenderHistory` does not provide a lot of useful information and it is filled with unnecessary information.
 
-I am working fixing these as soon as possible
-
+I am working on fixing these as soon as possible
