@@ -12,7 +12,7 @@ import clone from "clone";
 import { Button, RoundButton } from "../components/button";
 import { Layout, MenuLayout } from "../components/layout";
 
-type Props = {
+export type DevtoolsProps = {
   value: Node[]; // NodeList value to show in devtools
   editor: ReactEditor; // Corresponding editor
   module?: {
@@ -28,7 +28,7 @@ export const Devtools = ({
   module = {},
   open = false,
   height = "325px",
-}: Props) => {
+}: DevtoolsProps) => {
   const [devValue, setDevValue] = useState<Node[]>(clone(value));
   const [isOpen, onClickToggle] = useToggleOnClick<HTMLButtonElement>(open);
 
