@@ -1,13 +1,20 @@
 import React from "react";
+import { CSSProperties } from "react";
 import { styled } from "../../styles/stitches.config";
 
 export type RoundButtonProps = {
   children: string;
   size: string;
   onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  style?: CSSProperties;
 };
 
-export const RoundButton = ({ size, children, onClick }: RoundButtonProps) => {
+export const RoundButton = ({
+  size,
+  children,
+  onClick,
+  style,
+}: RoundButtonProps) => {
   return (
     <RoundButtonStyled
       css={{
@@ -16,6 +23,7 @@ export const RoundButton = ({ size, children, onClick }: RoundButtonProps) => {
         borderRadius: `calc(${size} / 2)`,
       }}
       onClick={onClick}
+      style={style}
     >
       {children}
     </RoundButtonStyled>

@@ -28,5 +28,14 @@
       "import": "./dist/slate-devtools.es.js",
       "require": "./dist/slate-devtools.umd.js"
     }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,tsx,ts}": "eslint --cache --fix",
+    "*.{js,css,md,tsx,ts}": "prettier --write"
   }
 }
