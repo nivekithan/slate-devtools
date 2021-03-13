@@ -20,6 +20,7 @@
   "files": [
     "dist"
   ],
+  "types": "./dist/lib.d.ts",
   "main": "./dist/slate-devtools.umd.js",
   "module": "./dist/slate-devtools.es.js",
   "exports": {

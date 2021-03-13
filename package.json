@@ -2,12 +2,11 @@
   "name": "devtools",
   "version": "1.0.0",
   "description": "`slate-devtools` as name suggests it is devtool for [slatejs](https://github.com/ianstormtaylor/slate) which will assist you in debugging the code",
-  "main": "index.js",
   "scripts": {
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "dev": "vite",
-    "build": "npm run tsc",
+    "build": " npm run esbuild && npm run tsc",
     "tsc": "tsc --project ./slate-devtools/tsconfig.json",
     "esbuild": "node ./esbuild.config.js"
   },

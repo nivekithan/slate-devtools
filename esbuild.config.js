@@ -9,7 +9,22 @@ require("esbuild").buildSync({
   define: {
     "process.env.NODE_ENV": `"production"`,
   },
-  outfile: "./slate-devtools/dist/slate-devtools.js",
+  format: "esm",
+  outfile: "./slate-devtools/dist/slate-devtools.es.js",
+  tsconfig: "./slate-devtools/tsconfig.json",
+  external: ["react", "react-dom", "jotai"],
+});
+
+require("esbuild").buildSync({
+  entryPoints: ["./slate-devtools/src/lib.tsx"],
+  bundle: true,
+  sourcemap: true,
+  // outfile: "slate-devtools.js",
+  define: {
+    "process.env.NODE_ENV": `"production"`,
+  },
+  format: "iife",
+  outfile: "./slate-devtools/dist/slate-devtools.umd.js",
   tsconfig: "./slate-devtools/tsconfig.json",
   external: ["react", "react-dom", "jotai"],
 });

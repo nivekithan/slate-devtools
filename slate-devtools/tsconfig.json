@@ -13,12 +13,16 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
+    "noEmit": false,
     "jsx": "react",
     "rootDir": "./src",
     "outDir": "./dist",
-    "composite": true
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "declarationDir": "./dist",
+    "declarationMap": true
   },
-  "include": ["src/**/*"],
+  "include": ["src"],
   "exclude": ["src/**/*.stories.tsx"]
 }
