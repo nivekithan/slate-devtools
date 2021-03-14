@@ -9,7 +9,7 @@
     "build": " npm run clear && npm run esbuild && npm run tsc",
     "tsc": "tsc --project ./slate-devtools/tsconfig.json",
     "esbuild": "node ./esbuild.config.js",
-    "clear" : "rimraf ./slate-devtools/dist && rimraf ./slate-devtools/tsconfig.tsbuildinfo"
+    "clear": "rimraf ./slate-devtools/dist && rimraf ./slate-devtools/tsconfig.tsbuildinfo"
   },
   "repository": {
     "type": "git",
@@ -59,7 +59,7 @@
     "*.{js,css,md,tsx,ts}": "prettier --write"
   },
   "dependencies": {
-    "jotai": "^0.15.2",
+    "jotai": "^0.15.3",
     "slate": "^0.59.0",
     "slate-react": "^0.59.0"
   }

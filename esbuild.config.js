@@ -12,7 +12,7 @@ require("esbuild").buildSync({
   format: "esm",
   outfile: "./slate-devtools/dist/slate-devtools.es.js",
   tsconfig: "./slate-devtools/tsconfig.json",
-  external: ["react", "react-dom", "jotai" ],
+  external: ["react", "react-dom"],
 });
 
 require("esbuild").buildSync({
@@ -26,5 +26,5 @@ require("esbuild").buildSync({
   format: "iife",
   outfile: "./slate-devtools/dist/slate-devtools.umd.js",
   tsconfig: "./slate-devtools/tsconfig.json",
-  external: ["react", "react-dom", "jotai"],
+  external: ["react", "react-dom"],
 });
