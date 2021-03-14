@@ -5,6 +5,7 @@ import { useDevEditorRead } from "../atom/devEditor";
 import { useToggleOnClick } from "../hooks/useToggleOnClick";
 import { RenderDetailedOperation } from "./renderDetailedOperation";
 import { styled } from "../styles/stitches.config";
+import { isArrayEqual } from "../util/isArrayEqual";
 
 type Props = {
   op: Operation;
@@ -16,7 +17,11 @@ export const RenderOperations = ({ op, to }: Props) => {
   const { history } = devEditor;
   const { type, path } = op;
   const [showFullOperation, onClickShowOperation] = useToggleOnClick(false);
-
+  const from = devEditor.from || [
+    history.length - 1,
+    history[history.length - 1].data.length - 1,
+  ];
+  const isFromAndToSame = isArrayEqual(from, to);
   /**
    * When clicking here we call HistoryEditor.apply
    *
@@ -29,26 +34,22 @@ export const RenderOperations = ({ op, to }: Props) => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    HistoryEditor.apply(
-      devEditor,
-      devEditor.from || [
-        history.length - 1,
-        history[history.length - 1].data.length - 1,
-      ],
-      to
-    );
+    HistoryEditor.apply(devEditor, from, to);
     devEditor.from = to;
   };
 
   return (
     <StyledRenderOpeartion>
       <div>
-        <button onClick={onClickingHere}>Here</button>
+        <button onClick={onClickingHere}>
+          {isFromAndToSame ? "Current State" : "Here"}
+        </button>
         <button onClick={onClickShowOperation}>
           <div>{type.toUpperCase()}</div>
           <div>{JSON.stringify(path)}</div>
         </button>
       </div>
+
       {showFullOperation ? (
         <div>
           <RenderDetailedOperation op={op} />
