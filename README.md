@@ -5,20 +5,20 @@
 
 To know about features take loot at this [issue](https://github.com/ianstormtaylor/slate/issues/4112)
 
-# NPM
+# Features
 
-I am planning to release the project in npm after I finished these tasks
-
-- [X] Refactor Code 
-- [X] Add storybook
-- [X] Convert windicss to css-in-js libary
-- [X] Solve perfomance issue
+Currently working on finishing these tasks
+- [X] Provide some feedback on current state in `RenderHistory` 
+- [ ] Differentiate between operations happened in devtools and operations happened in app
+- [ ] Update the working of `AppOperations` so that every single of batch of operations will not be considered as single operation
+- [ ] Add a cleanup function so that unnecessary operations in `RenderHistory` will not be shown
+- [ ] Create a plugin that can be used in creating the app `editor`. It should give a lot more important information about app operations like weather an operation is due to normalization.
 
 
 # Roadmap
 
-- [ ] Release the tool in npm
+- [X] Release the tool in npm
+- [ ] Features
+- [ ] Improve the look
 - [ ] Write tests
 - [ ] Add support for multiple editors
-- [ ] Improve the RenderHistory to show more usefull information
-- [ ] Improve the look
