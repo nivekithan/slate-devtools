@@ -9,7 +9,7 @@ To know about features take loot at this [issue](https://github.com/ianstormtayl
 
 Currently working on finishing these tasks
 - [X] Provide some feedback on current state in `RenderHistory` 
-- [ ] Differentiate between operations happened in devtools and operations happened in app
+- [X] Differentiate between operations happened in devtools and operations happened in app
 - [ ] Update the working of `AppOperations` so that every single of batch of operations will not be considered as single operation
 - [ ] Add a cleanup function so that unnecessary operations in `RenderHistory` will not be shown
 - [ ] Create a plugin that can be used in creating the app `editor`. It should give a lot more important information about app operations like weather an operation is due to normalization.
