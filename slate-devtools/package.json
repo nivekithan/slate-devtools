@@ -1,6 +1,6 @@
 {
   "name": "slate-devtools",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "`slate-devtools` as name suggests it is devtool for [slatejs](https://github.com/ianstormtaylor/slate) which will assist you in debugging the code",
   "license": "ISC",
   "keywords": [
@@ -13,14 +13,13 @@
     "react-dom": "^17.0.0",
     "react": "^17.0.0"
   },
-  "dependencies": {
-    "jotai": "^0.15.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@popperjs/core": "^2.8.4",
+    "@popperjs/core": "^2.9.1",
     "@stitches/react": "0.1.0-canary.15",
     "clone": "^2.1.2",
-    "nanoid": "^3.1.20",
+    "jotai": "^0.15.3",
+    "nanoid": "^3.1.21",
     "re-resizable": "^6.9.0",
     "react-popper": "^2.2.4",
     "slate": "^0.59.0",
