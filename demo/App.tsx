@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { createEditor, Node, Operation, Transforms } from "slate";
 import { Editable, withReact, Slate } from "slate-react";
-import { Devtools } from "slate-devtools";
+import { Devtools } from "../slate-devtools/src/lib";
 
 export const App = () => {
   const [slateValue, setSlateValue] = useState<Node[]>(initialValue);

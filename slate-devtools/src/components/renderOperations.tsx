@@ -26,7 +26,7 @@ export const RenderOperations = ({ op, to }: Props) => {
    */
 
   const onClickingHere = (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
     HistoryEditor.apply(
@@ -42,11 +42,13 @@ export const RenderOperations = ({ op, to }: Props) => {
 
   return (
     <StyledRenderOpeartion>
-      <button onClick={onClickShowOperation}>
-        <div>{type.toUpperCase()}</div>
-        <a onClick={onClickingHere}>Here</a>
-        <div>{JSON.stringify(path)}</div>
-      </button>
+      <div>
+        <button onClick={onClickingHere}>Here</button>
+        <button onClick={onClickShowOperation}>
+          <div>{type.toUpperCase()}</div>
+          <div>{JSON.stringify(path)}</div>
+        </button>
+      </div>
       {showFullOperation ? (
         <div>
           <RenderDetailedOperation op={op} />
@@ -60,34 +62,29 @@ const StyledRenderOpeartion = styled("div", {
   $reset: "",
   display: "flex",
   flexDirection: "column",
-  rowGap: "0.5rem",
+  rowGap: "0.75rem",
 
-  "& > button": {
-    $reset: "",
-    display: "grid",
-    backgroundColor: "$buttonGreen",
-    borderRadius: "5px",
-    gridTemplateColumns: "5rem 1fr 4rem",
-    fontSize: "0.75rem",
-    padding: "0.25rem",
-
-    "& > *": {
+  "& > div": {
+    "&:first-child": {
       $reset: "",
+      backgroundColor: "$buttonGreen",
+      fontSize: "0.75rem",
+      display: "flex",
 
-      "&:first-child": {
-        justifySelf: "start",
-      },
+      "& > button": {
+        $reset: "",
 
-      "&:nth-child(2)": {
-        justifySelf: "center",
-        border: "1px",
-        padding: "0 0.5rem",
-        borderRadius: "3px",
-        backgroundColor: "$operationHere",
-      },
-
-      "&:nth-child(3)": {
-        justifySelf: "end",
+        "&:first-child": {
+          backgroundColor: "$operationHere",
+          padding: "0px 5px",
+        },
+        "&:nth-child(2)": {
+          flex: "1 1 0%",
+          display: "flex",
+          alignItems: "center",
+          padding: "0.25rem",
+          justifyContent: "space-between",
+        },
       },
     },
   },
