@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "jotai": "^0.15.0"
-
   },
   "devDependencies": {
     "@popperjs/core": "^2.8.4",
