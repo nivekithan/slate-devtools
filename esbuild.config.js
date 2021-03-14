@@ -12,7 +12,7 @@ require("esbuild").buildSync({
   format: "esm",
   outfile: "./slate-devtools/dist/slate-devtools.es.js",
   tsconfig: "./slate-devtools/tsconfig.json",
-  external: ["react", "react-dom", "jotai"],
+  external: ["react", "react-dom", "jotai" ],
 });
 
 require("esbuild").buildSync({
