@@ -29,7 +29,7 @@ export const RenderBatch = ({ batch, num }: RenderBranchProps) => {
         onClick={onClick}
         op={batch.normalizing ? "no" : "yes"}
       >
-        {batch.normalizing ? "Normalizing" : "Operation"}
+        {batch.location} {batch.normalizing ? "Normalizing" : "Operation"}
       </StyledBatchButton>
       {showOperations
         ? batch.data.map((op, i) => {

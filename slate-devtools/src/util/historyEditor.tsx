@@ -4,6 +4,7 @@ export type Batch = {
   normalizing: boolean;
   data: Operation[];
   id: string;
+  location: "Devtools" | "App";
 };
 
 export type HistoryEditor = {
@@ -11,7 +12,10 @@ export type HistoryEditor = {
   isNormalizing: boolean;
   shouldSave: boolean;
   shouldNormalize: boolean;
-  apply: (op: Operation, shouldNormalize: boolean) => void;
+  apply: (
+    op: Operation,
+    options: { shouldNormalize?: boolean; location?: "App" | "Devtools" }
+  ) => void;
   from: [number, number] | undefined;
 };
 
@@ -221,7 +225,7 @@ export const HistoryEditor = {
             considerFrom: true,
             considerTo: false,
           })) {
-            editor.apply(operation, false);
+            editor.apply(operation, { shouldNormalize: false });
           }
         });
       });
@@ -240,7 +244,7 @@ export const HistoryEditor = {
             considerFrom: false,
             considerTo: true,
           })) {
-            editor.apply(operations, false);
+            editor.apply(operations, { shouldNormalize: false });
           }
         });
       });

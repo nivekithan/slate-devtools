@@ -31,7 +31,11 @@ export const withHistory = <T extends Editor>(editor: T) => {
     }
   };
 
-  e.apply = (op: Operation, shouldNormalize = true) => {
+  e.apply = (
+    op: Operation,
+    options: { shouldNormalize?: boolean; location?: "App" | "Devtools" } = {}
+  ) => {
+    const { shouldNormalize = true, location = "Devtools" } = options;
     /**
      * We dont record set_selection operation so if the operation is set_selection we will
      * just apply it
@@ -110,6 +114,7 @@ export const withHistory = <T extends Editor>(editor: T) => {
         normalizing: isNormalizing,
         data: [op],
         id: nanoid(),
+        location,
       };
 
       history.push(batch);

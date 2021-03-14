@@ -148,7 +148,12 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
 
     appOperations.current = applyOperations(
       operations.concat(appOperations.current),
-      devEditor
+      devEditor,
+      /**
+       * Specify the location of operation as App
+       */
+
+      { location: "App" }
     );
   };
 
