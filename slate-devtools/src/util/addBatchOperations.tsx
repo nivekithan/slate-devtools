@@ -18,18 +18,22 @@ export const addBatchOperations = (
   const { normalizing = false, location = "Devtools" } = options;
   const { current } = ref;
 
-  for (const op of operations) {
-    if (op.type === "set_selection") {
-      continue;
-    }
+  const filteredOperation = operations.filter(
+    (op) => op.type !== "set_selection"
+  );
+
+  for (let i = 0; i < filteredOperation.length; i++) {
+    const op = filteredOperation[i];
 
     const lastBatch = current[current.length - 1] as Batch | undefined;
     const lastOp = lastBatch && lastBatch.data[lastBatch.data.length - 1];
     let merge = false;
 
-    if (operations.length !== 0) {
+    if (shouldMerge(op, lastOp)) {
       merge = true;
-    } else if (shouldMerge(op, lastOp)) {
+    } else if (i === 0) {
+      merge = false;
+    } else {
       merge = true;
     }
 
