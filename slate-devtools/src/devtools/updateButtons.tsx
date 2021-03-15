@@ -109,7 +109,6 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
    */
   useEffect(() => {
     const { current } = appOperations;
-    console.log(current);
     if (current.length !== 0 && updateDevtools !== "on") {
       setUpdateDevtools("on");
     } else if (current.length === 0 && updateDevtools !== "off") {
