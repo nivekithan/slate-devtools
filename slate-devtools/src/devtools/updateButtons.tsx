@@ -110,9 +110,9 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
   useEffect(() => {
     const { current } = appOperations;
 
-    if (current.length !== 0) {
+    if (current.length !== 0 && updateDevtools !== "on") {
       setUpdateDevtools("on");
-    } else {
+    } else if (current.length === 0 && updateDevtools !== "off") {
       setUpdateDevtools("off");
     }
   });
@@ -123,10 +123,11 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
    */
   useEffect(() => {
     const { current } = devtoolsOperations;
-    if (current.length !== 0) {
+
+    if (current.length !== 0 && updateApp !== "on") {
       setUpdateApp("on");
       clickUpdateAppButtonOnce();
-    } else {
+    } else if (current.length === 0 && updateApp !== "off") {
       setUpdateApp("off");
     }
   });
