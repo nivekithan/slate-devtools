@@ -17,14 +17,12 @@ export const addBatchOperations = (
 ) => {
   const { normalizing = false, location = "Devtools" } = options;
   const { current } = ref;
-
   const filteredOperation = operations.filter(
     (op) => op.type !== "set_selection"
   );
 
   for (let i = 0; i < filteredOperation.length; i++) {
     const op = filteredOperation[i];
-
     const lastBatch = current[current.length - 1] as Batch | undefined;
     const lastOp = lastBatch && lastBatch.data[lastBatch.data.length - 1];
     let merge = false;
