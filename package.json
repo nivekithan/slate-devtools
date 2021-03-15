@@ -59,10 +59,8 @@
     "*.{js,css,md,tsx,ts}": "prettier --write"
   },
   "dependencies": {
-    "emotion": "^10.0.9",
     "jotai": "^0.15.3",
     "slate": "^0.59.0",
-    "slate-history": "^0.59.0",
     "slate-react": "^0.59.0"
   }
 }

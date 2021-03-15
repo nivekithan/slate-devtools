@@ -1,22 +1,18 @@
 import React, { useMemo, useState } from "react";
 import { createEditor, Node, Operation, Transforms } from "slate";
-import { withReact } from "slate-react";
+import { Editable, withReact, Slate } from "slate-react";
 import { Devtools } from "../slate-devtools/src/lib";
-import { withHistory } from "../slate-devtools/src/plugins";
-import { RichTextExample } from "./Editor";
 
 export const App = () => {
   const [slateValue, setSlateValue] = useState<Node[]>(initialValue);
-  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+  const editor = useMemo(() => withReact(createEditor()), []);
 
   return (
     <div>
       <div>
-        <RichTextExample
-          editor={editor}
-          setValue={setSlateValue}
-          value={slateValue}
-        />
+        <Slate editor={editor} value={slateValue} onChange={setSlateValue}>
+          <Editable spellCheck={false} />
+        </Slate>
       </div>
       <Devtools
         value={slateValue}
@@ -26,8 +22,7 @@ export const App = () => {
     </div>
   );
 };
-
-const initialValue: Node[] = [
+const initialValue = [
   {
     type: "paragraph",
     children: [
