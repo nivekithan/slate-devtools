@@ -26,12 +26,8 @@ Currently working on finishing these tasks
 You can try the `slate-devtools` in your project by
 
 ```bash
-npm i -D slate-devtools jotai
+npm i -D slate-devtools
 ```
-
-We need to install `jotai` because for some reason `esbuild` is throwing error when I tried to build. You can check the issue [here](https://github.com/pmndrs/jotai/issues/354)
-
-If you know solution for this please let me know.
 
 Once you installed you can use devtools in your project
 
