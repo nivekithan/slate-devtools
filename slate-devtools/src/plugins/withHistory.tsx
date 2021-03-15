@@ -144,7 +144,10 @@ export const withHistory = <T extends Editor>(editor: T) => {
  * Copied from slate-history
  */
 
-const shouldMerge = (op: Operation, prev: Operation | undefined): boolean => {
+export const shouldMerge = (
+  op: Operation,
+  prev: Operation | undefined
+): boolean => {
   if (
     prev &&
     op.type === "insert_text" &&
