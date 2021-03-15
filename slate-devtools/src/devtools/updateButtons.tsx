@@ -10,6 +10,11 @@ import { applyOperations } from "../util/applyOperations";
 import { inverseOperations } from "../util/inverseOperations";
 import { Button } from "../components/button/button";
 import { styled } from "../styles/stitches.config";
+import { Batch } from "../util/historyEditor";
+import { addBatchOperations } from "../util/addBatchOperations";
+import { applyBatchOperations } from "../util/applyBatchOperations";
+import { nanoid } from "nanoid";
+import { inverseBatchOperations } from "../util/inverseBatchOperations";
 
 type Props = {
   editor: ReactEditor;
@@ -36,7 +41,7 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
   /**
    * Stores every operation applied to app (editor)
    */
-  const appOperations = useRef<Operation[]>([]);
+  const appOperations = useRef<Batch[]>([]);
 
   /**
    * stores every operation applied to devtools (devEditor)
@@ -67,7 +72,14 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
       return;
     }
 
-    appOperations.current = addOperations(appOperations, editor.operations);
+    appOperations.current = addBatchOperations(
+      appOperations,
+      editor.operations,
+      {
+        location: "App",
+        normalizing: false,
+      }
+    );
   }, [value, editor.operations]);
 
   /**
@@ -97,7 +109,6 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
    */
   useEffect(() => {
     const { current } = appOperations;
-
     if (current.length !== 0 && updateDevtools !== "on") {
       setUpdateDevtools("on");
     } else if (current.length === 0 && updateDevtools !== "off") {
@@ -137,23 +148,28 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
     e.preventDefault();
 
     isDevtoolsUpdating.current = true;
-    const operations: Operation[] = [];
+    const operations: Batch[] = [];
 
     if (updateApp === "on") {
+      const inverseOperation: Batch = {
+        data: [],
+        id: nanoid(),
+        location: "Devtools",
+        normalizing: false,
+      };
       for (const operation of inverseOperations(devtoolsOperations.current)) {
-        operations.push(operation);
+        inverseOperation.data.push(operation);
       }
       devtoolsOperations.current = [];
+
+      if (inverseOperation.data.length !== 0) {
+        operations.push(inverseOperation);
+      }
     }
 
-    appOperations.current = applyOperations(
+    appOperations.current = applyBatchOperations(
       operations.concat(appOperations.current),
-      devEditor,
-      /**
-       * Specify the location of operation as App
-       */
-
-      { location: "App" }
+      devEditor
     );
   };
 
@@ -177,7 +193,7 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
     const operations: Operation[] = [];
 
     if (updateDevtools === "on") {
-      for (const operation of inverseOperations(appOperations.current)) {
+      for (const operation of inverseBatchOperations(appOperations.current)) {
         operations.push(operation);
       }
       appOperations.current = [];

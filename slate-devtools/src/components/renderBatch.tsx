@@ -23,7 +23,7 @@ export type RenderBranchProps = {
 export const RenderBatch = ({ batch, num }: RenderBranchProps) => {
   const [showOperations, onClick] = useToggleOnClick<HTMLButtonElement>(false);
 
-  return (
+  return !(batch.location === "Devtools" && batch.normalizing) ? (
     <StyledRenderBatch>
       <StyledBatchButton
         onClick={onClick}
@@ -43,7 +43,7 @@ export const RenderBatch = ({ batch, num }: RenderBranchProps) => {
           })
         : null}
     </StyledRenderBatch>
-  );
+  ) : null;
 };
 
 const StyledBatchButton = styled("button", {
