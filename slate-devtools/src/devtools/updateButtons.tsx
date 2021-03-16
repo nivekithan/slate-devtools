@@ -5,16 +5,10 @@ import { useDevEditorRead } from "../atom/devEditor";
 import { useUpdateApp } from "../atom/updateApp";
 import { useUpdateDevtools } from "../atom/updateDevtools";
 import { useCallOnce } from "../hooks/useCallOnce";
-import { addOperations } from "../util/addOperations";
-import { applyOperations } from "../util/applyOperations";
-import { inverseOperations } from "../util/inverseOperations";
 import { Button } from "../components/button/button";
 import { styled } from "../styles/stitches.config";
-import { Batch } from "../util/historyEditor";
-import { addBatchOperations } from "../util/addBatchOperations";
-import { nanoid } from "nanoid";
-import { applyBatchOperations } from "../util/applyBatchOperations";
-import { inverseBatchOperations } from "../util/inverseBatchOperations";
+import { Batch } from "../util/batch";
+import { DTOperation } from "../util/dtOperation";
 
 type Props = {
   editor: ReactEditor;
@@ -46,7 +40,7 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
   /**
    * stores every operation applied to devtools (devEditor)
    */
-  const devtoolsOperations = useRef<Operation[]>([]);
+  const devtoolsOperations = useRef<DTOperation<Operation>[]>([]);
 
   /**
    * Ref for the button `Update App`
@@ -59,7 +53,7 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
   });
 
   /**
-   * At first we will check if the operation applied to app (editor) is due to cliking `Update App` if thats the case
+   * At first we will check if the operation applied to app (editor) is due to clicking `Update App` if thats the case
    * then we wont add those operation to appOperation and we set isAppUpdating to false
    *
    * IF thats not case then we will those operations to appOperations.
@@ -72,9 +66,13 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
       return;
     }
 
-    appOperations.current = addBatchOperations(
-      appOperations,
-      editor.operations
+    appOperations.current = Batch.addOperationsToBatches(
+      appOperations.current,
+      editor.operations,
+      {
+        location: "App",
+        normalizing: false,
+      }
     );
   }, [value, editor.operations]);
 
@@ -92,8 +90,8 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
       return;
     }
 
-    devtoolsOperations.current = addOperations(
-      devtoolsOperations,
+    devtoolsOperations.current = DTOperation.addOperations(
+      devtoolsOperations.current,
       devEditor.operations
     );
   }, [devValue, devEditor.operations]);
@@ -148,30 +146,28 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
     const batches: Batch[] = [];
 
     if (updateApp === "on") {
-      const inverseBatch: Batch = {
-        id: nanoid(),
-        location: "App",
-        data: [],
+      const inverseBatch = new Batch([], {
         normalizing: false,
-      };
-      for (const operation of inverseOperations(devtoolsOperations.current)) {
-        inverseBatch.data.push(operation);
+        location: "Devtools",
+      });
+      for (const op of DTOperation.inverseOperations(
+        devtoolsOperations.current
+      )) {
+        inverseBatch.ops.push(op);
       }
       devtoolsOperations.current = [];
       batches.push(inverseBatch);
     }
 
-    appOperations.current = applyBatchOperations(
-      batches.concat(appOperations.current),
-      devEditor
-    );
+    Batch.applyOperations(batches.concat(appOperations.current), devEditor);
+    appOperations.current = [];
   };
 
   /**
    * At first we will set isAppUpdating to true
    *
    * Then we will check if updateDevtools is "on" this means that user has applied some
-   * operation to app but before syncing that opeartion with devtools the user also applied some operation
+   * operation to app but before syncing that operation with devtools the user also applied some operation
    * to devtools.
    *
    * As a result we have reverse those changes to app before updating the app
@@ -184,19 +180,20 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
     e.preventDefault();
 
     isAppUpdating.current = true;
-    const operations: Operation[] = [];
+    const operations: DTOperation<Operation>[] = [];
 
     if (updateDevtools === "on") {
-      for (const operation of inverseBatchOperations(appOperations.current)) {
+      for (const operation of Batch.inverseOperations(appOperations.current)) {
         operations.push(operation);
       }
       appOperations.current = [];
     }
 
-    devtoolsOperations.current = applyOperations(
-      operations.concat(devtoolsOperations.current),
-      editor
+    DTOperation.applyOperations(
+      editor,
+      operations.concat(devtoolsOperations.current)
     );
+    devtoolsOperations.current = [];
   };
 
   return (

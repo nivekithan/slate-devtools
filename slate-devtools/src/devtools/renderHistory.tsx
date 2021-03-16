@@ -9,9 +9,10 @@ export const RenderHistory = () => {
 
   const { history } = devEditor;
 
-  if (history.length === 0) {
-    return <div></div>;
-  }
+  // if (history.length === 0) {
+  //   console.log()
+  //   return <div></div>;
+  // }
 
   return (
     <Resizable width="400px">

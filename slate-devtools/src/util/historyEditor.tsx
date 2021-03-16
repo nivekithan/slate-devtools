@@ -1,10 +1,11 @@
 import { Editor, Operation } from "slate";
+import { ReactEditor } from "slate-react";
+import { Batch } from "./batch";
+import { DTOperation } from "./dtOperation";
 
-export type Batch = {
-  normalizing: boolean;
-  data: Operation[];
-  id: string;
-  location: "Devtools" | "App";
+export type runOptions = {
+  shouldNormalize?: boolean;
+  location?: "App" | "Devtools";
 };
 
 export type HistoryEditor = {
@@ -12,10 +13,7 @@ export type HistoryEditor = {
   isNormalizing: boolean;
   shouldSave: boolean;
   shouldNormalize: boolean;
-  apply: (
-    op: Operation,
-    options: { shouldNormalize?: boolean; location?: "App" | "Devtools" }
-  ) => void;
+  apply: (op: Operation, options: runOptions) => void;
   from: [number, number] | undefined;
   dontMerge: boolean;
 };
@@ -26,14 +24,13 @@ type HistoryOptions = {
   from: Location;
   to: Location;
   mode?: "top-bottom" | "bottom-top" | "auto";
-  match?: (loc: Location, op: Operation) => boolean;
   considerFrom?: boolean;
   considerTo?: boolean;
 };
 
 export const HistoryEditor = {
   /**
-   * Calls an function without saving any of the operations applied beacause
+   * Calls an function without saving any of the operations applied because
    * of that function to history
    */
 
@@ -57,7 +54,6 @@ export const HistoryEditor = {
     } = options;
 
     let { mode = "auto" } = options;
-    const { match = () => true } = options;
 
     if (mode === "auto") {
       if (fromBatch > toBatch) {
@@ -82,7 +78,7 @@ export const HistoryEditor = {
         hightToLow ? i <= toBatch : i >= toBatch;
         hightToLow ? i++ : i--
       ) {
-        const operations = history[i].data;
+        const operations = history[i].ops;
 
         let j;
         for (
@@ -137,9 +133,7 @@ export const HistoryEditor = {
           const operation = operations[j];
 
           if (operation) {
-            if (match([i, j], operation)) {
-              yield operation;
-            }
+            yield operation;
           } else {
             throw new Error(
               "Either from or to is not valid" +
@@ -167,7 +161,7 @@ export const HistoryEditor = {
 
   *inverseOperations(editor: HistoryEditor, options: HistoryOptions) {
     for (const operation of this.operations(editor, options)) {
-      yield Operation.inverse(operation);
+      yield DTOperation.inverse(operation);
     }
   },
   /**
@@ -176,7 +170,7 @@ export const HistoryEditor = {
    */
 
   apply(
-    editor: HistoryEditor & Editor,
+    editor: HistoryEditor & ReactEditor,
     from: [number, number],
     to: [number, number]
   ) {
@@ -190,9 +184,9 @@ export const HistoryEditor = {
 
     if (
       !history[fromBatch] ||
-      !history[fromBatch].data[fromOp] ||
+      !history[fromBatch].ops[fromOp] ||
       !history[toBatch] ||
-      !history[toBatch].data[toOp]
+      !history[toBatch].ops[toOp]
     ) {
       throw new Error(
         "Either from or to is not valid" +
@@ -226,13 +220,13 @@ export const HistoryEditor = {
             considerFrom: true,
             considerTo: false,
           })) {
-            editor.apply(operation, { shouldNormalize: false });
+            operation.apply(editor);
           }
         });
       });
     } else {
       /**
-       * If we are not inversing then we wont have to consider from
+       * If we are not inverting then we wont have to consider from
        * since we already applied that operation.
        */
 
@@ -245,7 +239,7 @@ export const HistoryEditor = {
             considerFrom: false,
             considerTo: true,
           })) {
-            editor.apply(operations, { shouldNormalize: false });
+            operations.apply(editor);
           }
         });
       });
@@ -259,7 +253,7 @@ export const HistoryEditor = {
   giveTill(editor: HistoryEditor, till: [number, number]): Batch[] {
     const { history } = editor;
 
-    if (!history[till[0]] || !history[till[0]].data[till[1]]) {
+    if (!history[till[0]] || !history[till[0]].ops[till[1]]) {
       throw new Error("The till is not valid: " + JSON.stringify(till));
     }
 
@@ -267,7 +261,7 @@ export const HistoryEditor = {
     const lastBatch = sliceBatch[sliceBatch.length - 1];
     const correctLastBatch = {
       ...lastBatch,
-      data: lastBatch.data.slice(0, till[1] + 1),
+      ops: lastBatch.ops.slice(0, till[1] + 1),
     };
 
     sliceBatch.pop();

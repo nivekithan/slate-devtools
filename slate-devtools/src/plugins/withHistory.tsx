@@ -1,14 +1,15 @@
-import { nanoid } from "nanoid";
 import { Editor, Operation, Path } from "slate";
-import { Batch, HistoryEditor } from "../util/historyEditor";
+import { Batch } from "../util/batch";
+import { DTOperation } from "../util/dtOperation";
+import { HistoryEditor, runOptions } from "../util/historyEditor";
 
 /**
  * My plan to interact with this api is to directly change the value like
  *
  * editor.shouldNormalize = false
- * editor.apply(someoperation)
+ * editor.apply(someOperation)
  *
- * I am not sure weather it is okat to that but since its working, I am not planning to change it
+ * I am not sure weather it is okay to that but since its working, I am not planning to change it
  * but you do know for the fact that interacting like that will lead to some problems open an issue or an
  * pr with the correct way
  *
@@ -32,10 +33,7 @@ export const withHistory = <T extends Editor>(editor: T) => {
     }
   };
 
-  e.apply = (
-    op: Operation,
-    options: { shouldNormalize?: boolean; location?: "App" | "Devtools" } = {}
-  ) => {
+  e.apply = (op: Operation, options: runOptions = {}) => {
     const { shouldNormalize = true, location = "Devtools" } = options;
     /**
      * We dont record set_selection operation so if the operation is set_selection we will
@@ -57,7 +55,7 @@ export const withHistory = <T extends Editor>(editor: T) => {
       return apply(op);
     }
     const _lastBatch = e.history[e.history.length - 1] as Batch | undefined;
-    const _lastOp = _lastBatch && _lastBatch.data[_lastBatch.data.length - 1];
+    const _lastOp = _lastBatch && _lastBatch.ops[_lastBatch.ops.length - 1];
     /**
      * We are checking if there is no from or no _lastOp or from is _lastOp in that case
      * the user is correct state and we dont have to remove anything
@@ -68,7 +66,7 @@ export const withHistory = <T extends Editor>(editor: T) => {
     if (
       !from ||
       !_lastOp ||
-      (from[0] === _lastOp[0] && from[1] === _lastOp[1])
+      (from[0] === _lastOp.operation[0] && from[1] === _lastOp.operation[1])
     ) {
       //
     } else {
@@ -85,7 +83,7 @@ export const withHistory = <T extends Editor>(editor: T) => {
      */
 
     const lastBatch = history[history.length - 1] as Batch | undefined;
-    const lastOp = lastBatch && lastBatch.data[lastBatch.data.length - 1];
+    const lastOp = lastBatch && lastBatch.ops[lastBatch.ops.length - 1];
     let merge = false;
 
     if (!e.dontMerge) {
@@ -101,24 +99,22 @@ export const withHistory = <T extends Editor>(editor: T) => {
       } else if (operations.length !== 0) {
         merge = true;
       } else {
-        merge = shouldMerge(op, lastOp);
+        merge = shouldMerge(op, lastOp?.operation);
       }
     }
 
     if (lastBatch && merge) {
-      lastBatch.data.push(op);
+      lastBatch.ops.push(new DTOperation(op));
     } else {
       /**
        * We create unqiue id so that we can pass a key when rendering a
        * list of batches
        */
 
-      const batch: Batch = {
+      const batch = new Batch([new DTOperation(op)], {
         normalizing: isNormalizing,
-        data: [op],
-        id: nanoid(),
         location,
-      };
+      });
 
       history.push(batch);
     }
@@ -133,12 +129,11 @@ export const withHistory = <T extends Editor>(editor: T) => {
 
     e.from = [
       e.history.length - 1,
-      e.history[e.history.length - 1].data.length - 1,
+      e.history[e.history.length - 1].ops.length - 1,
     ];
 
-    apply(op);
+    return apply(op);
   };
-
   return e;
 };
 /**
