@@ -10,13 +10,13 @@ Currently working on finishing these tasks
 
 - [x] Provide some feedback on current state in `RenderHistory`
 - [x] Differentiate between operations happened in devtools and operations happened in app
-- [ ] Update the working of `AppOperations` so that every single of batch of operations will not be considered as single operation
-- [ ] Add a cleanup function so that unnecessary operations in `RenderHistory` will not be shown
+- [x] Update the working of `AppOperations` so that every single of batch of operations will not be considered as single operation
+- [x] Add a cleanup function so that unnecessary operations in `RenderHistory` will not be shown
 
 # Roadmap
 
 - [x] Release the tool in npm
-- [ ] Features
+- [x] Features
 - [ ] Improve the look
 - [ ] Write tests
 - [ ] Add support for multiple editors
