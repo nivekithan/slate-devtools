@@ -17,6 +17,7 @@ export type HistoryEditor = {
     options: { shouldNormalize?: boolean; location?: "App" | "Devtools" }
   ) => void;
   from: [number, number] | undefined;
+  dontMerge: boolean;
 };
 
 type Location = [number, number];

@@ -14,7 +14,7 @@ export const addOperations = (
   operations.forEach((op) => {
     /**
      * We wont care about set_selection operation since they are pretty useless
-     * for usecase
+     * for our usecase
      */
 
     if (op.type !== "set_selection") {

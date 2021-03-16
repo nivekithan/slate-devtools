@@ -10,6 +10,11 @@ import { applyOperations } from "../util/applyOperations";
 import { inverseOperations } from "../util/inverseOperations";
 import { Button } from "../components/button/button";
 import { styled } from "../styles/stitches.config";
+import { Batch } from "../util/historyEditor";
+import { addBatchOperations } from "../util/addBatchOperations";
+import { nanoid } from "nanoid";
+import { applyBatchOperations } from "../util/applyBatchOperations";
+import { inverseBatchOperations } from "../util/inverseBatchOperations";
 
 type Props = {
   editor: ReactEditor;
@@ -36,7 +41,7 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
   /**
    * Stores every operation applied to app (editor)
    */
-  const appOperations = useRef<Operation[]>([]);
+  const appOperations = useRef<Batch[]>([]);
 
   /**
    * stores every operation applied to devtools (devEditor)
@@ -67,7 +72,10 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
       return;
     }
 
-    appOperations.current = addOperations(appOperations, editor.operations);
+    appOperations.current = addBatchOperations(
+      appOperations,
+      editor.operations
+    );
   }, [value, editor.operations]);
 
   /**
@@ -137,23 +145,25 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
     e.preventDefault();
 
     isDevtoolsUpdating.current = true;
-    const operations: Operation[] = [];
+    const batches: Batch[] = [];
 
     if (updateApp === "on") {
+      const inverseBatch: Batch = {
+        id: nanoid(),
+        location: "App",
+        data: [],
+        normalizing: false,
+      };
       for (const operation of inverseOperations(devtoolsOperations.current)) {
-        operations.push(operation);
+        inverseBatch.data.push(operation);
       }
       devtoolsOperations.current = [];
+      batches.push(inverseBatch);
     }
 
-    appOperations.current = applyOperations(
-      operations.concat(appOperations.current),
-      devEditor,
-      /**
-       * Specify the location of operation as App
-       */
-
-      { location: "App" }
+    appOperations.current = applyBatchOperations(
+      batches.concat(appOperations.current),
+      devEditor
     );
   };
 
@@ -177,7 +187,7 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
     const operations: Operation[] = [];
 
     if (updateDevtools === "on") {
-      for (const operation of inverseOperations(appOperations.current)) {
+      for (const operation of inverseBatchOperations(appOperations.current)) {
         operations.push(operation);
       }
       appOperations.current = [];

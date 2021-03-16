@@ -22,6 +22,7 @@ export const withHistory = <T extends Editor>(editor: T) => {
   e.isNormalizing = false; // Says weather an operation is due to normalizing
   e.shouldNormalize = true; // Says weather we should normalize after that operation
   e.from = undefined; // Stores the current state in History
+  e.dontMerge = false;
 
   e.normalizeNode = (entry) => {
     if (e.shouldNormalize) {
@@ -87,19 +88,21 @@ export const withHistory = <T extends Editor>(editor: T) => {
     const lastOp = lastBatch && lastBatch.data[lastBatch.data.length - 1];
     let merge = false;
 
-    if (!lastBatch) {
-      merge = false;
-    } else if (lastBatch.normalizing !== isNormalizing) {
-      /**
-       * If the lastBatch normalizing is not equal to current isNormalizing then
-       * we wont merge those operations
-       */
+    if (!e.dontMerge) {
+      if (!lastBatch) {
+        merge = false;
+      } else if (lastBatch.normalizing !== isNormalizing) {
+        /**
+         * If the lastBatch normalizing is not equal to current isNormalizing then
+         * we wont merge those operations
+         */
 
-      merge = false;
-    } else if (operations.length !== 0) {
-      merge = true;
-    } else {
-      merge = shouldMerge(op, lastOp);
+        merge = false;
+      } else if (operations.length !== 0) {
+        merge = true;
+      } else {
+        merge = shouldMerge(op, lastOp);
+      }
     }
 
     if (lastBatch && merge) {
@@ -142,7 +145,10 @@ export const withHistory = <T extends Editor>(editor: T) => {
  * Copied from slate-history
  */
 
-const shouldMerge = (op: Operation, prev: Operation | undefined): boolean => {
+export const shouldMerge = (
+  op: Operation,
+  prev: Operation | undefined
+): boolean => {
   if (
     prev &&
     op.type === "insert_text" &&
