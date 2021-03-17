@@ -8,7 +8,7 @@ import { useCallOnce } from "../hooks/useCallOnce";
 import { Button } from "../components/button/button";
 import { styled } from "../styles/stitches.config";
 import { Batch } from "../util/batch";
-import { DTOperation } from "../util/dtOperation";
+import { DTOperation } from "../util/DTOperation";
 
 type Props = {
   editor: ReactEditor;
@@ -53,8 +53,9 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
   });
 
   /**
-   * At first we will check if the operation applied to app (editor) is due to clicking `Update App` if thats the case
-   * then we wont add those operation to appOperation and we set isAppUpdating to false
+   * At first we will check if the operation applied to app (editor) is due to clicking
+   * `Update App` if thats the case then we wont add those operation to appOperation
+   * and we set isAppUpdating to false
    *
    * IF thats not case then we will those operations to appOperations.
    *
@@ -77,8 +78,9 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
   }, [value, editor.operations]);
 
   /**
-   * At first we will check if the operation applied to devtools (devEditor) is due to clicking `update devtools` if thats the case
-   * then we wont add those operation to devtoolsOperation and we set isDevtoolsUpdating to false
+   * At first we will check if the operation applied to devtools (devEditor) is due to clicking `update devtools`
+   * if thats the case then we wont add those operation to devtoolsOperation and we
+   * set isDevtoolsUpdating to false
    *
    * If thats not the case then we will add those operations to devtoolsOperations
    *
@@ -130,7 +132,7 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
    * At first we will set isDevtoolsUpdating to true
    *
    * Then we will check if updateApp is "on" this means that user has applied some
-   * operation to devtools but before syncing that opeartion with app the user also applied some operation
+   * operation to devtools but before syncing that operation with app the user also applied some operation
    * to app.
    *
    * As a result we have reverse those changes to devtools before updating the devtools

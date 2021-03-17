@@ -2,7 +2,7 @@ import { nanoid } from "nanoid";
 import { Editor, Operation } from "slate";
 import { ReactEditor } from "slate-react";
 import { shouldMerge } from "../plugins";
-import { DTOperation } from "./dtOperation";
+import { DTOperation } from "./DTOperation";
 import { HistoryEditor } from "./historyEditor";
 
 export type BatchOptions = {

@@ -1,7 +1,7 @@
 import { Editor, Operation } from "slate";
 import { ReactEditor } from "slate-react";
 import { Batch } from "./batch";
-import { DTOperation } from "./dtOperation";
+import { DTOperation } from "./DTOperation";
 
 export type runOptions = {
   shouldNormalize?: boolean;

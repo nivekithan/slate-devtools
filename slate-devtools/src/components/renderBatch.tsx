@@ -19,6 +19,11 @@ export type RenderBranchProps = {
 export const RenderBatch = ({ batch, num }: RenderBranchProps) => {
   const [showOperations, onClick] = useToggleOnClick<HTMLButtonElement>(false);
 
+  /**
+   * We wont show the Devtools Normalizing operations since they are not
+   * useful to user
+   */
+
   return !(batch.normalizing && batch.location === "Devtools") ? (
     <StyledRenderBatch>
       <StyledBatchButton
@@ -32,7 +37,7 @@ export const RenderBatch = ({ batch, num }: RenderBranchProps) => {
             return (
               <RenderOperations
                 op={op.operation}
-                key={`${op.id}`} // TODO: 2
+                key={`${op.id}`}
                 to={[num, i]}
               />
             );

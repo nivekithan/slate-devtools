@@ -3,7 +3,7 @@ import { Node, Operation, Path } from "slate";
 /**
  * Converts the given operation into ReturnConvertOperation type so that it will be easy to render
  *
- * if you know someother way to write this code so that it would be readable
+ * if you know some other way to write this code so that it would be readable
  * please open a pr
  *
  */

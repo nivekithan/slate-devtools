@@ -22,6 +22,7 @@ export const RenderOperations = ({ op, to }: Props) => {
     history[history.length - 1].ops.length - 1,
   ];
   const isFromAndToSame = isArrayEqual(from, to);
+
   /**
    * When clicking here we call HistoryEditor.apply
    *

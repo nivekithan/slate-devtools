@@ -1,6 +1,6 @@
 import { Editor, Operation, Path } from "slate";
 import { Batch } from "../util/batch";
-import { DTOperation } from "../util/dtOperation";
+import { DTOperation } from "../util/DTOperation";
 import { HistoryEditor, runOptions } from "../util/historyEditor";
 
 /**
@@ -76,10 +76,9 @@ export const withHistory = <T extends Editor>(editor: T) => {
     const { operations, history, isNormalizing } = e;
 
     /**
-     * Most of the code below is copied from slate-history there are 
+     * Most of the code below is copied from slate-history there are
      * some additions to code
-     * 
-    
+     *
      */
 
     const lastBatch = history[history.length - 1] as Batch | undefined;
@@ -106,11 +105,6 @@ export const withHistory = <T extends Editor>(editor: T) => {
     if (lastBatch && merge) {
       lastBatch.ops.push(new DTOperation(op));
     } else {
-      /**
-       * We create unqiue id so that we can pass a key when rendering a
-       * list of batches
-       */
-
       const batch = new Batch([new DTOperation(op)], {
         normalizing: isNormalizing,
         location,
