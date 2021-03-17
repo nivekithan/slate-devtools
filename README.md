@@ -4,21 +4,12 @@
 
 To know about features take loot at this [issue](https://github.com/ianstormtaylor/slate/issues/4112)
 
-# Features
-
-Currently working on finishing these tasks
-
-- [x] Provide some feedback on current state in `RenderHistory`
-- [x] Differentiate between operations happened in devtools and operations happened in app
-- [x] Update the working of `AppOperations` so that every single of batch of operations will not be considered as single operation
-- [x] Add a cleanup function so that unnecessary operations in `RenderHistory` will not be shown
-
 # Roadmap
 
 - [x] Release the tool in npm
 - [x] Features
-- [ ] Improve the look
 - [ ] Write tests
+- [ ] Improve the look
 - [ ] Add support for multiple editors
 
 You can try the `slate-devtools` in your project by
