@@ -1,3 +1,5 @@
+// @refresh reset
+
 import React, { Fragment, useState } from "react";
 import { Node } from "slate";
 import { ReactEditor } from "slate-react";

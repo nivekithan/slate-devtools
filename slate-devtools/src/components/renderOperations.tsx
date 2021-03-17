@@ -19,9 +19,10 @@ export const RenderOperations = ({ op, to }: Props) => {
   const [showFullOperation, onClickShowOperation] = useToggleOnClick(false);
   const from = devEditor.from || [
     history.length - 1,
-    history[history.length - 1].data.length - 1,
+    history[history.length - 1].ops.length - 1,
   ];
   const isFromAndToSame = isArrayEqual(from, to);
+
   /**
    * When clicking here we call HistoryEditor.apply
    *
@@ -39,7 +40,7 @@ export const RenderOperations = ({ op, to }: Props) => {
   };
 
   return (
-    <StyledRenderOpeartion>
+    <StyledRenderOperation>
       <div>
         <button onClick={onClickingHere}>
           {isFromAndToSame ? "Current State" : "Here"}
@@ -55,11 +56,11 @@ export const RenderOperations = ({ op, to }: Props) => {
           <RenderDetailedOperation op={op} />
         </div>
       ) : null}
-    </StyledRenderOpeartion>
+    </StyledRenderOperation>
   );
 };
 
-const StyledRenderOpeartion = styled("div", {
+const StyledRenderOperation = styled("div", {
   $reset: "",
   display: "flex",
   flexDirection: "column",
