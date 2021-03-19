@@ -9,7 +9,9 @@
     "build": " npm run clear && npm run esbuild && npm run tsc",
     "tsc": "tsc --project ./slate-devtools/tsconfig.json",
     "esbuild": "node ./esbuild.config.js",
-    "clear": "rimraf ./slate-devtools/dist && rimraf ./slate-devtools/tsconfig.tsbuildinfo"
+    "clear": "rimraf ./slate-devtools/dist && rimraf ./slate-devtools/tsconfig.tsbuildinfo",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run --record"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
     "@storybook/addon-essentials": "^6.1.21",
     "@storybook/addon-links": "^6.1.21",
     "@storybook/react": "^6.1.21",
+    "@testing-library/cypress": "^7.0.4",
     "@types/clone": "^2.1.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
@@ -35,6 +38,8 @@
     "@typescript-eslint/parser": "^4.16.1",
     "@vitejs/plugin-react-refresh": "^1.1.0",
     "babel-loader": "^8.2.2",
+    "cypress": "^6.7.1",
+    "cypress-commands": "^1.1.0",
     "esbuild": "^0.9.2",
     "eslint": "^7.21.0",
     "eslint-config-prettier": "^8.1.0",
@@ -59,6 +64,7 @@
     "*.{js,css,md,tsx,ts}": "prettier --write"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "jotai": "^0.15.3",
     "slate": "^0.59.0",
     "slate-react": "^0.59.0"

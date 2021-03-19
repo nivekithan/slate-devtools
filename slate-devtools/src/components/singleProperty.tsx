@@ -86,17 +86,27 @@ export const SingleProperty = ({ keys, value }: Props) => {
 
   return (
     <Fragment>
-      <div className={keyCSS}>{keys}</div>
+      <div className={keyCSS} data-cy-sp-key={keys}>
+        {keys}
+      </div>
       <div>:</div>
-      <div className={valueCSS}>
+      <div
+        className={valueCSS}
+        data-cy-sp-value={valueInputValue}
+        data-cy-sp-key={keys}
+      >
         {allowEdit ? (
           <InlineEdit
             value={valueInputValue}
             onBlur={onBlur}
             onChange={onChangeUpdateValueInput}
+            data-cy-sp-edit={true}
+            data-cy-sp-key={keys}
           />
         ) : (
-          <span>{valueInputValue}</span>
+          <span data-cy-sp-key={keys} data-cy-sp-edit={false}>
+            {valueInputValue}
+          </span>
         )}
       </div>
       <PlainButton
@@ -106,6 +116,8 @@ export const SingleProperty = ({ keys, value }: Props) => {
           visibility: allowEdit && keys !== "text" ? "visible" : "hidden",
         }}
         onClick={onRemoveClick}
+        data-cy-sp-key={keys}
+        data-cy-sp-cancel={allowEdit && keys !== "text"}
       >
         X
       </PlainButton>

@@ -2,7 +2,7 @@ import React from "react";
 import { Editor } from "slate";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useFormInputs } from "../hooks/useFormInputs";
-import { exceute } from "../util/excecute";
+import { execute } from "../util/execute";
 import { InputSubmit } from "../components/button";
 import { styled } from "../styles/stitches.config";
 
@@ -21,11 +21,11 @@ export const ScriptEditor = ({ module, editor }: Props) => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    exceute(codeValue, module, editor, devEditor);
+    execute(codeValue, module, editor, devEditor);
   };
 
   return (
-    <ScriptEditorStyled>
+    <ScriptEditorStyled data-cy-component="ScriptEditor">
       <form onSubmit={onSubmit}>
         <textarea
           value={codeValue}

@@ -11,7 +11,7 @@ export const RenderHistory = () => {
 
   return (
     <Resizable width="400px">
-      <RenderHistoryStyled>
+      <RenderHistoryStyled data-cy-component="RenderHistory">
         {history.map((batch, i) => {
           return <RenderBatch key={batch.id} batch={batch} num={i} />;
         })}

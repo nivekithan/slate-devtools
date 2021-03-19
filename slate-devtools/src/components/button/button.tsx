@@ -10,9 +10,9 @@ export type ButtonProps = {
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   // eslint-disable-next-line react/prop-types
-  ({ children, color, onClick }, ref) => {
+  ({ children, color, onClick, ...props }, ref) => {
     return (
-      <StyledButton onClick={onClick} color={color} ref={ref}>
+      <StyledButton onClick={onClick} color={color} ref={ref} {...props}>
         {children}
       </StyledButton>
     );

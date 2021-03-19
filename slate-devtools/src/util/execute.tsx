@@ -12,7 +12,7 @@ type Module = {
  * the editor (of App) and devEditor (of devtools) by their names
  */
 
-export const exceute = (
+export const execute = (
   callbackString: string,
   module: Module,
   editor: Editor,

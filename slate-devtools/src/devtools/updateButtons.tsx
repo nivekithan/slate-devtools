@@ -203,6 +203,7 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
       <Button
         color={updateDevtools === "on" ? "rose" : "gray"}
         onClick={onUpdateDevtoolsClick}
+        data-cy-ub-color={updateDevtools === "on" ? "rose" : "gray"}
       >
         Update Devtools
       </Button>
@@ -210,6 +211,7 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
         color={updateApp === "on" ? "rose" : "gray"}
         onClick={onUpdateAppClick}
         ref={updateAppRef}
+        data-cy-ub-color={updateApp === "on" ? "rose" : "gray"}
       >
         Update App
       </Button>

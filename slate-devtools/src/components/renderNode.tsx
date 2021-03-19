@@ -37,9 +37,7 @@ export const RenderNode = (props: RenderElementProps | RenderLeafProps) => {
     false
   );
 
-  const onClickCopy = copyOnClick(
-    JSON.stringify(ReactEditor.findPath(devEditor, ele))
-  );
+  const onClickCopy = copyOnClick(JSON.stringify(path));
 
   /**
    * On clicking on node we will setSelectedProperties to that node and its path
@@ -141,7 +139,7 @@ export const RenderNode = (props: RenderElementProps | RenderLeafProps) => {
         <PlainButton onClick={onClickUpdateSelectedProperties}>{`<${
           isRenderElementProps(props) ? type || "normal" : "text"
         } />`}</PlainButton>
-        <PlainButton onClick={onClickCopy} className="gray">
+        <PlainButton onClick={onClickCopy} className="gray" data-cy-path={path}>
           C
         </PlainButton>
       </div>

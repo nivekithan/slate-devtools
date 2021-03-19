@@ -10,7 +10,7 @@ export const PropertiesEditor = () => {
 
   return (
     <Resizable width="400px">
-      <PropertiesEditorLayout>
+      <PropertiesEditorLayout data-cy-component="PropertiesEditor">
         <AddProperties />
         <div>
           {Object.keys(node).map((keys) => {

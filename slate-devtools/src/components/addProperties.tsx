@@ -17,7 +17,11 @@ export const AddProperties = () => {
 
   return (
     <div>
-      <PlainButton onClick={onClickToggleModal} ref={setplusButtonElement}>
+      <PlainButton
+        onClick={onClickToggleModal}
+        ref={setplusButtonElement}
+        data-cy-component="AddProperties"
+      >
         +
       </PlainButton>
       {showModal ? (

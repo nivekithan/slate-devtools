@@ -29,6 +29,9 @@ export const RenderBatch = ({ batch, num }: RenderBranchProps) => {
       <StyledBatchButton
         onClick={onClick}
         op={batch.normalizing ? "no" : "yes"}
+        data-cy-he-batch={`${batch.location} ${
+          batch.normalizing ? "Normalizing" : "Operation"
+        }`}
       >
         {batch.location} {batch.normalizing ? "Normalizing" : "Operation"}
       </StyledBatchButton>
