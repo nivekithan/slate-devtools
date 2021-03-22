@@ -139,7 +139,11 @@ export const RenderNode = (props: RenderElementProps | RenderLeafProps) => {
         <PlainButton onClick={onClickUpdateSelectedProperties}>{`<${
           isRenderElementProps(props) ? type || "normal" : "text"
         } />`}</PlainButton>
-        <PlainButton onClick={onClickCopy} className="gray" data-cy-path={path}>
+        <PlainButton
+          onClick={onClickCopy}
+          className="devtools_slate_gray"
+          data-cy-path={path}
+        >
           C
         </PlainButton>
       </div>
