@@ -1,6 +1,7 @@
 import { nanoid } from "nanoid";
 import { Editor, Operation } from "slate";
 import { ReactEditor } from "slate-react";
+import { DevtoolsEditor } from "../plugins/withDevtools";
 import { HistoryEditor, runOptions } from "./historyEditor";
 
 export class DTOperation<T extends Operation> {
@@ -21,7 +22,7 @@ export class DTOperation<T extends Operation> {
   }
 
   apply(
-    editor: ReactEditor | (ReactEditor & HistoryEditor),
+    editor: (ReactEditor & DevtoolsEditor) | (ReactEditor & HistoryEditor),
     options: runOptions = {}
   ) {
     if (HistoryEditor.isHistoryEditor(editor)) {
@@ -44,7 +45,7 @@ export class DTOperation<T extends Operation> {
   }
 
   static applyOperations(
-    editor: ReactEditor | (ReactEditor & HistoryEditor),
+    editor: (ReactEditor & DevtoolsEditor) | (ReactEditor & HistoryEditor),
     ops: DTOperation<Operation>[]
   ) {
     Editor.withoutNormalizing(editor, () => {

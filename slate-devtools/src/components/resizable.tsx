@@ -54,6 +54,6 @@ const reClasName = css({
 
 const leftHandleClass = css({
   $reset: "",
-  borderLeft: "2px solid $buttonGray",
+  borderLeft: "2px solid $DTSbuttonGray",
   padding: "0px 4px",
 })();

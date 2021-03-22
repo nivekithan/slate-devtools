@@ -11,7 +11,7 @@ export const NodeLayout = styled("div", {
       display: "flex",
       columnGap: "0.75rem",
 
-      ".gray": {
+      ".devtools_slate_gray": {
         color: "#6B7280",
       },
     },

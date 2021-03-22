@@ -7,14 +7,14 @@ export const StyledLayout = styled("div", {
   backgroundColor: "#282a36",
   color: "white",
 
-  ".row-1": {
+  ".devtools_slate_row-1": {
     $reset: "",
     height: "40px",
     display: "flex",
     alignItems: "center",
   },
 
-  ".row-2": {
+  ".devtools_slate_row-2": {
     $reset: "",
     display: "flex",
     height: "calc(100% - 90px)",
@@ -32,7 +32,7 @@ export const StyledLayout = styled("div", {
     },
   },
 
-  ".row-3": {
+  ".devtools_slate_row-3": {
     $reset: "",
     height: "50px",
   },

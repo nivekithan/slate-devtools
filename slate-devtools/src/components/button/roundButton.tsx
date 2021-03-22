@@ -37,7 +37,7 @@ const RoundButtonStyled = styled("button", {
   bottom: "0px",
   marginLeft: "1.25rem",
   marginBottom: "1.25rem",
-  backgroundColor: "$bg",
+  backgroundColor: "$DTSbg",
   color: "white",
   display: "grid",
   placeItems: "center",

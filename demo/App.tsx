@@ -1,11 +1,11 @@
 import React, { useMemo, useState } from "react";
 import { createEditor, Node, Operation, Transforms } from "slate";
 import { Editable, withReact, Slate } from "slate-react";
-import { Devtools } from "../slate-devtools/src/lib";
+import { Devtools, withDevtools } from "../slate-devtools/src/lib";
 
 export const App = () => {
   const [slateValue, setSlateValue] = useState<Node[]>(initialValue);
-  const editor = useMemo(() => withReact(createEditor()), []);
+  const editor = useMemo(() => withDevtools(withReact(createEditor())), []);
 
   return (
     <div>
@@ -18,6 +18,7 @@ export const App = () => {
         value={slateValue}
         editor={editor}
         module={{ Node, Operation, Transforms }}
+        type={"type"}
       />
     </div>
   );

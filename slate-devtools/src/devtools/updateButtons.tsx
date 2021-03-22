@@ -9,9 +9,14 @@ import { Button } from "../components/button/button";
 import { styled } from "../styles/stitches.config";
 import { Batch } from "../util/batch";
 import { DTOperation } from "../util/DTOperation";
+import { DevtoolsEditor } from "../plugins/withDevtools";
+import {
+  dont_save_to_history,
+  dont_update_app_operations,
+} from "../util/weekmap";
 
 type Props = {
-  editor: ReactEditor;
+  editor: ReactEditor & DevtoolsEditor;
   value: Node[];
   devValue: Node[];
 };
@@ -20,11 +25,6 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
   const [updateDevtools, setUpdateDevtools] = useUpdateDevtools();
   const [updateApp, setUpdateApp] = useUpdateApp();
   const [devEditor] = useDevEditorRead();
-  /**
-   * isAppUpdating stores weather the app is updating after
-   * clicking `Update App`
-   */
-  const isAppUpdating = useRef<boolean>(false);
 
   /**
    * isDevtoolsUpdating stores weather the devtools is updating after clicking
@@ -62,20 +62,22 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
    * Works only on useLayoutEffect not on useEffect
    */
   useLayoutEffect(() => {
-    if (isAppUpdating.current) {
-      isAppUpdating.current = false;
+    if (dont_update_app_operations.get(editor)) {
+      dont_update_app_operations.set(editor, false);
+      appOperations.current = Batch.addOperationsToBatches(
+        appOperations.current,
+        editor.devtools_history.filter((op) => op.normalizing)
+      );
+      editor.devtools_reset();
       return;
     }
 
     appOperations.current = Batch.addOperationsToBatches(
       appOperations.current,
-      editor.operations,
-      {
-        location: "App",
-        normalizing: false,
-      }
+      editor.devtools_history
     );
-  }, [value, editor.operations]);
+    editor.devtools_reset();
+  }, [value, editor]);
 
   /**
    * At first we will check if the operation applied to devtools (devEditor) is due to clicking `update devtools`
@@ -181,7 +183,7 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
   ) => {
     e.preventDefault();
 
-    isAppUpdating.current = true;
+    dont_update_app_operations.set(editor, true);
     const operations: DTOperation<Operation>[] = [];
 
     if (updateDevtools === "on") {
@@ -190,11 +192,12 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
       }
       appOperations.current = [];
     }
-
+    dont_save_to_history.set(editor, true);
     DTOperation.applyOperations(
       editor,
       operations.concat(devtoolsOperations.current)
     );
+    dont_save_to_history.set(editor, false);
     devtoolsOperations.current = [];
   };
 

@@ -49,13 +49,13 @@ const ScriptEditorStyled = styled("div", {
   "& > form": {
     $reset: "",
     display: "flex",
-    backgroundColor: "$bgScriptEditor",
+    backgroundColor: "$DTSbgScriptEditor",
     borderRadius: "2px",
 
     "& > textarea": {
       $reset: "",
       width: "100%",
-      backgroundColor: "$bgScriptEditor",
+      backgroundColor: "$DTSbgScriptEditor",
       padding: "0.5rem 0.25rem",
       borderRadius: "2px",
       resize: "none",

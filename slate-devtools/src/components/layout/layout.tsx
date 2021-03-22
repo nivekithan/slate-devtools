@@ -19,7 +19,7 @@ export const Layout = ({ children, show, height }: LayoutProps) => {
 const TopLayout = styled("div", {
   $reset: "",
   position: "fixed",
-  backgroundColor: "$bg",
+  backgroundColor: "$DTSbg",
 
   "& button": {
     cursor: "pointer",

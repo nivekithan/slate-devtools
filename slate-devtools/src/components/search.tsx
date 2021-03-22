@@ -30,7 +30,7 @@ export const Search = ({ startValue = '""', onSubmit }: SearchProps) => {
       <form onSubmit={onFormSubmit}>
         <InlineEdit
           value={inputValue}
-          css={{ background: "$bgInput" }}
+          css={{ background: "$DTSbgInput" }}
           onChange={onChangeUpdateInput}
         />
         <InputSubmit color="blue">Search</InputSubmit>

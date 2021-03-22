@@ -7,11 +7,12 @@ import { useSelectedPropertiesRead } from "../atom/selectedProperties";
 import { GreenLabel } from "../components/greenLabel";
 import { RenderPath } from "../components/path";
 import { Search } from "../components/search";
+import { DevtoolsEditor } from "../plugins/withDevtools";
 import { styled } from "../styles/stitches.config";
 import { UpdateButtons } from "./updateButtons";
 
 type Props = {
-  editor: ReactEditor;
+  editor: ReactEditor & DevtoolsEditor;
   value: Node[];
   devValue: Node[];
 };

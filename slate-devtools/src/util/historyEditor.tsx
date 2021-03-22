@@ -220,7 +220,7 @@ export const HistoryEditor = {
             considerFrom: true,
             considerTo: false,
           })) {
-            operation.apply(editor);
+            operation.apply(editor, { shouldNormalize: false });
           }
         });
       });
@@ -239,7 +239,7 @@ export const HistoryEditor = {
             considerFrom: false,
             considerTo: true,
           })) {
-            operations.apply(editor);
+            operations.apply(editor, { shouldNormalize: false });
           }
         });
       });
