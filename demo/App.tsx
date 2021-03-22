@@ -18,6 +18,7 @@ export const App = () => {
         value={slateValue}
         editor={editor}
         module={{ Node, Operation, Transforms }}
+        type={"type"}
       />
     </div>
   );

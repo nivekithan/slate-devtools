@@ -13,18 +13,19 @@ import { RenderNode } from "../components/renderNode";
 type Props = {
   devValue: Node[];
   setDevValue: (value: Node[]) => void;
+  type: string;
 };
 
-export const DevSlate = ({ devValue, setDevValue }: Props) => {
+export const DevSlate = ({ devValue, setDevValue, type }: Props) => {
   const [devEditor] = useDevEditorRead();
 
   const renderElement = useCallback(
-    (props: RenderElementProps) => <RenderNode {...props} />,
+    (props: RenderElementProps) => <RenderNode {...props} type={type} />,
     []
   );
 
   const renderLeaf = useCallback(
-    (props: RenderLeafProps) => <RenderNode {...props} />,
+    (props: RenderLeafProps) => <RenderNode {...props} type={type} />,
     []
   );
 

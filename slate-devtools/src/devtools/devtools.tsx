@@ -26,6 +26,7 @@ export type DevtoolsProps = {
   open?: boolean;
   height?: string;
   style?: CSSProperties;
+  type?: string;
 };
 
 export const Devtools = ({
@@ -35,6 +36,7 @@ export const Devtools = ({
   open = false,
   height = "325px",
   style,
+  type = "type",
 }: DevtoolsProps) => {
   const [devValue, setDevValue] = useState<Node[]>(clone(value));
   const [isOpen, onClickToggle] = useToggleOnClick<HTMLButtonElement>(open);
@@ -55,7 +57,7 @@ export const Devtools = ({
           </Button>
         </MenuLayout>
         <div className="devtools_slate_row-2">
-          <DevSlate devValue={devValue} setDevValue={setDevValue} />
+          <DevSlate devValue={devValue} setDevValue={setDevValue} type={type} />
           <PropertiesEditor />
           <RenderHistory />
         </div>
