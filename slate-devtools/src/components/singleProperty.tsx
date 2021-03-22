@@ -130,7 +130,7 @@ export const SingleProperty = ({ keys, value }: Props) => {
 const keyCSS = css({
   $reset: "",
   $truncate: "",
-  color: "$textPropertiesBlue",
+  color: "$DTStextPropertiesBlue",
 })();
 
 const valueCSS = css({

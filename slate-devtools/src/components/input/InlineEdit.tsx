@@ -9,7 +9,7 @@ export const InlineEdit = styled("input", {
   borderRadius: "5px",
 
   "&:focus": {
-    backgroundColor: "$bgInput",
+    backgroundColor: "$DTSbgInput",
     $focus: "",
     padding: "0.20rem",
   },

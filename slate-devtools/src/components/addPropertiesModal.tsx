@@ -121,14 +121,14 @@ export const AddPropertiesModal = ({
           value={keyInputValue}
           onChange={onChangeUpdateKeyInput}
           placeholder="Key"
-          css={{ background: "$bgInput" }}
+          css={{ background: "$DTSbgInput" }}
         />
         <div>Value : </div>
         <InlineEdit
           value={valueInputValue}
           onChange={onChangeUpdateValueInput}
           placeholder="Value"
-          css={{ background: "$bgInput" }}
+          css={{ background: "$DTSbgInput" }}
         />
         <div>
           <InputSubmit color="blue">Add</InputSubmit>
@@ -149,7 +149,7 @@ const AddPropertiesModalLayout = styled("form", {
   flexDirection: "column",
   rowGap: "0.75rem",
   color: "white",
-  backgroundColor: "$bg",
+  backgroundColor: "$DTSbg",
   padding: "0.5rem",
   fontSize: "0.875rem",
   boxShadow: "3px 3px 13px 2px rgba(0,0,0,0.6)",

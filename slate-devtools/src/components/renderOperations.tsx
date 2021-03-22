@@ -69,7 +69,7 @@ const StyledRenderOperation = styled("div", {
   "& > div": {
     "&:first-child": {
       $reset: "",
-      backgroundColor: "$buttonGreen",
+      backgroundColor: "$DTSbuttonGreen",
       fontSize: "0.75rem",
       display: "flex",
 
@@ -77,7 +77,7 @@ const StyledRenderOperation = styled("div", {
         $reset: "",
 
         "&:first-child": {
-          backgroundColor: "$operationHere",
+          backgroundColor: "$DTSoperationHere",
           padding: "0px 5px",
         },
         "&:nth-child(2)": {

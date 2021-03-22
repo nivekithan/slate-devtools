@@ -32,24 +32,24 @@ export const StyledButton = styled("button", {
   variants: {
     color: {
       gray: {
-        backgroundColor: "$buttonGray",
+        backgroundColor: "$DTSbuttonGray",
         cursor: "default",
       },
       rose: {
-        backgroundColor: "$buttonRose",
+        backgroundColor: "$DTSbuttonRose",
         "&:hover": {
-          backgroundColor: "$buttonRoseHover",
+          backgroundColor: "$DTSbuttonRoseHover",
         },
       },
       blue: {
-        backgroundColor: "$buttonBlue",
+        backgroundColor: "$DTSbuttonBlue",
         "&:hover": {
-          backgroundColor: "$buttonBlueHover",
+          backgroundColor: "$DTSbuttonBlueHover",
         },
       },
       red: {
-        backgroundColor: "$buttonRed",
-        "&:hover": { backgroundColor: "$buttonRedHover" },
+        backgroundColor: "$DTSbuttonRed",
+        "&:hover": { backgroundColor: "$DTSbuttonRedHover" },
       },
     },
   },

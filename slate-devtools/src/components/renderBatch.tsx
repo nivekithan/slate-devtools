@@ -56,10 +56,10 @@ const StyledBatchButton = styled("button", {
   variants: {
     op: {
       yes: {
-        backgroundColor: "$batchOperations",
+        backgroundColor: "$DTSbatchOperations",
       },
       no: {
-        backgroundColor: "$batchNormalizing",
+        backgroundColor: "$DTSbatchNormalizing",
       },
     },
   },
