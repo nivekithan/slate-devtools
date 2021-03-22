@@ -14,10 +14,12 @@ import clone from "clone";
 import { Button, RoundButton } from "../components/button";
 import { Layout, MenuLayout } from "../components/layout";
 import { CSSProperties } from "react";
+import { DevtoolsEditor } from "../plugins/withDevtools";
+import { isDevtoolsEditor } from "../util/isDevtoolsEditor";
 
 export type DevtoolsProps = {
   value: Node[]; // NodeList value to show in devtools
-  editor: ReactEditor; // Corresponding editor
+  editor: ReactEditor & DevtoolsEditor; // Corresponding editor
   module?: {
     [index: string]: unknown;
   };
@@ -36,6 +38,12 @@ export const Devtools = ({
 }: DevtoolsProps) => {
   const [devValue, setDevValue] = useState<Node[]>(clone(value));
   const [isOpen, onClickToggle] = useToggleOnClick<HTMLButtonElement>(open);
+
+  if (!isDevtoolsEditor(editor)) {
+    throw new Error(
+      "The passed editor is not DevtoolsEditor, add plugin withDevtools to the editor. Make sure that withDevtools is last plugin"
+    );
+  }
 
   return ReactDOM.createPortal(
     <Fragment>
