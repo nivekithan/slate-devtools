@@ -2,6 +2,7 @@ import { nanoid } from "nanoid";
 import { Editor, Operation } from "slate";
 import { ReactEditor } from "slate-react";
 import { shouldMerge } from "../plugins";
+import { DevtoolsEditor } from "../plugins/withDevtools";
 import { DTOperation } from "./DTOperation";
 import { HistoryEditor } from "./historyEditor";
 
@@ -73,7 +74,7 @@ export class Batch {
 
   static applyOperations(
     current: Batch[],
-    editor: ReactEditor | (ReactEditor & HistoryEditor)
+    editor: (ReactEditor & DevtoolsEditor) | (ReactEditor & HistoryEditor)
   ) {
     Editor.withoutNormalizing(editor, () => {
       current.forEach((batch) => {
