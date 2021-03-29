@@ -12,6 +12,8 @@ To know about features take loot at this [issue](https://github.com/ianstormtayl
 - [ ] Improve the look
 - [ ] Add support for multiple editors
 
+As of now I am working on redesigining the `devtools` you can check the figma design in this [link](https://www.figma.com/file/gr0Bw3nTpWX6Zs6Jdn0lCr/Slate-devtools?node-id=0%3A1)
+
 You can try the `slate-devtools` in your project by
 
 ```bash
@@ -128,11 +130,6 @@ const initialValue = [
 ];
 ```
 
-# Disclaimer
-
-The project is in super early life of its development as a result I still didnt implement any animations, visual feedback is not good enough, its not responsive, styling can be improved a lot, `RenderHistory` does not provide a lot of useful information and it is filled with unnecessary information.
-
-I am working on fixing these as soon as possible
 
 # Disclaimer
 
