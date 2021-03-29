@@ -1,6 +1,6 @@
 {
   "name": "slate-devtools",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "`slate-devtools` as name suggests it is devtool for [slatejs](https://github.com/ianstormtaylor/slate) which will assist you in debugging the code",
   "license": "GPL",
   "keywords": [
