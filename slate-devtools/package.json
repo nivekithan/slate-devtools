@@ -1,6 +1,6 @@
 {
   "name": "slate-devtools",
-  "version": "0.0.13",
+  "version": "0.0.15",
   "description": "`slate-devtools` as name suggests it is devtool for [slatejs](https://github.com/ianstormtaylor/slate) which will assist you in debugging the code",
   "license": "MIT",
   "keywords": [
@@ -10,7 +10,6 @@
     "slate-devtools"
   ],
   "peerDependencies": {
-    "react-dom": "^17.0.0",
     "react": "^17.0.0"
   },
   "dependencies": {},
