@@ -2,7 +2,7 @@
   "name": "slate-devtools",
   "version": "0.0.13",
   "description": "`slate-devtools` as name suggests it is devtool for [slatejs](https://github.com/ianstormtaylor/slate) which will assist you in debugging the code",
-  "license": "GPL",
+  "license": "MIT",
   "keywords": [
     "slate",
     "slate-react",
@@ -23,8 +23,7 @@
     "re-resizable": "^6.9.0",
     "react-popper": "^2.2.4",
     "slate": "^0.59.0",
-    "slate-react": "^0.59.0",
-    "use-deep-compare-effect": "^1.6.1"
+    "slate-react": "^0.59.0"
   },
   "files": [
     "dist"

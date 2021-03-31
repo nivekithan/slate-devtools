@@ -6,7 +6,7 @@ import {
   RenderElementProps,
   RenderLeafProps,
 } from "slate-react";
-import { SlateEditorErrorBoundry } from "../components/ErrorBoundry";
+import { SlateEditorErrorBoundary } from "../components/ErrorBoundary";
 import { useDevEditorRead } from "../atom/devEditor";
 import { RenderNode } from "../components/renderNode";
 
@@ -21,12 +21,12 @@ export const DevSlate = ({ devValue, setDevValue, type }: Props) => {
 
   const renderElement = useCallback(
     (props: RenderElementProps) => <RenderNode {...props} type={type} />,
-    []
+    [type]
   );
 
   const renderLeaf = useCallback(
     (props: RenderLeafProps) => <RenderNode {...props} type={type} />,
-    []
+    [type]
   );
 
   /**
@@ -42,7 +42,7 @@ export const DevSlate = ({ devValue, setDevValue, type }: Props) => {
   }, []);
 
   return (
-    <SlateEditorErrorBoundry>
+    <SlateEditorErrorBoundary>
       <Slate value={devValue} editor={devEditor} onChange={setDevValue}>
         <Editable
           renderElement={renderElement}
@@ -51,6 +51,6 @@ export const DevSlate = ({ devValue, setDevValue, type }: Props) => {
           style={{ wordWrap: "normal", whiteSpace: "normal" }}
         />
       </Slate>
-    </SlateEditorErrorBoundry>
+    </SlateEditorErrorBoundary>
   );
 };

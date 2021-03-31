@@ -6,12 +6,15 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "dev": "vite",
-    "build": " npm run clear && npm run esbuild && npm run tsc",
-    "tsc": "tsc --project ./slate-devtools/tsconfig.json",
+    "build": " npm run clear && npm run esbuild && npm run tsc:build",
+    "tsc:build": "tsc --project ./slate-devtools/tsconfig.json",
     "esbuild": "node ./esbuild.config.js",
-    "clear": "rimraf ./slate-devtools/dist && rimraf ./slate-devtools/tsconfig.tsbuildinfo",
+    "clear": "rimraf ./slate-devtools/dist && npm run clear:tsc",
+    "clear:tsc" : "rimraf ./slate-devtools/tsconfig.tsbuildinfo",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run --record"
+    "cypress:run": "cypress run --record",
+    "tsc" : "npm run clear:tsc && npm run tsc:build"
+   
   },
   "repository": {
     "type": "git",

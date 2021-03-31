@@ -4,7 +4,6 @@ import { ReactEditor } from "slate-react";
 import { useDevEditorRead } from "../atom/devEditor";
 import { useUpdateApp } from "../atom/updateApp";
 import { useUpdateDevtools } from "../atom/updateDevtools";
-import { useCallOnce } from "../hooks/useCallOnce";
 import { Button } from "../components/button/button";
 import { styled } from "../styles/stitches.config";
 import { Batch } from "../util/batch";
@@ -46,11 +45,6 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
    * Ref for the button `Update App`
    */
   const updateAppRef = useRef<HTMLButtonElement | null>(null);
-
-  // Function runs only one time
-  const clickUpdateAppButtonOnce = useCallOnce(() => {
-    updateAppRef.current?.click();
-  });
 
   /**
    * At first we will check if the operation applied to app (editor) is due to clicking
@@ -98,6 +92,7 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
       devtoolsOperations.current,
       devEditor.operations
     );
+    console.log({ devtoolsOperations });
   }, [devValue, devEditor.operations]);
 
   /**
@@ -124,7 +119,6 @@ export const UpdateButtons = ({ editor, value, devValue }: Props) => {
 
     if (current.length !== 0 && updateApp !== "on") {
       setUpdateApp("on");
-      clickUpdateAppButtonOnce();
     } else if (current.length === 0 && updateApp !== "off") {
       setUpdateApp("off");
     }

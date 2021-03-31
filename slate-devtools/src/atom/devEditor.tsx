@@ -1,7 +1,6 @@
 import { atom, useAtom } from "jotai";
 import { createEditor, Editor } from "slate";
 import { ReactEditor, withReact } from "slate-react";
-import { withDepth, withId } from "../plugins";
 import { withHistory } from "../plugins/withHistory";
 import { HistoryEditor } from "../util/historyEditor";
 
@@ -10,7 +9,7 @@ import { HistoryEditor } from "../util/historyEditor";
  */
 
 const devEditorAtom = atom<Editor & ReactEditor & HistoryEditor>(
-  withHistory(withDepth(withId(withReact(createEditor()))))
+  withHistory(withReact(createEditor()))
 );
 
 const devEditorAtomRead = atom((get) => get(devEditorAtom));

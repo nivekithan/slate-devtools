@@ -8,7 +8,7 @@ type State = {
   hasError: boolean;
 };
 
-export class SlateEditorErrorBoundry extends React.Component<Props, State> {
+export class SlateEditorErrorBoundary extends React.Component<Props, State> {
   constructor(Props: Props) {
     super(Props);
     this.state = { hasError: false };

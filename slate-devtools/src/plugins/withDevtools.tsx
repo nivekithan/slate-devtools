@@ -41,6 +41,7 @@ export const withDevtools = <T extends ReactEditor>(
   };
 
   e.apply = (op: Operation, ...rest) => {
+    console.log(op);
     e.devtools_run(op);
     apply(op, ...rest);
   };

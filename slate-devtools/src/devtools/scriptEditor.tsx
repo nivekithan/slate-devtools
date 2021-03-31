@@ -14,14 +14,18 @@ type Props = {
 };
 
 export const ScriptEditor = ({ module, editor }: Props) => {
-  const [codeValue, onChangeUpdateCode] = useFormInputs<HTMLTextAreaElement>(
-    ""
-  );
+  const [
+    codeValue,
+    onChangeUpdateCode,
+    setCodeValue,
+  ] = useFormInputs<HTMLTextAreaElement>("");
   const [devEditor] = useDevEditorRead();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    execute(codeValue, module, editor, devEditor);
+    if (execute(codeValue, module, editor, devEditor)) {
+      setCodeValue("");
+    }
   };
 
   return (

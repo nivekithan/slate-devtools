@@ -1,11 +1,10 @@
-import { CSSProperties, useEffect } from "react";
+import { useEffect } from "react";
 import {
   ReactEditor,
   RenderElementProps,
   RenderLeafProps,
   useSlate,
 } from "slate-react";
-import useDeepCompareEffect from "use-deep-compare-effect";
 import { useSearchedProperties } from "../atom/searchedPath";
 import { useSelectedProperties } from "../atom/selectedProperties";
 import { copyOnClick } from "../util/copyOnClick";
@@ -16,25 +15,30 @@ import { isSubset } from "../util/isSubset";
 import React from "react";
 import { NodeLayout } from "./layout";
 import { PlainButton } from "./button";
+import { useMemo } from "react";
+import { useCallback } from "react";
 
 export const RenderNode = (
   props: (RenderElementProps | RenderLeafProps) & { type: string }
 ) => {
-  const ele = isRenderElementProps(props) ? props.element : props.text;
-  const { devtools_depth: depth, devtools_id: id } = ele;
+  const ele = useMemo(
+    () => (isRenderElementProps(props) ? props.element : props.text),
+    [props]
+  );
   const type = ele[props.type];
 
   const devEditor = useSlate();
 
   const [
-    {
-      node: { devtools_id: selectedId },
-    },
+    { path: selectedPath },
     setSelectedProperties,
   ] = useSelectedProperties();
   const [searchedProperties, setSearchedProperties] = useSearchedProperties();
 
-  const path = ReactEditor.findPath(devEditor, ele);
+  const path = useMemo(() => ReactEditor.findPath(devEditor, ele), [
+    devEditor,
+    ele,
+  ]);
 
   const [showChildren, onClickShowChildren, setShowChildren] = useToggleOnClick(
     false
@@ -54,24 +58,18 @@ export const RenderNode = (
   };
 
   /**
-   * we use DeepCompareEffect since in each render we recalculate path if we are to use
-   * useEffect instead it will cause infinite rerender
    *
    * We will update the selectedProperties with current ele and path so that it
-   * will stay current evev when the properties of ele or path changes due to other reasons
-   * (like updating ele through scirptEditor)
+   * will stay current even when the properties of ele or path changes due to other reasons
+   * (like updating ele through scriptEditor)
    *
    */
 
-  useDeepCompareEffect(() => {
-    if (!selectedId) {
-      return;
-    }
-
-    if (id === selectedId) {
+  useEffect(() => {
+    if (isSubset(selectedPath, path) && selectedPath.length === path.length) {
       setSelectedProperties({ node: ele, path: path });
     }
-  }, [path, ele, id, selectedId, setSearchedProperties]);
+  }, [ele, path, selectedPath, setSelectedProperties]);
 
   /**
    * When a user searches the path using Search by Path the result will be either a valid result or an
@@ -85,8 +83,8 @@ export const RenderNode = (
    * if thats the case then we showChildren since its children contains the node
    * searched by the user
    *
-   * And if the searchedId is equal to id then the user searched for this node
-   * so we will setSelectedProperties to this ele and path dnd we wont show its children
+   * And if the searchedPath is equal to path then the user searched for this node
+   * so we will setSelectedProperties to this ele and path and we wont show its children
    * since this is node user wanted
    *
    * After that we will clear the searchedProperties by setting it with emptyProperty
@@ -95,15 +93,12 @@ export const RenderNode = (
 
   useEffect(() => {
     if (!isEmptyProperties(searchedProperties)) {
-      const {
-        node: { devtools_id: searchedId },
-        path: searchedPath,
-      } = searchedProperties;
+      const { path: searchedPath } = searchedProperties;
 
       if (isSubset(searchedPath, path)) {
         setShowChildren(true);
 
-        if (searchedId === id) {
+        if (searchedPath.length === path.length) {
           setSelectedProperties({ node: ele, path: path });
           setSearchedProperties({ node: { children: [] }, path: [] });
           setShowChildren(false);
@@ -111,12 +106,11 @@ export const RenderNode = (
       }
     }
   }, [
-    id,
+    ele,
     path,
+    searchedProperties,
     setSearchedProperties,
     setSelectedProperties,
-    ele,
-    searchedProperties,
     setShowChildren,
   ]);
 
@@ -126,17 +120,15 @@ export const RenderNode = (
    * we can highlight the selectedProperties with different background colour
    */
 
-  const depthStyle = (depth: number): CSSProperties => {
-    return {
-      marginLeft: `${depth}rem`,
-    };
-  };
+  const depth = useCallback(
+    (increase = 0) => {
+      return (path.length || 1 + increase) * 1.5;
+    },
+    [path.length]
+  );
 
   return (
-    <NodeLayout
-      style={{ ...depthStyle(depth as number) }}
-      contentEditable={false}
-    >
+    <NodeLayout style={{ marginLeft: `${depth()}rem` }} contentEditable={false}>
       <div>
         <PlainButton onClick={onClickShowChildren}>+</PlainButton>
         <PlainButton onClick={onClickUpdateSelectedProperties}>{`<${
@@ -154,9 +146,7 @@ export const RenderNode = (
         isRenderElementProps(props) ? (
           props.children
         ) : (
-          <div style={{ ...depthStyle(((depth as number) || 1) + 1) }}>
-            {props.text.text}
-          </div>
+          <div style={{ marginLeft: `${depth(1)}rem` }}>{props.text.text}</div>
         )
       ) : null}
     </NodeLayout>
